@@ -1,11 +1,12 @@
 deploy:
-  variables:
-    CI_DEBUG_TRACE: "false"
   stage: deploy
   only:
-      - master
+    variables:
+      - $CI_COMMIT_MESSAGE != 'content_backup'
+      - $CI_COMMIT_REF_NAME == 'master'
+      
   script:
-    - apt-get update -qq && apt-get install -y -qq openssh-client sshpass
+    - apt-get update -qq && apt-get install -y -qq sshpass rsync
     - sshpass -V
     - export SSHPASS=$PASSWORD
-    - sshpass -e scp -o stricthostkeychecking=no -r benoitvinceneux.com 6c4nf_cd@6c4nf.ftp.infomaniak.com:/home/clients/4d2bacdb41356fc6dce1c18e19077c30/sites
+    - rsync -ratlz --rsh="sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no -l 6c4nf_cd" --exclude benoitvinceneux.com/content/ benoitvinceneux.com 6c4nf.ftp.infomaniak.com:/home/clients/4d2bacdb41356fc6dce1c18e19077c30/sites
