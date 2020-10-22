@@ -1,0 +1,11 @@
+deploy:
+  variables:
+    CI_DEBUG_TRACE: "false"
+  stage: deploy
+  only:
+      - master
+  script:
+    - apt-get update -qq && apt-get install -y -qq openssh-client sshpass
+    - sshpass -V
+    - export SSHPASS=$PASSWORD
+    - sshpass -e scp -o stricthostkeychecking=no -r benoitvinceneux.com 6c4nf_cd@6c4nf.ftp.infomaniak.com:/home/clients/4d2bacdb41356fc6dce1c18e19077c30/sites
