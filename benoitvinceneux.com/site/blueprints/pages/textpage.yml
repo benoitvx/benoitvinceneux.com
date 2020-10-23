@@ -1,0 +1,18 @@
+title: Text Page
+
+columns:
+
+  - width: 1/2
+    sections:
+
+      content:
+        type: fields
+        fields:
+
+          text:
+            extends: fields/text
+
+  - width: 1/2
+    sections:
+
+      files: sections/files

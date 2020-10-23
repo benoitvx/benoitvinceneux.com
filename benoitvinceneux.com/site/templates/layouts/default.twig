@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="{{ site.htmlLang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{{ page.title }} &ndash; {{ site.title }}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%~ block meta %}
+  <meta name="description" content="{% block meta_description page.text | excerpt(160) %}">
+  {%~ endblock %}
+  <link rel="stylesheet" href="{{ kirby.url }}/static/master.css">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/brands.css">
+  <style media="screen">
+  :root {
+    {%~ for propName, cssProp in {
+      backgroundColor: 'background-color',
+      textColor: 'text-color',
+      linkColor: 'link-color',
+      highlightTextColor: 'highlight-text-color',
+      highlightBackgroundColor: 'highlight-background-color',
+    } %}
+    {%~ with { prop: site.content.get(propName) } %}
+    {%~ if (prop.notEmpty) %}
+    --theme-{{ cssProp }}: {{ prop.isColor ? prop.toColor : prop.value }};
+    {%~ endif %}
+    {%~ endwith %}
+    {%~ endfor %}
+    {%~ if site.textColor.notEmpty %}
+    --theme-text-color-05: {{ site.textColor.toColor.setAlpha(5).value }};
+    {%~ endif %}
+  }
+  </style>
+  {%~ if site.googleAnalytics.notEmpty %}
+  <!-- Google Analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '{{ site.googleAnalytics }}', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+  {%~ endif %}
+  {%~ if site.googleTagManager.notEmpty %}
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{ site.googleTagManager }}');</script>
+  <!-- End Google Tag Manager -->
+  {%~ endif %}
+</head>
+<body class="body lh4">
+
+  {%~ if site.googleTagManager.notEmpty %}
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.googleTagManager }}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  {%~ endif %}
+
+  <header>
+    <div class="py05 sd-p05">
+      {%~ with { logo: site.images.filterBy('template', 'logo').first } %}
+      {%~ if logo %}
+      <figure class="p1"><a
+        class="block maxw ha"
+        href="{{ kirby.url }}"
+        style="width: {{ logo.width }}px;"
+      ><img
+        class="block w100 ha"
+        src="{{ logo.url }}"
+        width="{{ logo.width }}"
+        height="{{ logo.height }}"
+        alt="{{ site.title }}"
+      ></a></figure>
+      {%~ else %}
+      <h1 class="p1"><a class="block h1 lh1 fw800" href="{{ kirby.url }}">{{ site.title }}</a></h1>
+      {%~ endif %}
+      {%~ endwith %}
+    </div>
+    {%~ if site.description.notEmpty %}
+    <aside class="py05 sd-p05">
+      <div class="copy p1">
+        {{ site.description | kt }}
+      </div>
+    </aside>
+    {%~ endif %}
+    <nav class="py05 sd-p05">
+      <ul class="px075 py1">
+        {%~ for _page in site.pages.listed %}
+        <li class="px0125"><a
+          class="inlineblock px0125 ul:hover {%- if _page.id != page.id %} color-link:hover{% endif %}"
+          href="{{ _page.url }}"
+        ><span
+            {%- if _page.id == page.id %} class="color-highlight bg-highlight bg-highlight-shadow"{% endif %}>{{ _page.title }}</span></a></li>
+        {%~ endfor %}
+      </ul>
+    </nav>
+    {%~ if site.social.notEmpty %}
+    <aside class="py05 sd-p05">
+      <ul class="p05 row flex-wrap">
+        {%~ for item in site.social.toStructure %}
+        <li class="p05 h3 lh0"><a class="block" title="{{ item.name }}" href="{{ item.url }}"><span class="fab block" aria-hidden="true">&#x{{ item.code }};</span><span class="hide">{{ item.name }}</span></a></li>
+        {%~ endfor %}
+      </ul>
+    </aside>
+    {%~ endif %}
+  </header>
+
+  <main class="main py05 sd-p05">
+    {%~ block main none %}
+  </main>
+
+  {%~ if site.footer.notEmpty %}
+  <footer class="py05 sd-p05">
+    <div class="p1 copy">
+      {{ site.footer | kt }}
+    </div>
+  </footer>
+  {%~ endif %}
+
+</body>
+</html>

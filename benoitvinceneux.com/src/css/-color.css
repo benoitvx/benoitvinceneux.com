@@ -1,0 +1,18 @@
+.color-link,
+.color-link\:hover:hover,
+.anchor:hover .color-link\:hover {
+  color: var(--link-color);
+}
+
+.color-highlight {
+  color: var(--theme-highlight-text-color);
+}
+
+.bg-highlight {
+  background-color: var(--theme-highlight-background-color);
+}
+
+.bg-highlight-shadow {
+  box-shadow: -1px 0 0 2px var(--theme-highlight-background-color),
+    1px 0 0 2px var(--theme-highlight-background-color);
+}

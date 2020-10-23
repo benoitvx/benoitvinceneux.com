@@ -1,0 +1,146 @@
+title: Site
+
+tabs:
+
+  content:
+    label: Content
+    icon: text
+    sections:
+
+      pages:
+        headline: Pages
+        type: pages
+        create:
+          - project
+          - textpage
+        image:
+          query: page.images.filterBy('template', 'project').sortBy('sort').first
+          conver: true
+        info: "{{ page.intendedTemplate }}"
+
+  settings:
+    label: Settings
+    icon: cog
+    columns:
+
+      - width: 2/3
+        sections:
+
+          fields:
+            type: fields
+            fields:
+
+              tagline:
+                label: Tagline
+                type: text
+                help: >
+                  Tagline will be displayed in title tag next to your site name.
+                  (e.g. {{ site.title }} - Your Custom Tagline)
+
+              description:
+                label: Description
+                type: textarea
+
+              social:
+                label: Social
+                type: structure
+                fields:
+                  name:
+                    label: Name
+                    type: text
+                  code:
+                    label: Code
+                    type: text
+                    help: Font Awesome Unicode code.
+                  url:
+                    label: Url
+                    type: url
+
+              footer:
+                label: Footer
+                type: textarea
+                buttons: false
+                help: >
+                  This theme is completely free for both personal and commercial use,
+                  however any kind of attribution is appreciated.
+
+      - width: 1/3
+        fields:
+
+          htmlLang:
+            label: Document Language
+            type: text
+            help: &lt;html lang="{{site.htmlLang}}"&gt;
+
+          googleAnalytics:
+            label: Google Analytics
+            type: text
+            placeholder: UA-XXXXX-Y
+            width: 1/2
+
+          googleTagManager:
+            label: Google Tag Manager
+            type: text
+            placeholder: GTM-XXXX
+            width: 1/2
+
+
+  visual:
+    label: Visual
+    icon: settings
+    columns:
+
+      - width: 1/3
+        sections:
+
+          logo:
+            type: files
+            template: logo
+            empty: No logo yet
+            max: 1
+            sortable: false
+            layout: cards
+            size: huge
+            info: "{{ file.width }} x {{ file.height }}"
+            image:
+              ratio: 1/1
+              cover: false
+              back: white
+
+          favicon:
+            type: files
+            template: favicon
+            empty: No favicon uploaded
+            max: 1
+            sortable: false
+            size: tiny
+            info: "{{ file.width }} x {{ file.height }} ({{ file.mime }})"
+            image:
+              ratio: 1/1
+              cover: false
+
+      - width: 1/3
+        fields:
+
+          backgroundColor:
+            label: Background Color
+            type: text
+            placeholder: '#FFFFFF'
+
+          textColor:
+            label: Text Color
+            type: text
+            placeholder: '#040404'
+
+          linkColor:
+            label: Link Color
+            type: text
+
+          highlightTextColor:
+            label: Highlight Text Color
+            type: text
+
+          highlightBackgroundColor:
+            label: Highlight Background Color
+            type: text
+            placeholder: '#FFDC00'

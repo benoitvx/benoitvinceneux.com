@@ -1,0 +1,43 @@
+@import 'abrusco';
+@import '-body';
+@import '-copy';
+@import '-color';
+
+/* Inter font-family */
+
+:root {
+  --font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    --font-family: 'Inter var', sans-serif;
+  }
+}
+
+/* responsivity */
+
+@custom-media --view-sd (min-width: 40rem);
+@custom-media --view-md (min-width: 61rem);
+@custom-media --view-ld (min-width: 80rem);
+@custom-media --view-xl (min-width: 100rem);
+
+/* theme variables */
+
+:root {
+
+  --theme-background-color:           var(--white);
+  --theme-text-color:                 var(--black);
+  --theme-text-color-05:              var(--black-05);
+  --theme-link-color:                 inherit;
+  --theme-highlight-text-color:       inherit;
+  --theme-highlight-background-color: var(--yellow);
+
+  --base-background-color:            var(--theme-background-color);
+  --base-color:                       var(--theme-text-color);
+  --default-link-color:               var(--theme-link-color);
+
+  --copy-space-primary:               1.5em;
+  --copy-space-secondary:             0.5em;
+
+}

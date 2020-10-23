@@ -1,0 +1,63 @@
+Title: Portfolio Theme
+
+----
+
+Tagline: Free Customizable Kirby Template
+
+----
+
+Description: Lemmon Portfolio is a free Kirby CMS theme. Minimalistic look with focus on your content. Customizable and responsive.
+
+----
+
+Social:
+
+- 
+  name: GitHub
+  code: f09b
+  url: >
+    https://github.com/lemmon/kirby-portfolio-theme
+- 
+  name: Twitter
+  code: f099
+  url: https://twitter.com/lemmon
+
+----
+
+Footer: (c) (date: year) Built with (link: https://github.com/lemmon/kirby-portfolio-theme text: Portfolio Theme) by (link: https://twitter.com/lemmon text: Lemmon Juice)
+
+----
+
+Htmllang: en
+
+----
+
+Googleanalytics: 
+
+----
+
+Googletagmanager: 
+
+----
+
+Backgroundcolor: 
+
+----
+
+Textcolor: 
+
+----
+
+Linkcolor: 
+
+----
+
+Highlighttextcolor: 
+
+----
+
+Highlightbackgroundcolor: 
+
+----
+
+Highlightcolor: 
