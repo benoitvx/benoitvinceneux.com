@@ -1,0 +1,25 @@
+# Benoit Vinceneux
+
+> Senior Product IC — AI × Data. Père de famille, builder & passionné d'outdoor. 📍France. Product leader spécialisé dans le développement 0→1 de produits IA, fondateur, ancien freelance (10 ans), premier PM en PME, puis intrapreneur d'État. Actuellement CPO MCP & Données à la DINUM (Services du Premier ministre). Mi-builder, mi-hacker, mi-dealmaker — je fais passer la tech de l'idée à la production.
+
+## Pages
+
+- [À propos](https://benoitvinceneux.com/a-propos): Profil, parcours, convictions, stack quotidienne, engagements et formations.
+- [Services du Premier ministre](https://benoitvinceneux.com/services-du-premier-ministre): CPO MCP & Données à la DINUM (depuis janvier 2026). Brique données & MCP du socle IA interministériel : MCP data.gouv (3 M de requêtes/semaine en production), catalogue ia.data.gouv.fr, Skills État, accompagnement administrations, éval LLM verticalisée (+16 % qualité).
+- [Présidence de la République](https://benoitvinceneux.com/presidence-de-la-republique): CPO Datalma — startup d'État (sept. 2024 – déc. 2025). Plateforme d'intelligence décisionnelle pour Président, ministres, conseillers. Datalma Alerting (~30 articles/jour, stack souveraine 100 %), observatoire grippe lancé en 1 semaine, programme Entrepreneur d'Intérêt Général.
+- [Curated Adventures](https://benoitvinceneux.com/curated-adventures): Solopreneur. Guide pour trouver rapidement les meilleurs documentaires d'aventure outdoor (surf, escalade, snowboard, vélo) sur YouTube et Vimeo. Curation manuelle, démarche éco-responsable. https://curatedadventures.club
+- [Sigfox](https://benoitvinceneux.com/sigfox): Product Manager. DMS (2019-2020) — espace client B2B grands comptes (~100 écrans, équipe 2-10 devs, −50 % délais de paiement, support facturation 10 min → 1 min). GNOC (2018) — data viz temps réel sur mur de 12 écrans (−65 % temps d'identification d'erreur réseau).
+- [NotreSanté](https://benoitvinceneux.com/notresante): Cofondateur, CPO (2017-2020). Startup e-santé, app iOS/Android pour familles avec enfants en bas âge, parcours croisés patient/professionnel de santé, hébergement HDS. Trophée Citoyenneté & Solidarité (CD Haute-Garonne, 2019), Prix de l'innovation (CCI Occitanie, 2018).
+- [Ça Compte Pour Moi](https://benoitvinceneux.com/ca-compte-pour-moi): Intrapreneur, Head of Product & GTM (2014-2016). Première offre d'expertise-comptable 100 % digitale en France pour la Compagnie Fiduciaire. 0 → 1 M€ ARR an 1, rentable an 3, 0 → 60 collaborateurs en 3 ans, top 3 du marché en 4 ans, 3 000 clients en 2019. 3 Trophées Les Echos 2015 (Or Marketing digital, Or Stratégie & Innovation, Prix spécial du jury).
+- [Pierre Fabre](https://benoitvinceneux.com/pierre-fabre): 1ᵉʳ Product Manager (2011-2017). Espace Pro B2B des Laboratoires Pierre Fabre — centre névralgique relationnel avec 16 000 pharmacies clientes (commande en ligne, gestion des factures, e-learning, e-merchandising, retours produits). Lancement septembre 2015. 80 % des pharmaciens clients connectés au moins 1×/semaine, 3 heures gagnées par semaine pour les utilisateurs.
+- [ANCT (Gouvernement 🇫🇷)](https://benoitvinceneux.com/societe-numerique): UX pour les principaux sites de l'Agence Nationale de la Cohésion des Territoires (Programme Société Numérique, Labo Société Numérique). Premiers sites à utiliser le DSFR. Collaboration Telescoop.
+- [Groupama](https://benoitvinceneux.com/groupama): UX/UI Designer. Extranet courtiers — dématérialisation du suivi administratif, tarification en quelques clics. ~30 écrans, MVP validé et déployé en 2 mois.
+- [LePharmacien.fr](https://benoitvinceneux.com/lepharmacien-fr): Product Manager & GTM (2016-2018). Plateforme B2B2C Résopharma pour simplifier la relation patient – pharmacien. Multi-canal (desktop, tablette, smartphone) — envoi d'ordonnance, Click & Collect, enrôlement patients, pharmacie de garde 24/7 partout en France. 10 ateliers de co-création, 250 wireframes, lancement octobre 2018.
+- [Toulouse Football Club](https://benoitvinceneux.com/toulouse-football-club): Missions régulières 2014-2019. Refonte du site institutionnel et de la boutique officielle, CRM custom intégré (site, shop, billetterie, social media), refonte digitale globale.
+- [YANA.place](https://benoitvinceneux.com/yana-place): Co-fondateur, Designer & gestionnaire (depuis 2018). Espace de 220 m² en hyper-centre de Toulouse, rénové en 3 mois, bureaux fermés tout équipés (4-6 pers., location min. 1 an). https://yana.place
+
+## Contact
+
+- Email : benoitvinceneux@gmail.com
+- LinkedIn : https://www.linkedin.com/in/benoitvinceneux/
+- GitHub : https://github.com/benoitvx

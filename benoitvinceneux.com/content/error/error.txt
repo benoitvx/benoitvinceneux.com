@@ -1,5 +1,0 @@
-Title: Error
-
-----
-
-Text: Sorry, the page you have requested was not found.
