@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # T-BV-HTTP-01 à 06 : comportement HTTP du site servi par Apache. Usage : BASE_URL=http://127.0.0.1:8080 bash tests/http_check.sh
-# T-BV-SMK-01 (smoke après déploiement, « tests/smoke.sh » de #7) : BASE_URL=https://benoitvinceneux.com HSTS_MIN_AGE=16000000, + redirection http -> https
-# HSTS : posé par le serveur, pas par dist/.htaccess (décision de Benoit, 22/10/2026) : exigé en production (max-age >= HSTS_MIN_AGE), absent en local
+# T-BV-SMK-01 (smoke, « tests/smoke.sh » de #7) : BASE_URL=https://benoitvinceneux.com HSTS_MIN_AGE=<seuil> (valeur dans deploy.yml), + redirection http -> https.
+# HSTS posé par le serveur, jamais par dist/.htaccess (22/10/2026) : exigé avec max-age >= HSTS_MIN_AGE si fourni, absent sinon (Apache local).
 set -u
 BASE="${BASE_URL:?BASE_URL requis}"
 DIR="$(dirname "$0")/.."

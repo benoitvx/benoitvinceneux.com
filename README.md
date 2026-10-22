@@ -24,7 +24,7 @@ BASE_URL=http://127.0.0.1:8080 bash tests/http_check.sh   # dist/ servi par un A
 npx playwright test
 ```
 
-Le smoke après déploiement (`tests/smoke.sh` dans #7) est `tests/http_check.sh` lancé sur le domaine public, avec `BASE_URL=https://benoitvinceneux.com`.
+Le smoke après déploiement (`tests/smoke.sh` dans #7) est `tests/http_check.sh` lancé sur le domaine public : `BASE_URL=https://benoitvinceneux.com HSTS_MIN_AGE=16000000 bash tests/http_check.sh` (sans `HSTS_MIN_AGE`, le script exige l'absence de HSTS, ce qui ne vaut que pour l'Apache local).
 
 ## Rollback
 

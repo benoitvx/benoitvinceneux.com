@@ -1,5 +1,7 @@
 # #7 [BV-05] Bascule : déploiement de `dist/` conditionné aux tests
 
+> Remplacé en partie le 22/10/2026 (décisions de Benoit) : HSTS laissé au serveur (absent de `public/.htaccess`, smoke avec `HSTS_MIN_AGE=16000000`), pas d'environnement `production` (secrets au niveau du dépôt). Les mentions de `environment: production` et `HSTS_MAX_AGE=300` ci-dessous sont caduques.
+
 Branche : `feat/bv-05-bascule` (déjà créée). PR `Closes #7` ouverte par l'orchestrateur, **non mergée** : M2 = mise en production, Benoit décide (CLAUDE.md, garde-fous).
 Dépendances : #4 (BV-02) et #6 (BV-04) mergés. Décisions liées (#2) : D-1 (pas de préproduction : smoke + revert en moins de 5 min), D-5 (Environment `production` + protection de `master`, réglés par Benoit).
 `tasks/lessons.md` (modifié, non commité) part avec le premier commit.
