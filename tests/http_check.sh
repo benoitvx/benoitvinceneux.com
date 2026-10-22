@@ -5,7 +5,7 @@ set -u
 BASE="${BASE_URL:?BASE_URL requis}"
 DIR="$(dirname "$0")/.."
 HSTS="max-age=${HSTS_MAX_AGE:-300}"
-c() { curl -s -H 'X-Forwarded-Proto: https' "$@"; }
+c() { curl -s --max-time 10 -H 'X-Forwarded-Proto: https' "$@"; }
 fail() { echo "ÉCHEC $1 : obtenu « $2 », attendu « $3 »"; exit 1; }
 excluded() { [ -f "$DIR/tests/legacy-exclude.txt" ] && grep -qxF "$1" "$DIR/tests/legacy-exclude.txt"; }
 
@@ -69,7 +69,7 @@ done
 
 # SMK-01 : http:// redirige en 301 vers https:// (domaine public seulement)
 case "$BASE" in https://*)
-  got="$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' "http://${BASE#https://}/")"
+  got="$(curl -s --max-time 10 -o /dev/null -w '%{http_code} %{redirect_url}' "http://${BASE#https://}/")"
   [ "$got" = "301 $BASE/" ] || fail "http://${BASE#https://}/" "$got" "301 $BASE/" ;;
 esac
 

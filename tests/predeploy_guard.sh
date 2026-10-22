@@ -11,6 +11,7 @@ php="$(find "$d" -type f \( -iname '*.php' -o -iname '*.php[0-9]' -o -iname '*.p
 [ -z "$php" ] || fail "fichier .php : $php"
 # Pages HTML attendues : entrées 200 de legacy-urls.txt sans extension ou en .html
 want="$(awk -F'\t' '$2 == "200" && ($1 !~ /\./ || $1 ~ /\.html$/)' "$(dirname "$0")/legacy-urls.txt" | wc -l | tr -d ' ')"
+[ "$want" -gt 0 ] || fail "aucune page attendue lue dans legacy-urls.txt"
 got="$(find "$d" -type f -name '*.html' ! -name 404.html | wc -l | tr -d ' ')"
 [ "$got" -ge "$want" ] || fail "$got pages HTML dans $d, au moins $want attendues"
 echo "predeploy_guard : OK ($d)"

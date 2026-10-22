@@ -27,8 +27,6 @@ Le smoke après déploiement (`tests/smoke.sh` dans #7) est `tests/http_check.sh
 
 ## Rollback
 
-1. `git revert <sha du commit à annuler>` sur une branche, puis PR vers `master`.
+1. `git revert <sha du commit à annuler>` sur une branche, puis PR vers `master`. Pour annuler la bascule (#7) alors que les secrets `DEPLOY_*` sont rattachés à l'environnement `production` (D-5), garder la ligne `environment: production` dans le job de déploiement restauré.
 2. Merger quand le job `test` est vert : le job `deploy` republie la version précédente.
 3. Vérifier le run, puis le site : 200 sur `/`, une page projet et `/a-propos`.
-
-Revenir sur la bascule elle-même (#7) : si les secrets `DEPLOY_*` sont rattachés à l'environnement `production` (D-5), garder la ligne `environment: production` dans le job de déploiement de la version restaurée, sinon les secrets sont vides et la mise en ligne échoue.
