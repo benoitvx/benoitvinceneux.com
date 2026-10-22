@@ -62,68 +62,62 @@ Claude Code, MCP, embeddings, LLM-as-a-judge, Python, React, Metabase, Dagster, 
 
 ---
 
-## Services du Premier ministre — DINUM
+## Services du Premier ministre : DINUM
 
 URL : https://benoitvinceneux.com/services-du-premier-ministre
 
-Direction Interministérielle du Numérique — Services du Premier ministre 🇫🇷
-CPO MCP & Données — depuis janvier 2026.
+Direction interministérielle du numérique, Services du Premier ministre 🇫🇷
+AI Product Lead : depuis janvier 2026.
 
-Pilote de la composante « données & MCP » du socle interministériel d'IA générative, au sein du département IA dans l'État (IAE, ex-Etalab) de la DINUM.
+Au sein du département IA dans l'État (IAE, ex-Etalab) de la DINUM, je contribue à intégrer l'IA dans les services publics : dans les outils des agents comme dans les services accessibles aux citoyens.
 
 ### Contexte
 
-Les données publiques françaises sont abondantes mais mal structurées pour les systèmes IA. Le trafic humain sur les portails baisse alors que les appels API explosent (340 M en 2025 sur la DILA, ×2 vs 2024). Le défi central : « Le problème n'est pas le modèle, c'est la donnée » — la donnée existe mais elle est mal exposée.
+Les données publiques françaises sont abondantes mais mal exposées pour l'IA. Le trafic humain sur les portails baisse, les appels API explosent (340 M en 2025 sur la DILA, ×2 par rapport à 2024). Les agents et assistants IA deviennent de gros consommateurs de données publiques, mais ces données ne sont pas dans les formats dont ils ont besoin.
 
-### Mission
+« Le problème n'est pas le modèle, c'est la donnée. Et la donnée n'est pas absente : elle est mal exposée. »
 
-Rendre les données publiques françaises exploitables par l'IA et accompagner les administrations à faire de même avec leurs propres jeux de données.
+### Mission : cinq fronts
 
-- Piloter l'offre données & MCP du socle interministériel d'IA générative
-- Concevoir les fonctionnalités IA d'accès à la donnée publique
-- Lien produit avec l'Opérateur des Produits Interministériels, en particulier data.gouv.fr
-- Accompagner le déploiement de projets IA dans les ministères via l'incubateur ALLiaNCE
+- Ouvrir les données publiques à l'IA : coordination des serveurs MCP, CLI et skills qui connectent les modèles aux données publiques, et accompagnement des administrations qui exposent leurs propres données.
+- Équiper les développeurs de l'État : une stack de code agentique souveraine, avec les standards de l'État embarqués dès la conception (design system, accessibilité RGAA, sécurité).
+- Structurer les pratiques d'évaluation IA : jeux de données de référence, LLM-as-a-judge, méthodes adaptées à chaque type de produit.
+- Veille sur l'IA agentique et les nouveaux usages, pour en tirer des enseignements actionnables.
+- Coaching produit des équipes de l'incubateur IA de l'État (ALLiaNCE) et réflexion sur la stratégie des services IA aux citoyens.
 
 ### Approche : initialiser, prouver, transférer
 
-Construire des premières versions qui démontrent la faisabilité, recueillir des retours par mise en circulation, puis transférer aux administrations métier pour qu'elles enrichissent.
+Sur chaque sujet : on fait une première version pour montrer que c'est possible, on met en circulation et on collecte des retours, puis on transfère à l'administration métier qui prend la main et améliore.
 
-### Offre data : 3 piliers + 1 chantier
+### Réalisations
 
-- Pilier 1 — Données Publiques pour l'IA. Accompagner les administrations à exposer leurs données dans des formats IA-natifs (MCP, CLI, Skill, llms.txt) avec un catalogue qui donne de la visibilité.
-- Pilier 2 — RAG as a Service. Infrastructure mutualisée de collections vectorielles pour les administrations.
-- Pilier 3 — Gouvernance des données. Faire avancer un GT interministériel sur la doctrine d'accès aux données comme pré-requis à la diffusion de l'IA.
-- Chantier — IA pour les devs. Équiper les développeurs de l'État (doctrine, skills, outils souverains), changer les pratiques.
+Évaluation LLM verticalisée : une méthode réplicable
+- Jeu de données de référence de 100 questions sur 8 catégories juridiques, construit à partir de conversations réelles
+- LLM-as-a-judge pour comparer plusieurs approches
+- +16 % de qualité par rapport à la référence avec l'approche hybride retenue, déployée en production
 
-### Réalisations clés
+Évaluation de la transcription audio
+- Benchmark de modèles ouverts et commerciaux sur un corpus représentatif de l'administration : environ 10 % de taux d'erreur en moins
+- Contribution au benchmark open source qui porte la méthode
 
-MCP data.gouv — accès programmatique à l'open data français pour les LLMs
-- 3 millions de requêtes par semaine en production
-- Couverture média numérique publique inédite, retours uniformément positifs
-- Démocratisation de l'usage en langage naturel
+Stack de code agentique souveraine
+- 30+ entretiens dans les ministères
+- Benchmark comparatif d'agents de code sur inférence souveraine, 3 POC livrés
+- Standards de l'État embarqués sous forme de skills : design system, accessibilité, sécurité
 
-ia.data.gouv.fr — premier catalogue européen multi-format natif IA pour les données publiques
-- Pour chaque source : formats disponibles (API, MCP, Parquet, collection vectorielle, Skill, llms.txt) avec liens directs
+Skills État : les standards de l'État dans les assistants de code
+- Dépôt etalab-ia/skills (https://github.com/etalab-ia/skills), dont je suis l'auteur : DSFR, RGAA, sécurité ANSSI, data.gouv.fr, La Suite
 
-Accompagnement des administrations sur les nouveaux formats (MCP, CLI, Skill)
-Partenariats avec data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA — retex, Q&A, aide à la conception, articles pédagogiques.
+### Coordination de l'exposition des données
 
-Évaluation LLM verticalisée
-- Constitution d'un Golden Dataset
-- Méthodologie LLM-as-a-judge sur plusieurs approches d'optimisation
-- +16 % de qualité vs baseline, déployée en production
-
-Déploiement de la stack IA souveraine pour les développeurs
-- Évaluation de solutions du marché
-- Package d'expérimentation : Skills, Agent, environnement de travail (VM)
-- Repository etalab-ia/skills publié sur GitHub
-- Premières skills : Design System, ANSSI, RGAA / accessibilité
+- Serveur MCP data.gouv.fr : coordination et suivi produit du serveur qui connecte les modèles d'IA à l'open data français ; 45 M de requêtes en 100 jours.
+- Accompagnement des administrations qui exposent leurs données dans des formats prêts pour l'IA (MCP, CLI, skills) : data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA ; retours d'expérience, questions-réponses, aide à la conception, articles de vulgarisation.
 
 ### Convictions portées
 
-- Le succès de l'IA dans le secteur public se gagne sur la disponibilité des données dans le bon format, pas sur le choix du modèle.
-- Les Skills État renforcent la sécurité de manière proactive : les bonnes pratiques (ANSSI, RGAA) sont intégrées dès le développement plutôt qu'auditées a posteriori.
-- Une bonne offre data est multi-format by design : un même dataset doit être disponible en API, MCP, Parquet, collections vectorielles selon le cas d'usage.
+- L'IA pour le secteur public se gagne sur les données et leur disponibilité dans le bon format au bon moment, pas sur le modèle
+- Les Skills État sont aussi un levier de sécurisation proactive : les bonnes pratiques (ANSSI, RGAA) intégrées dès le développement plutôt qu'auditées après coup
+- Une bonne offre data est multi-format by design : un même dataset doit être disponible en API, MCP, Parquet, collection vectorielle selon l'usage
 
 ---
 
