@@ -1,72 +1,58 @@
 ---
 title: "Services du Premier ministre"
 order: 2
-description: "Direction Interministérielle du Numérique — Services du Premier ministre 🇫🇷 CPO MCP & Données — depuis janvier 2026"
+description: "Direction interministérielle du numérique : IA dans l'État. Données publiques pour l'IA, code agentique souverain, évaluation des modèles, coaching produit."
 textposition: "above"
 cover: { src: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-288x288.png", srcset: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-288x288.png 288w,/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-576x576.png 576w" }
 images:
   - { src: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-640x.png", srcset: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-320x.png 320w, /media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-640x.png 640w, /media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-960x.png 960w, /media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-1280x.png 1280w", width: 576, height: 578 }
 ---
-**Direction Interministérielle du Numérique — Services du Premier ministre 🇫🇷**  
-*CPO MCP & Données — depuis janvier 2026*
+**Direction interministérielle du numérique, Services du Premier ministre 🇫🇷**  
+*AI Product Lead : depuis janvier 2026*
 
-Pilote de la brique « données & MCP » du socle interministériel d'IA générative de l'État, au sein du département **IA dans l'État (IAE, ex-Etalab)** de la DINUM.
+Au sein du département IA dans l'État (IAE, ex-Etalab) de la DINUM, je contribue à intégrer l'IA dans les services publics : dans les outils des agents comme dans les services accessibles aux citoyens.
 
 ### Le contexte
 
-Les données publiques françaises sont abondantes mais mal exposées pour l'IA. Le trafic humain sur les portails baisse, les appels API explosent (340 M en 2025 sur la DILA, ×2 vs 2024). Les agents et assistants IA deviennent des gros consommateurs de données publiques — mais ces données ne sont pas dans les formats dont ils ont besoin.
+Les données publiques françaises sont abondantes mais mal exposées pour l'IA. Le trafic humain sur les portails baisse, les appels API explosent (340 M en 2025 sur la DILA, ×2 par rapport à 2024). Les agents et assistants IA deviennent de gros consommateurs de données publiques, mais ces données ne sont pas dans les formats dont ils ont besoin.
 
-> *Le problème n'est pas le modèle, c'est la donnée. Et la donnée n'est pas absente — elle est mal exposée.*
+> *Le problème n'est pas le modèle, c'est la donnée. Et la donnée n'est pas absente : elle est mal exposée.*
 
-### La mission
+### La mission : cinq fronts
 
-Rendre les données publiques françaises exploitables par l'IA — et accompagner les administrations pour qu'elles fassent de même avec leurs données.
-
-- Piloter l'offre données & MCP du socle interministériel d'IA générative  
-- Concevoir les fonctionnalités IA d'accès à la donnée publique pour les usagers  
-- Lien produit avec l'Opérateur des Produits Interministériels, en particulier data.gouv.fr  
-- Accompagner le déploiement de projets IA dans les ministères via l'incubateur ALLiaNCE
+- **Ouvrir les données publiques à l'IA** : coordination des serveurs MCP, CLI et skills qui connectent les modèles aux données publiques, et accompagnement des administrations qui exposent leurs propres données.
+- **Équiper les développeurs de l'État** : une stack de code agentique souveraine, avec les standards de l'État embarqués dès la conception (design system, accessibilité RGAA, sécurité).
+- **Structurer les pratiques d'évaluation IA** : jeux de données de référence, LLM-as-a-judge, méthodes adaptées à chaque type de produit.
+- **Veille sur l'IA agentique et les nouveaux usages**, pour en tirer des enseignements actionnables.
+- **Coaching produit** des équipes de l'incubateur IA de l'État (ALLiaNCE) et réflexion sur la stratégie des services IA aux citoyens.
 
 ### L'approche : initialiser, prouver, transférer
 
 Sur chaque sujet : on fait une première version pour montrer que c'est possible, on met en circulation et on collecte des retours, puis on transfère à l'administration métier qui prend la main et améliore.
 
-### L'offre data : 3 piliers + 1 chantier
+### Réalisations
 
-**Pilier 1 — Données Publiques pour l'IA**  
-Accompagner les administrations pour exposer leurs données dans les formats IA-natifs (MCP, CLI, skill, llms.txt) et donner de la visibilité sur l'existant via un catalogue.
+**Évaluation LLM verticalisée : une méthode réplicable**  
+- Jeu de données de référence de 100 questions sur 8 catégories juridiques, construit à partir de conversations réelles  
+- LLM-as-a-judge pour comparer plusieurs approches  
+- +16 % de qualité par rapport à la référence avec l'approche hybride retenue, déployée en production
 
-**Pilier 2 — RAG as a Service**  
-Infrastructure mutualisée de collections vectorielles pour les administrations.
+**Évaluation de la transcription audio**  
+- Benchmark de modèles ouverts et commerciaux sur un corpus représentatif de l'administration : environ 10 % de taux d'erreur en moins  
+- Contribution au benchmark open source qui porte la méthode
 
-**Pilier 3 — Gouvernance des données**  
-Pousser un GT interministériel sur la doctrine d'accès aux données comme pré-requis à la diffusion de l'IA.
+**Stack de code agentique souveraine**  
+- 30+ entretiens dans les ministères  
+- Benchmark comparatif d'agents de code sur inférence souveraine, 3 POC livrés  
+- Standards de l'État embarqués sous forme de skills : design system, accessibilité, sécurité
 
-**Chantier — IA pour les devs**  
-Équiper les développeurs de l'État (doctrine, skills, outils souverains), changer les pratiques.
+**Skills État : les standards de l'État dans les assistants de code**  
+- Dépôt [etalab-ia/skills](https://github.com/etalab-ia/skills), dont je suis l'auteur : DSFR, RGAA, sécurité ANSSI, data.gouv.fr, La Suite
 
-### Réalisations clés
+### Coordination de l'exposition des données
 
-**MCP data.gouv — accès programmatique à l'open data français pour les LLMs**  
-- 3 millions de requêtes par semaine en production  
-- Buzz com inédit pour le numérique public, 100 % retours positifs  
-- Démocratisation de l'usage en langage naturel
-
-**ia.data.gouv.fr — premier catalogue européen multi-format natif IA pour les données publiques**  
-- Pour chaque source de données : statut des formats disponibles (API, MCP, Parquet, collection vectorielle, Skill, llms.txt) avec lien direct
-
-**Accompagnement des administrations pour déployer de nouveaux formats (MCP, CLI, skill)**  
-data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA — retex, Q&A, aide à la conception, série d'articles de vulgarisation.
-
-**Évaluation LLM verticalisée**  
-- Élaboration de Golden Dataset  
-- LLM-as-a-judge sur différentes méthodes d'optimisations des systèmes évalués  
-- +16 % de qualité vs baseline avec l'approche retenue, déployée en production
-
-**Déploiement d'une stack souveraine d'IA pour le développement**  
-- Évaluation des solutions clés du marché  
-- Package d'expérimentation : Skills, Agent et environnement de travail (VM)  
-- Repository [`etalab-ia/skills`](https://github.com/etalab-ia/skills) publié sur GitHub. Premières skills : Design System, ANSSI, RGAA / accessibilité,
+- **Serveur MCP data.gouv.fr** : coordination et suivi produit du serveur qui connecte les modèles d'IA à l'open data français ; 45 M de requêtes en 100 jours.
+- **Accompagnement des administrations** qui exposent leurs données dans des formats prêts pour l'IA (MCP, CLI, skills) : data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA ; retours d'expérience, questions-réponses, aide à la conception, articles de vulgarisation.
 
 ### Convictions portées
 

@@ -30,3 +30,8 @@
 ### Orchestration (#7, PR #35)
 - Le site en ligne envoyait déjà `Strict-Transport-Security: max-age=16000000` depuis la conf serveur, alors que le plan supposait l'absence de HSTS : relever les en-têtes de production (`curl -sI`) avant de fixer des valeurs cibles.
 - Prouver la condition `if:` du job `deploy` avec un `workflow_dispatch` sur une branche **verte** : sur une branche rouge, `needs: test` suffit à le sauter et le test ne prouve rien.
+
+## #9 Nettoyage (PR #37)
+- Le tag `snapshot-kirby` pointe sur un commit qui déploie déjà `dist/` : revenir au snapshot demande de remplir `dist/` depuis le tag dans le job `deploy` (README), pas seulement de restaurer `site/`.
+- Les exceptions html-validate et axe sont dans `tests/exceptions.json` (l'ancienne allowlist de parité n'existe plus).
+- `playwright install --with-deps` dépend d'`apt` : des miroirs lents ont porté le job `test` à 13 min sans échec.
