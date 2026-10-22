@@ -1,5 +1,6 @@
 import json
 import re
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -46,6 +47,17 @@ class TestRepo(unittest.TestCase):
             "job test": r"^  test:",
         }.items():
             self.assertRegex(text, re.compile(pattern, re.M), f"deploy.yml: {label} absent")
+
+    def test_art_03_no_php_in_git(self):
+        files = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True).stdout.decode().split("\0")
+        needle = b"<" + b"?php"  # jamais écrite en clair dans le dépôt
+        for f in filter(None, files):
+            self.assertNotRegex(f, r"\.php\d?$", f"fichier PHP versionné : {f}")
+            if f.endswith(".htaccess"):
+                self.assertIn(f, {"public/.htaccess", "site/.htaccess"}, f".htaccess versionné hors public/ et site/ : {f}")
+            path = ROOT / f
+            if path.is_file() and not path.is_symlink():
+                self.assertNotIn(needle, path.read_bytes(), f"balise PHP dans le fichier versionné {f}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import { readdirSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const pages = (readdirSync('dist', { recursive: true }) as string[]).filter((f) => f.endsWith('.html'));
+const pages = (readdirSync('dist', { recursive: true }) as string[]).filter((f) => f.endsWith('.html') && f !== 'google48428a5b5297f7c9.html'); // fichier texte de Google, pas une page
 
 for (const file of pages) {
   test(`axe: ${file}`, async ({ page }) => {

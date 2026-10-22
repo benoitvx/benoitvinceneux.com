@@ -1,128 +1,149 @@
-# #3 [BV-01] Socle Astro et job CI `test`
+# #4 [BV-02] `.htaccess` cible, fichiers statiques, 404, robots et sitemap
 
-Branche : `feat/bv-01-socle-astro`. PR : `Closes #3` (ouverte par l'orchestrateur).
-Décision liée : D-BV4 (#2, validée) : `dependencies` = `astro` seul ; `devDependencies` = `@playwright/test`, `@axe-core/playwright`, `html-validate`, versions exactes.
+Branche : `feat/bv-02-htaccess-statiques` (déjà créée). PR `Closes #4` ouverte par l'orchestrateur.
+Décisions liées (#2, toutes validées) : D-BV2 (retirer les liens vers les pages non publiées, `/societe-numerique` supprimée), D-BV3 (export Search Console du 22/10 : 7 pages indexées, toutes déjà dans la liste de référence, **aucune URL à ajouter**), D-3 (404 en français), D-BV4 (pas de nouvelle dépendance).
+`package.json` ne change pas : ne pas toucher au lockfile (si jamais il change : leçon #3, régénérer depuis zéro et `npm ci --dry-run`).
+Premier commit : inclure `tasks/lessons.md` (non versionné à ce jour).
 
-## Critères d'acceptation (issue #3)
+## Critères d'acceptation (issue #4)
 
-- [ ] `package.json` : `dependencies` = `astro` seul (les `devDependencies` suivent D-BV4 ; la note CTO de #3 prime sur le scénario QA 8 « pas de devDependencies »)
-- [ ] Une PR dont le build échoue a un check `test` rouge
-- [ ] Un push sur `master` déploie toujours `site/`, sans changement visible (même commande rsync, même cible)
-- [ ] Aucun `${{ secrets.* }}` dans une ligne `run:`
-- [ ] Aucune action référencée par tag mobile (SHA de 40 caractères uniquement)
-- [ ] Dependabot actif sur `npm` et `github-actions` (hebdomadaire)
-- [ ] Projet Astro : `build.format: 'file'`, `trailingSlash: 'never'`, `.nvmrc` = `24`, `package-lock.json` versionné
-- [ ] `site/static/` copié tel quel dans `public/static/` ; `master.css` chargé par `<link rel="stylesheet" href="/static/master.css">` dans `Base.astro` (pas d'import dans `src/`, pas d'URL `/_astro/…`)
-- [ ] `permissions: contents: read` au niveau du workflow ; déclencheurs `push` (master), `pull_request`, `workflow_dispatch`
+- [ ] Chaque URL de `legacy-urls.txt` hors liste d'exclusion temporaire (accueil, `/a-propos`, pages projet) correspond à un fichier dans `dist/`
+- [ ] `dist/.htaccess` contient `ErrorDocument`, `Options -Indexes`, le refus PHP, le Content-Type markdown des `llms*.txt`, `nosniff`, `Content-Security-Policy`, `Strict-Transport-Security`
+- [ ] `dist/sitemap.txt` liste `/`, `/a-propos` et chaque entrée de la collection `projects` (les 11 projets sont vérifiés dans #6)
+- [ ] `dist/favicon.ico` identique à l'octet à `favicon.gif`
+- [ ] Fichier de vérification Google identique à l'octet au snapshot
+- [ ] Un fichier `.php` ajouté dans `public/` fait échouer le test
+- [ ] Aucun fichier de `dist/` ne contient `/societe-numerique` (page supprimée, D-BV2), en particulier `llms.txt` et `llms-full.txt`
+- [ ] Imposé par l'orchestrateur : job `deploy` strictement inchangé (publie toujours `site/`) ; aucun nom d'hébergeur, d'hôte, d'utilisateur ou de chemin serveur dans les fichiers
 
 ## Tests à livrer (catalogue #10)
 
 | ID | Porté par | Contenu |
 |---|---|---|
-| T-BV-BUILD-01 | étape `npx astro build` du job `test` + assertion `dist/index.html` existe dans `tests/test_dist.py` | code retour 0, `dist/index.html` présent |
-| T-BV-DEP-01 | `tests/test_repo.py` | `dependencies` == `{astro}` ; `devDependencies` ⊆ liste D-BV4 ; chaque version `^\d+\.\d+\.\d+$` ; `package-lock.json` présent ; `.nvmrc` (strip) == `24` |
-| T-BV-WF-01 | `tests/test_repo.py` | chaque `uses:` de `.github/workflows/*.yml` finit par `@[0-9a-f]{40}` (commentaire `# vX` toléré après) |
-| T-BV-WF-02 | `tests/test_repo.py` | toute ligne contenant `secrets.` : la ligne non vide précédente la plus proche d'indentation strictement inférieure vaut `env:` |
-| T-BV-WF-03 | `tests/test_repo.py` | `permissions:` + `contents: read` au niveau racine ; `push` avec `branches: [master]`, `pull_request`, `workflow_dispatch` ; job `test:` présent (regex, pas de parseur YAML) |
-| T-BV-CSS-01 | `tests/test_dist.py` | `dist/static/` identique à `site/static/` récursivement, comparaison du **contenu** ; `<link ... href="/static/master.css">` dans `dist/index.html` |
-| T-BV-HTML-01 (outil) | `.htmlvalidate.json` + étape 5 du job | `{"extends": ["html-validate:recommended"]}`, vert sur `dist/index.html` |
-| T-BV-A11Y-02 (harnais) | `playwright.config.ts` + `tests/e2e/a11y.spec.ts` + étape 7 du job | axe sur chaque `.html` de `dist/`, 1280 px, tags `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, échec sur `serious`/`critical` |
+| T-BV-ART-01 | `tests/test_dist.py` | fonction `artifact_problems(root) -> list[str]` : fichiers `\.(php\d?\|phtml\|phar)$`, `.htaccess` hors racine, liens symboliques, `.env*`, `.DS_Store`, `*.map`, `.git` ; appelée sur `dist/` → liste vide |
+| T-BV-ART-02 | `tests/test_dist.py` | même fonction sur un `tempfile.TemporaryDirectory` avec `x.php` + un symlink → la liste nomme les deux |
+| T-BV-ART-03 | `tests/test_repo.py` | `git ls-files` (subprocess) : aucun `.php` ; `.htaccess` seulement `public/.htaccess` et `site/.htaccess` ; aucun fichier versionné ne contient la balise d'ouverture PHP (lecture en **octets** ; aiguille construite par concaténation, voir points d'attention) |
+| T-BV-INV-01 | `tests/test_dist.py` | chaque entrée `200` hors `tests/legacy-exclude.txt` se résout dans `dist/` (`p` si fichier, sinon `p.html`, `/` → `index.html`) |
+| T-BV-INV-02 | `tests/test_dist.py` | format `^/\S*\t(200\|301 /\S*\|403\|404\|403\|404)$`, chemins uniques, ⊇ les 26 chemins de référence (constante multiligne dans le test) ; + `legacy-exclude.txt` = exactement les 13 pages (accueil, `/a-propos`, 11 projets) |
+| T-BV-INV-04 | `tests/test_dist.py` | chaque cible `301` est une entrée `200` |
+| T-BV-SPE-01 | `tests/test_dist.py` | `llms*.txt` présents, non vides, UTF-8 ; chaque `https://benoitvinceneux.com(/…)?` cité (domaine nu → `/`) est une entrée `200` ; `/societe-numerique` absent de tous les fichiers de `dist/` (octets) |
+| T-BV-SPE-02 | `tests/test_dist.py` | sha256 de `dist/google48428a5b5297f7c9.html` = `f6c1d4827f5cbbe00470daddb685a61ec93567a69bb135a7360f208607204972` (constante) |
+| T-BV-SPE-03 | `tests/test_dist.py` | `robots.txt` : lignes `User-agent: *`, `Allow: /`, `Sitemap: https://benoitvinceneux.com/sitemap.txt` |
+| T-BV-SPE-04 | `tests/test_dist.py` | `favicon.ico` == `favicon.gif` à l'octet, commence par `GIF8` |
+| T-BV-SPE-05 | `tests/test_dist.py` | `sitemap.txt` : une URL `https://benoitvinceneux.com/…` par ligne, sans `.html`, sans doublon, contient `https://benoitvinceneux.com/` et `…/a-propos` (égalité aux 13 pages : #6) |
+| T-BV-SPE-06 | `tests/test_dist.py` | `404.html` existe, `<html lang="fr">`, un `href="/"`, assets en chemins absolus (`href="/static/…"`, aucun `href="static/` relatif) |
+| T-BV-HTA-01 | `tests/test_dist.py` | regex sur `dist/.htaccess` : `Options -Indexes`, `FilesMatch` PHP + `Require all denied`, `Content-Type "text/markdown` (llms), `ErrorDocument 404 /404.html`, `nosniff`, `Referrer-Policy`, `Strict-Transport-Security "max-age=300"`, pas de `includeSubDomains` ni `preload`, 301 `home` et `sitemap` |
+| T-BV-HTA-02 | `tests/test_dist.py` | aucune `RewriteRule` dont le motif contient `\.html` ou `index` (la règle interne slug → `$1.html` du snapshot a `.html` dans la **cible**, pas dans le motif : elle passe) |
+| T-BV-CSP-01 | `tests/test_dist.py` | CSP extraite du `.htaccess` : 6 directives fixes ; hôtes externes de `dist/**/*.html` (`<link rel=stylesheet>` → `style-src`, `<img>` → `img-src`, `<iframe>` → `frame-src`) et des CSS de `dist/` (`@import` → `style-src`, `url()` → `font-src`) couverts ; assertions littérales : `frame-src` contient `https://www.youtube-nocookie.com`, `font-src` contient `https://use.fontawesome.com` et `https://rsms.me` (sinon le scan est vide en #4). `html.parser` + `re` |
+| T-BV-HTTP-01…06 | `tests/http_check.sh` + étape 6 du job | voir ci-dessous |
+| (existants) BUILD-01, CSS-01, DEP-01, WF-01..03, HTML-01, A11Y-02 | inchangés | doivent rester verts ; A11Y-02 et HTML-01 couvrent `404.html` automatiquement (glob et `readdir` récursif : **pas d'ajout au spec**) |
 
-Total : 6 tests bloquants + 2 harnais (HTML-01, A11Y-02) verts sur la page actuelle.
+`tests/http_check.sh` (bash 3.2 compatible : pas de `mapfile` ni tableau associatif ; `set -u` ; chaque curl avec `-H 'X-Forwarded-Proto: https'` ; `exit 1` au premier écart en affichant l'URL, l'obtenu et l'attendu ; chemins des fichiers lus via `$(dirname "$0")/..`) :
+- HTTP-01 : pour chaque ligne de `tests/legacy-urls.txt` hors `tests/legacy-exclude.txt` : `curl -s -o /dev/null -w '%{http_code} %{redirect_url}'` ; `200` exact ; `301 <cible>` : code 301 et chemin de `redirect_url` (domaine retiré) == cible ; `403|404` : l'un des deux.
+- HTTP-02 : pour chaque entrée `200` sans extension, hors exclusion et hors `/` : `/<slug>.html` et `/<slug>/` en 200 ou 301 (vide en #4, s'active en #6) ; `curl -s -o /dev/null -L --max-redirs 3` sur `/`, `/index.html`, `/groupama.html`, `/a-propos/` (liste du catalogue) : code retour curl 0 (sans `-f` : un 404 en #4 est acceptable, seule la boucle échoue).
+- HTTP-03 : `/x.php` 403 ou 404 ; `/.htaccess` 403 ; `/media/` 403 et corps sans `Index of`.
+- HTTP-04 : `/n-existe-pas-$(date +%s)` en 404, corps contient le `<title>` extrait de `dist/404.html`.
+- HTTP-05 : `curl -sI /` : `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security: max-age=${HSTS_MAX_AGE:-300}` (égalité exacte de la valeur), `Content-Security-Policy` == valeur extraite de `dist/.htaccess` (comparaison insensible à la casse sur le nom d'en-tête, `\r` retirés).
+- HTTP-06 : `Content-Type` de `/llms.txt` et `/llms-full.txt` commence par `text/markdown`, de `/sitemap.txt` par `text/plain`.
 
 ## Fichiers
 
 Créer :
-- `.nvmrc` : `24` (n'existe pas encore ; ne pas mettre 25 malgré le Node local)
-- `package.json`, `package-lock.json` (générés par npm, voir étape 1)
-- `astro.config.mjs` : `defineConfig({ build: { format: 'file' }, trailingSlash: 'never' })`, rien d'autre
-- `public/static/master.css` : `cp -a site/static public/` (copie à l'octet)
-- `src/layouts/Base.astro` : `<!doctype html>`, `<html lang="fr">`, `<meta charset="utf-8">`, viewport, `<title>{title}</title>` (prop), `<link rel="stylesheet" href="/static/master.css">`, `<body><slot /></body>`. Le compilateur Astro fixe la forme des balises vides : vérifier `html-validate` sur le vrai `dist/index.html` et n'ajuster `.htmlvalidate.json` que si une règle se déclenche (toute règle désactivée devra avoir son entrée `html-validate` dans l'allowlist en #6).
-- `src/pages/index.astro` : placeholder minimal utilisant `Base` (`<main><h1>Benoit Vinceneux</h1></main>`) ; remplacé par #4, jamais déployé avant #7.
-- `tests/test_repo.py` : DEP-01, WF-01, WF-02, WF-03 (stdlib : `json`, `re`, `pathlib`, `unittest`)
-- `tests/test_dist.py` : BUILD-01 (fichier), CSS-01
-- `.htmlvalidate.json`
-- `playwright.config.ts` : `testDir: 'tests/e2e'`, projet Chromium seul, `viewport 1280x800`, `webServer: { command: 'python3 -m http.server -d dist 4321', url: 'http://127.0.0.1:4321', reuseExistingServer: !process.env.CI }`, `use.baseURL`
-- `tests/e2e/a11y.spec.ts` : liste récursive des `.html` de `dist/` (`fs`), un test par page, `AxeBuilder.withTags([...])`, filtre `impact in {serious, critical}` → `expect(...).toEqual([])` ; afficher les `moderate`/`minor` en `console.log`. Lecture de l'entrée `axe` de l'allowlist : hors périmètre (le fichier `tests/parity-allowlist.json` arrive avec #6).
-- `.github/dependabot.yml` : `version: 2`, `npm` et `github-actions`, `directory: "/"`, `schedule.interval: weekly`
+- `public/.htaccess` (contenu ci-dessous)
+- `public/llms.txt`, `public/llms-full.txt` : copies de `site/` ; dans `llms.txt` supprimer la ligne 15 (ANCT → `/societe-numerique`) ; dans `llms-full.txt` supprimer toute la section `## ANCT (Gouvernement 🇫🇷)` jusqu'au `---` suivant inclus (l. 377 à ~397). `grep -n -i 'societe-numerique\|anct' public/llms*.txt` vide. Aucune autre URL interne non publiée trouvée dans les `llms*.txt`.
+- `public/google48428a5b5297f7c9.html` : `cp -p site/google48428a5b5297f7c9.html public/`
+- `public/favicon.gif` : `git show b79225c:benoitvinceneux.com/content/favicon.gif > public/favicon.gif` (absent du snapshot ; source = contenu Kirby) ; `public/favicon.ico` : `cp public/favicon.gif public/favicon.ico`
+- `public/robots.txt` : 3 lignes `User-agent: *` / `Allow: /` / `Sitemap: https://benoitvinceneux.com/sitemap.txt`
+- `public/media/` : `cp -a site/media public/` (**avancé depuis #5**, voir points d'attention ; même blobs git, aucune croissance du dépôt)
+- `src/pages/404.astro` : `<Base title="Page introuvable"><main><h1>Page introuvable</h1><p>La page demandée n'existe pas ou a été déplacée.</p><p><a href="/">Retour à l'accueil</a></p></main></Base>`
+- `src/pages/sitemap.txt.ts` : vérifié dans le scratchpad (Astro 7.3.7) : sans collection, `getCollection` renvoie `[]` avec un simple WARN, le build passe.
+  ```ts
+  import { getCollection } from 'astro:content';
+  export async function GET() {
+    const projects = await getCollection('projects'); // [] tant que #5 n'a pas créé la collection
+    const paths = ['/', '/a-propos', ...projects.map((p) => `/${p.id}`)];
+    return new Response(paths.map((p) => `https://benoitvinceneux.com${p}`).join('\n') + '\n');
+  }
+  ```
+- `tests/legacy-urls.txt` : exactement les 26 lignes de la liste de référence de #10 (séparateur tabulation), rien d'autre (D-BV3 n'ajoute rien)
+- `tests/legacy-exclude.txt` : 13 chemins, un par ligne : `/`, `/a-propos`, `/groupama`, `/sigfox`, `/presidence-de-la-republique`, `/services-du-premier-ministre`, `/pierre-fabre`, `/notresante`, `/ca-compte-pour-moi`, `/curated-adventures`, `/lepharmacien-fr`, `/toulouse-football-club`, `/yana-place`
+- `tests/http_check.sh`
+- `.htmlvalidateignore` : `dist/google48428a5b5297f7c9.html` (fichier texte brut de Google, pas une page ; vérifier que la CLI l'honore avec le glob de l'étape 5, sinon exclure dans la commande)
 
 Modifier :
-- `.github/workflows/deploy.yml` (voir ci-dessous)
-- `.gitignore` : ajouter `test-results/`, `playwright-report/`
+- `src/layouts/Base.astro` : ajouter avant `master.css` les deux `<link rel="stylesheet">` du snapshot (`https://rsms.me/inter/inter.css`, `https://use.fontawesome.com/releases/v5.12.1/css/brands.css`) : mise en page du site sur la 404 (QA 8, 14), scan CSP-01 non vide
+- `tests/test_dist.py` : ART-01/02, INV-01/02/04, SPE-01..06, HTA-01/02, CSP-01 (helpers partagés : lecture de `legacy-urls.txt`/`legacy-exclude.txt`, extraction CSP)
+- `tests/test_repo.py` : ART-03
+- `tests/e2e/a11y.spec.ts` : filtre d'une ligne excluant `google48428a5b5297f7c9.html` (sinon axe `html-has-lang`/`document-title` serious)
+- `.github/workflows/deploy.yml` : **job `test` seulement**, étape 6 entre html-validate et l'étape `id: pw`. Job `deploy` : zéro octet modifié (`git diff` du bloc `deploy:` vide)
 
-## Workflow cible (`.github/workflows/deploy.yml`)
+### `public/.htaccess`
+
+Snapshot conservé (commentaire d'en-tête adapté), ordre : options/FilesMatch, en-têtes, ErrorDocument, rewrite HTTPS, 301, rewrite slug.
+```apache
+Options -Indexes
+ErrorDocument 404 /404.html
+<FilesMatch "\.(php[0-9]?|phtml|phar)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^llms(-full)?\.txt$">
+  Header set Content-Type "text/markdown; charset=utf-8"
+</FilesMatch>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Strict-Transport-Security "max-age=300"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; style-src 'self' 'unsafe-inline' https://rsms.me https://use.fontawesome.com; font-src 'self' https://rsms.me https://use.fontawesome.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com"
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteRule ^home/?$ / [R=301,L]
+RewriteRule ^sitemap/?$ /sitemap.txt [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+```
+CDN relevés : `site/*.html` → `rsms.me` (Inter) et `use.fontawesome.com` (brands) en `<link>`, iframe `www.youtube-nocookie.com` (sigfox) ; `site/static/master.css` : aucun hôte externe. Aucune `<img>` externe. `'unsafe-inline'` en `style-src` : attributs `style=` du snapshot (sigfox). Pas de `'unsafe-inline'` en `font-src` (sans effet pour cette directive).
+
+### Étape 6 du job `test`
 
 ```yaml
-name: Deploy
-on:
-  push:
-    branches: [master]
-  pull_request:
-  workflow_dispatch:
-permissions:
-  contents: read
-jobs:
-  test:                       # pas de `name:` : le check doit s'appeler `test` (D-5)
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with: { persist-credentials: false }
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        with: { node-version-file: .nvmrc, cache: npm }
-      - run: npm ci
-      - run: npx astro build                                   # T-BV-BUILD-01
-      - run: python3 -I -m unittest discover -s tests -v       # stdlib
-      - run: npx html-validate "dist/**/*.html"                # T-BV-HTML-01
-      # étape 6 (Apache + tests/http_check.sh) : ajoutée par #4, qui livre le script
-      - id: pw
-        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
-      - run: npx playwright install --with-deps chromium
-      - run: npx playwright test                               # T-BV-A11Y-02
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-    concurrency: { group: deploy, cancel-in-progress: false }
-    runs-on: ubuntu-latest    # inchangé (#7 restructure ce job)
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with: { persist-credentials: false }
-      - name: Configure SSH
+      - name: Apache local
+        run: |
+          command -v apache2 >/dev/null || { sudo apt-get update && sudo apt-get install -y apache2; }
+          sudo cp -a dist /var/www/ci
+          printf '%s\n' 'Listen 8080' '<VirtualHost *:8080>' '  DocumentRoot /var/www/ci' '  <Directory /var/www/ci>' '    AllowOverride All' '    Require all granted' '  </Directory>' '</VirtualHost>' | sudo tee /etc/apache2/sites-available/ci.conf
+          sudo a2ensite ci
+          sudo a2enmod rewrite headers
+          sudo apachectl configtest
+          sudo apachectl restart
+      - run: bash tests/http_check.sh
         env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-        run: |   # même logique, avec "$DEPLOY_SSH_KEY" / "$DEPLOY_KNOWN_HOSTS"
-      - name: Deploy site/
-        env:
-          DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}
-        run: rsync -rtlz --delete site/ "$DEPLOY_TARGET"
+          BASE_URL: http://127.0.0.1:8080
 ```
-
-Forme en blocs YAML (pas d'objets `{ }` en ligne si cela gêne les regex de WF-03 ; les regex de `test_repo.py` doivent accepter la forme réellement écrite).
+`apachectl restart` démarre Apache s'il est arrêté et recharge la conf s'il tourne (le `start` de #10 échouerait silencieusement si le service est déjà actif). Pas de `secrets.` ni de `uses:` ajouté : WF-01/02/03 inchangés.
 
 ## Ordre des étapes
 
-1. `.nvmrc` = 24 ; `npm init -y` puis nettoyer `package.json` (`"private": true`, `"type": "module"`, pas de `main`/`scripts` inutiles) ; `npm install --save-exact astro@7.3.7` ; `npm install --save-dev --save-exact @playwright/test@1.64.0 @axe-core/playwright@4.13.0 html-validate@11.16.2`. Vérifier qu'aucune version n'a de `^`/`~`.
-2. `astro.config.mjs`, `cp -a site/static public/`, `Base.astro`, `index.astro` ; `npx astro build` → `dist/index.html`, `dist/static/master.css`, aucun `dist/_astro/`.
-3. `tests/test_repo.py`, `tests/test_dist.py` ; `python3 -I -m unittest discover -s tests -v` vert. Vérifier qu'ils échouent bien : `dist/` absent → échec (pas `skip`) ; une ligne `uses: x@v4` → WF-01 rouge ; un `${{ secrets.X }}` dans `run:` → WF-02 rouge.
-4. `.htmlvalidate.json`, `npx html-validate "dist/**/*.html"` vert.
-5. `playwright.config.ts`, `tests/e2e/a11y.spec.ts` ; `npx playwright install chromium && npx playwright test` vert.
-6. `deploy.yml`, `dependabot.yml`, `.gitignore` ; relancer les tests (WF-01/02/03 portent sur le nouveau workflow) ; `grep -nE 'run:.*secrets\.'` et `grep -nE 'uses: [^@]+@(v[0-9]|main|master)'` vides.
-7. Commits en français, types de CLAUDE.md uniquement : `feat:` (socle Astro), `test:` (tests), `chore:` (workflow, Dependabot).
+1. Fichiers `public/` (copies, favicon, robots, media, `.htaccess`), `llms*.txt` nettoyés ; `Base.astro`, `404.astro`, `sitemap.txt.ts` ; `npx astro build`. Contrôles : `ls -a dist` (`.htaccess` copié), `cat dist/sitemap.txt`, `cmp dist/favicon.ico dist/favicon.gif`, `cmp dist/google48428a5b5297f7c9.html site/google48428a5b5297f7c9.html`, `grep -rl societe-numerique dist/` vide.
+2. `tests/legacy-urls.txt`, `tests/legacy-exclude.txt`, `test_dist.py`, `test_repo.py` ; `python3 -I -m unittest discover -s tests -v` vert. Contre-épreuves : `public/x.php` → ART-01 rouge en nommant `x.php` (retirer) ; une ligne en trop dans `legacy-exclude.txt` → rouge ; `max-age=300; includeSubDomains` → HTA-01 rouge ; retirer `frame-src` → CSP-01 rouge.
+3. `.htmlvalidateignore` ; `npx html-validate "dist/**/*.html"` vert (404 incluse). Filtre du spec ; `npx playwright test` vert (404 incluse, fichier Google exclu).
+4. `tests/http_check.sh` en local : conf temporaire `${scratchpad}/httpd.conf` pour `/usr/sbin/httpd` : `ServerRoot "/usr"`, `Listen 127.0.0.1:8080`, `PidFile`/`ErrorLog` dans le scratchpad, `LoadModule` (depuis `/usr/libexec/apache2/`) `mpm_prefork`, `unixd`, `authz_core`, `dir`, `mime`, `rewrite`, `headers`, `log_config` ; `TypesConfig /private/etc/apache2/mime.types` ; `DirectoryIndex index.html` ; `DocumentRoot` = `dist/` du dépôt avec `<Directory>` `AllowOverride All` + `Require all granted` ; reproduire la règle globale d'Ubuntu `<FilesMatch "^\.ht"> Require all denied </FilesMatch>`. `httpd -f … -t` puis `httpd -f … -k start`, `BASE_URL=http://127.0.0.1:8080 bash tests/http_check.sh` vert, `-k stop`. Garder les sorties `curl -sI` de `/`, `/home`, `/sitemap`, `/n-existe-pas`, `/llms.txt` pour la QA. Contre-épreuve : casser la règle `home` → script rouge avec l'URL.
+5. Étape 6 dans `deploy.yml` ; tests repo relancés ; `git diff master -- .github/workflows/deploy.yml` ne touche que le job `test`.
+6. Relire `git diff master` (et `grep -niE 'ssh|/home/|/var/www/'`) : rien qui nomme un hôte, un utilisateur ou un chemin serveur (seul `/var/www/ci` du runner CI est permis).
+7. Commits (types CLAUDE.md, en français) : `feat: Fichiers statiques, .htaccess cible, 404 et sitemap (BV-02)` (avec `tasks/lessons.md`), `test: Inventaire, fichiers spéciaux, .htaccess et CSP (BV-02)`, `chore: Étape Apache locale du job test (BV-02)`.
 
 ## Points d'attention
 
-- **Écarts autorisés sur le job `deploy`, liste fermée** : (a) secrets via `env:` (#3) ; (b) `concurrency` sur le job (#3) ; (c) `if:` (imposé par l'ajout de `pull_request`) ; (d) checkout épinglé par SHA (#3, WF-01) ; (e) `persist-credentials: false` (sécurité, sans effet sur rsync) ; (f) étape renommée (CLAUDE.md, pas d'hébergeur). Rien d'autre : `runs-on: ubuntu-latest` reste.
-- **Déploiement inchangé** : même `rsync -rtlz --delete site/ "$DEPLOY_TARGET"`, mêmes secrets `DEPLOY_*`, aucune nouvelle valeur. Pas de `needs: test` (#7). Le `concurrency` passe du niveau workflow au job `deploy` (sinon les runs de PR se sérialiseraient avec le déploiement). L'`if:` empêche tout déploiement depuis une PR ou un `workflow_dispatch` hors `master`.
-- **Hébergement** : le nom de l'étape actuelle cite l'hébergeur ; la renommer `Deploy site/` (CLAUDE.md : aucun détail d'hébergement). Ne rien ajouter qui nomme hôte, utilisateur ou chemin. (Le README en parle déjà : hors périmètre, à signaler seulement.)
-- **CSS-01** : `filecmp.dircmp` compare en `shallow` (taille + mtime) ; utiliser `filecmp.cmpfiles(..., shallow=False)` sur l'arborescence parcourue (ou `filecmp.cmp(shallow=False)` par fichier), et vérifier aussi les fichiers présents d'un seul côté.
-- **Chemins** : les tests Python résolvent `dist/`, `site/`, `package.json`, `.nvmrc`, `.github/` depuis `ROOT = Path(__file__).resolve().parents[1]`, jamais depuis le cwd.
-- **Tests stdlib** : tout test qui lit `dist/` échoue si `dist/` est absent ; chaque message d'échec nomme le fichier et la valeur attendue.
-- **WF-02** : `env:` peut être au niveau step, job ou workflow ; l'algorithme « parent le plus proche d'indentation inférieure » couvre les trois.
-- **unittest discover** : `tests/e2e/` ne contient que du TS, sans `__init__.py` : ignoré par `discover`. Playwright ne prend que `tests/e2e`.
-- **Versions** : choisir des versions publiées depuis au moins 14 jours (chaîne d'approvisionnement) : astro 7.3.7 (7.4.2 sortie la veille), @playwright/test 1.64.0, @axe-core/playwright 4.13.0, html-validate 11.16.2. astro 7 exige Node ≥ 22.23.4 : OK avec 24. Lockfile généré avec npm 11 (Node 25 local), compatible avec `npm ci` sous Node 24.
-- **Placeholder** `index.astro` : non déployé (le deploy publie `site/`), remplacé par la vraie accueil en #4.
-- **Hors périmètre** : étape Apache (#4), allowlist (#6), `needs: test`, guard, smoke (#7), contenu. Ne pas créer `tests/parity-allowlist.json` vide.
-- **QA hors local** (scénarios 3, 4, 5, 9 de la recette) : PR de contrôle et vérification Dependabot à faire par l'orchestrateur après push ; Dependabot peut nécessiter que la fonctionnalité soit active dans les réglages du dépôt (le fichier suffit pour les version updates).
+- **`/media/` avancé de #5** : HTTP-03 et la liste de référence exigent `/media/ 403`, impossible sans dossier `dist/media` (Apache répondrait 404) ; la liste d'exclusion est figée aux 13 pages. On copie donc `site/media` dans `public/media/` dès #4 (une commande, aucun code) ; #5 n'a plus qu'à constater la copie, PAR-05 reste dans #5. À signaler dans la PR et dans #5.
+- **Balise d'ouverture PHP** : ne l'écrire littéralement dans aucun fichier versionné (ni test, ni plan) : dans `test_repo.py`, `needle = b"<" + b"?php"`. Lire en octets (`site/media`, `public/media` sont binaires). Vérifier que le dépôt actuel est propre (constaté : aucun fichier versionné ne la contient).
+- **Fichier Google** : texte brut, ni doctype ni `lang` : exclu de html-validate (`.htmlvalidateignore`) et d'axe (filtre du spec) ; jamais lié (LNK-02, #6). Il reste compté par INV-01 et SPE-02. Si #6 exige que toute exclusion passe par l'allowlist, il y migrera.
+- **`Header always`** pour les 4 en-têtes de sécurité : sinon absents des réponses 404 (ErrorDocument) et 301. Le `Header set Content-Type` des `llms` reste tel quel (snapshot).
+- **Redirections 301** placées après la règle HTTPS et avant la règle slug → `.html`. Cible relative (`/`) : en production Apache construit l'URL avec le schéma de la requête ; HTTP-01 ne compare que le chemin. Pas de redirection `x.html` → `/x` ni `/index.html` → `/` (HTA-02, boucle).
+- **Localement**, le `X-Forwarded-Proto: https` envoyé par le script neutralise la redirection HTTPS ; sans lui tout serait en 301.
+- **`sitemap.txt.ts`** : pas de `src/content.config.ts` en #4 (il arrive en #5) ; le WARN `collection "projects" does not exist` au build est attendu. Pas de `site` dans `astro.config.mjs` : constante dans l'endpoint.
+- **SPE-06** : `Base.astro` utilise déjà `/static/master.css` (absolu) ; les liens CDN sont absolus par nature.
+- **HTTP-02** en #4 : la boucle par slug est vide (13 pages exclues) ; seuls les 4 `curl -L` tournent. Elle s'active en #6 quand l'exclusion est vidée.
+- **Ne pas toucher** : job `deploy`, `.nvmrc` (24), `package.json`, `package-lock.json`, `site/`. Pas de PHP versionné.
+- **Hors périmètre** : pages accueil/à propos/projets et leur nav (#6), collection et import (#5), allowlist (#6), `needs: test`, guard, smoke (#7), HSTS longue durée (#9).
+- **QA hors local** : le scénario 13 (vidéo sigfox sous CSP) se fait sur l'Apache local avec `site/sigfox.html` copié dans le DocumentRoot temporaire (pas dans `public/`) ; les sorties `curl -sI` vont en commentaire de PR (orchestrateur).
