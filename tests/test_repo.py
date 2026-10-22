@@ -48,6 +48,27 @@ class TestRepo(unittest.TestCase):
         }.items():
             self.assertRegex(text, re.compile(pattern, re.M), f"deploy.yml: {label} absent")
 
+    def test_wf_04_deploy_job(self):
+        text = (ROOT / ".github/workflows/deploy.yml").read_text()
+        m = re.search(r"^  deploy:\n(?:(?!  \w).*\n?)*", text, re.M)
+        self.assertTrue(m, "deploy.yml: job deploy absent")
+        job = m[0]
+        for label, pattern in {
+            "needs: test": r"^\s+needs:\s*test\s*$",
+            "if: exact du ticket": r"^\s+if: github\.event_name != 'pull_request' && github\.ref == 'refs/heads/master'$",
+            "concurrency deploy sans annulation": r"^\s+concurrency:\n\s+group: deploy\n\s+cancel-in-progress: false$",
+        }.items():
+            self.assertRegex(job, re.compile(pattern, re.M), f"deploy.yml, job deploy : {label} absent")
+        lines = job.splitlines()
+        guard = next((i for i, l in enumerate(lines) if "predeploy_guard.sh" in l), None)
+        rsync = next((i for i, l in enumerate(lines) if re.search(r"run:.*rsync ", l)), None)
+        self.assertIsNotNone(guard, "deploy.yml, job deploy : predeploy_guard.sh absent")
+        self.assertIsNotNone(rsync, "deploy.yml, job deploy : ligne run: rsync absente")
+        self.assertLess(guard, rsync, "deploy.yml, job deploy : predeploy_guard.sh doit précéder rsync")
+        self.assertIn("--delete-after --delay-updates", lines[rsync], "deploy.yml, rsync : --delete-after --delay-updates absent")
+        self.assertIn(" dist/ ", lines[rsync], "deploy.yml, rsync : source dist/ absente")
+        self.assertNotIn("site/", job, "deploy.yml, job deploy : publie encore site/")
+
     def test_art_03_no_php_in_git(self):
         files = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True).stdout.decode().split("\0")
         needle = b"<" + b"?php"  # jamais écrite en clair dans le dépôt

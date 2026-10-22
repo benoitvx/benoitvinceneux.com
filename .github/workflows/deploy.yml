@@ -12,6 +12,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -45,15 +46,26 @@ jobs:
       - run: npx playwright test
 
   deploy:
+    needs: test
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     concurrency:
       group: deploy
       cancel-in-progress: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    environment: production
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx astro build
+      - name: Garde-fous avant mise en ligne
+        run: bash tests/predeploy_guard.sh dist
 
       - name: Configure SSH
         env:
@@ -65,7 +77,14 @@ jobs:
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_ed25519
 
-      - name: Deploy site/
+      - name: Deploy dist/
         env:
           DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}
-        run: rsync -rtlz --delete site/ "$DEPLOY_TARGET"
+        run: rsync -rtlz --delete-after --delay-updates dist/ "$DEPLOY_TARGET"
+
+      # Smoke T-BV-SMK-01 : dernière étape, le site est déjà en ligne. Rouge = signal, rollback manuel (README).
+      - name: Smoke après mise en ligne
+        run: bash tests/http_check.sh
+        env:
+          BASE_URL: https://benoitvinceneux.com
+          HSTS_MAX_AGE: 300

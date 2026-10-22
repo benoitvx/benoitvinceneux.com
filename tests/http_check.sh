@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # T-BV-HTTP-01 à 06 : comportement HTTP du site servi par Apache. Usage : BASE_URL=http://127.0.0.1:8080 bash tests/http_check.sh
+# T-BV-SMK-01 (smoke après déploiement, « tests/smoke.sh » de #7) : BASE_URL=https://benoitvinceneux.com HSTS_MAX_AGE=300, + redirection http -> https
 set -u
 BASE="${BASE_URL:?BASE_URL requis}"
 DIR="$(dirname "$0")/.."
@@ -65,5 +66,11 @@ for u in /llms.txt:text/markdown /llms-full.txt:text/markdown /sitemap.txt:text/
   type="$(c -o /dev/null -w '%{content_type}' "$BASE${u%%:*}")"
   case "$type" in "${u#*:}"*) ;; *) fail "${u%%:*}" "$type" "${u#*:}" ;; esac
 done
+
+# SMK-01 : http:// redirige en 301 vers https:// (domaine public seulement)
+case "$BASE" in https://*)
+  got="$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' "http://${BASE#https://}/")"
+  [ "$got" = "301 $BASE/" ] || fail "http://${BASE#https://}/" "$got" "301 $BASE/" ;;
+esac
 
 echo "http_check : OK ($BASE)"
