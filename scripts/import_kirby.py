@@ -12,7 +12,7 @@ import os
 import re
 from html.parser import HTMLParser
 
-DOMAIN = re.compile(r"^https?://(www\.)?benoitvinceneux\.com")
+DOMAIN = re.compile(r"^https?://(www\.)?benoitvinceneux\.com(?=/|$)")
 FIELDS = ("role", "client", "date", "website", "textposition")
 
 
@@ -116,7 +116,9 @@ def main(argv=None):
     for order, slug, txt in todo:
         f = fields(read(txt))
         page = Page(read(os.path.join(args.site, f"{slug}.html")))
-        cover = next(a for href, a in grid if href == f"{slug}.html")
+        cover = next((a for href, a in grid if href == f"{slug}.html"), None)
+        if cover is None:
+            raise SystemExit(f"{slug} : vignette absente de site/index.html")
         fm = [f"title: {json.dumps(f['title'], ensure_ascii=False)}", f"order: {order}",
               f"description: {json.dumps(page.description, ensure_ascii=False)}"]
         fm += [f"{k}: {json.dumps(f[k], ensure_ascii=False)}" for k in FIELDS if f.get(k)]
