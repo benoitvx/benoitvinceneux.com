@@ -26,7 +26,6 @@ jobs:
       - run: npx html-validate "dist/**/*.html"
       - name: Apache local
         run: |
-          command -v apache2 >/dev/null || { sudo apt-get update && sudo apt-get install -y apache2; }
           sudo cp -a dist /var/www/ci
           printf '%s\n' 'Listen 8080' '<VirtualHost *:8080>' '  DocumentRoot /var/www/ci' '  <Directory /var/www/ci>' '    AllowOverride All' '    Require all granted' '  </Directory>' '</VirtualHost>' | sudo tee /etc/apache2/sites-available/ci.conf
           sudo a2ensite ci

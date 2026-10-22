@@ -184,8 +184,8 @@ class TestDist(unittest.TestCase):
             "nosniff": r'X-Content-Type-Options "nosniff"',
             "Referrer-Policy": r'Referrer-Policy "strict-origin-when-cross-origin"',
             "HSTS": r'Strict-Transport-Security "max-age=300"',
-            "301 home": r"^RewriteRule \^home/\?\$ / \[R=301,L\]$",
-            "301 sitemap": r"^RewriteRule \^sitemap/\?\$ /sitemap\.txt \[R=301,L\]$",
+            "301 home": r"^RewriteRule \^home/\?\$ (https://%\{HTTP_HOST\})?/ \[R=301,L\]$",
+            "301 sitemap": r"^RewriteRule \^sitemap/\?\$ (https://%\{HTTP_HOST\})?/sitemap\.txt \[R=301,L\]$",
         }.items():
             self.assertRegex(hta, re.compile(pattern, re.M), f"dist/.htaccess : {label} absent")
         self.assertNotRegex(hta, r"includeSubDomains|preload", "dist/.htaccess : HSTS ne doit avoir ni includeSubDomains ni preload")
