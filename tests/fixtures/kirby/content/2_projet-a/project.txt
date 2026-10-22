@@ -1,0 +1,26 @@
+Title: Projet A
+
+----
+
+Text:
+
+##Titre
+Voir (link: https://benoitvinceneux.com/projet-b text: le projet B) et (link: /brouillon text: un brouillon).
+Écrire à (email: a@example.org text: moi).
+
+<div>
+ligne 1
+ligne 2
+</div>
+
+----
+
+Textposition: above
+
+----
+
+Role: Product Manager
+
+----
+
+Client: 
