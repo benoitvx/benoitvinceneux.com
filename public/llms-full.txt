@@ -28,7 +28,7 @@ Son approche produit combine vision fondateur (business case, adoption, go-to-ma
 - DINUM — Services du Premier ministre 🇫🇷 · CPO MCP & Données · janvier 2026 → présent
 - Présidence de la République 🇫🇷 · CPO Datalma · septembre 2024 – décembre 2025
 - Freelance produit / tech · 2014 – 2024
-- 🍿 Curated Adventures · solopreneur · 2021 – 2023
+- 🍿 Curated Adventures · solopreneur · 2021 – 2024
 - YANA.place · founder, CEO · depuis 2018
 - Sigfox · Product Manager · 2016 et 2019-2020
 - NotreSanté · cofondateur, CPO · 2017 – 2020
@@ -164,13 +164,17 @@ Python, Metabase, Dagster, dbt, React, embeddings Qwen3, Mistral, Docker.
 URL : https://benoitvinceneux.com/curated-adventures
 Site : https://curatedadventures.club
 
-Solopreneur. Projet créé après s'être lassé de passer des heures à chercher un bon documentaire d'aventure : un guide qui permet de trouver rapidement le bon contenu par sport, genre ou durée.
+Fondateur, projet solo : 2021 à 2024. Projet créé après s'être lassé de passer des heures à chercher un bon documentaire d'aventure : un guide qui permet de trouver rapidement le bon contenu par sport, genre ou durée.
 
 L'envie a démarré entre amis, puis amis d'amis : la demande organique a abouti au lancement de Curated Adventures.
 
+### Virage IA
+
+Fin 2023, dès le lancement des GPTs par OpenAI, l'expérience a été reconstruite autour d'un GPT personnalisé : l'utilisateur décrivait l'envie du moment, le GPT proposait le bon documentaire. En coulisses, des automatisations IA ont réduit de 80 % le temps passé sur les opérations quotidiennes.
+
 ### Contenu
 
-Sports outdoor — surf, escalade, snowboard, vélo. Documentaires connus comme plus confidentiels.
+Sports outdoor : surf, escalade, snowboard, vélo. Documentaires connus comme plus confidentiels.
 
 ### Curation & plateforme
 
@@ -178,7 +182,7 @@ Tous les documentaires sont sélectionnés manuellement et disponibles sur YouTu
 
 ### Démarche éco-responsable
 
-Conscient de l'impact du streaming vidéo, le projet vise à rendre le site « le plus responsable possible » — détaillé dans la section about du site.
+Conscient de l'impact du streaming vidéo, le projet vise à rendre le site « le plus responsable possible », détaillé dans la section about du site.
 
 ---
 
