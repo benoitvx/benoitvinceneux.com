@@ -44,10 +44,9 @@ Produit de data viz pour le Global Network Operation Center, sur un mur de 12 é
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
     <iframe
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
       src="https://www.youtube-nocookie.com/embed/1K01sdkYlrg"
       title="YouTube video player"
-      frameborder="0"
       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerpolicy="strict-origin-when-cross-origin"
       allowfullscreen></iframe>

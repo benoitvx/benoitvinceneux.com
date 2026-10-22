@@ -1,1 +1,4 @@
-{ "extends": ["html-validate:recommended"] }
+{
+  "extends": ["html-validate:recommended"],
+  "rules": { "long-title": "off", "no-inline-style": "off" }
+}

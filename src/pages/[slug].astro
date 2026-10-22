@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  return (await getCollection('projects')).map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { title, description, role, website, textposition, images } = entry.data;
+const { Content } = await render(entry);
+const above = textposition === 'above';
+---
+<Base title={`${title} – Benoit Vinceneux`} description={description} path={`/${entry.id}`} current={entry.id}>
+    <div class={above ? '' : 'ld-row'}>
+      <div class="span1 order9">
+        <div class="p025">
+          <div class="p075">
+            <h1 class={above ? 'h2 lh2 fw800' : 'h2 ld-h3 lh2 fw800'}>{title}</h1>
+          </div>
+          <div class={above ? 'ld-row' : ''}>
+            <div class="span2">
+              <div class="p075 copy lh4">
+<Content />
+              </div>
+            </div>{!above && (role || website) && (
+            <div class="span1">
+              <div class="p075 copy lh4">
+                <dl>
+                  {role && <><dt>Role</dt><dd>{role}</dd></>}
+                  {website && <><dt>Website</dt><dd><a class="ul" href={website}>{website}</a></dd></>}
+                </dl>
+              </div>
+            </div>)}
+          </div>
+        </div>
+      </div>
+      <div class="span2">
+        {above
+          ? <div class="p1 copy copy--wide lh4">{images.map((i) => <figure class="image"><img alt="" height={i.height} src={i.src} srcset={i.srcset} width={i.width}></figure>)}</div>
+          : images.map((i) => <div class="p1 copy lh4"><figure class="image"><img alt="" height={i.height} src={i.src} srcset={i.srcset} width={i.width}></figure></div>)}
+      </div>
+    </div>
+</Base>

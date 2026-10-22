@@ -1,16 +1,75 @@
 ---
-const { title, noindex } = Astro.props;
+import { getCollection } from 'astro:content';
+
+interface Props { title: string; description?: string; path?: string; current?: string; noindex?: boolean }
+const { title, description, path, current, noindex } = Astro.props;
+const DOMAIN = 'https://benoitvinceneux.com';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const nav = [{ slug: 'a-propos', label: 'À propos' }, ...projects.map((p) => ({ slug: p.id, label: p.data.title }))];
+const social = [
+  { label: 'Linkedin', href: 'https://www.linkedin.com/in/benoitvinceneux/', icon: '' },
+  { label: 'GitHub', href: 'https://github.com/benoitvx', icon: '' },
+];
 ---
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{title}</title>
-    {noindex && <meta name="robots" content="noindex">}
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/brands.css">
-    <link rel="stylesheet" href="/static/master.css">
-  </head>
-  <body><slot /></body>
+<head>
+  <meta charset="utf-8">
+  <title>{title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+{description && <meta name="description" content={description}>}
+{path && <link rel="canonical" href={DOMAIN + path}>}
+{noindex && <meta name="robots" content="noindex">}
+  <link rel="stylesheet" href="/static/master.css">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/brands.css" integrity="sha384-+2AYGyI2bR10NExh4Lu/3NQmpNxck8EcRE7aATrMi9QQ9OAKQAQw1bcrlWkp0tdM" crossorigin="anonymous">
+  <style is:inline media="screen">
+  :root {
+    --theme-highlight-text-color: #ffffff;
+    --theme-highlight-background-color: #0F4C81;
+  }
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 10; padding: .5rem 1rem; background: #0F4C81; color: #ffffff; }
+  .skip:focus { left: 1rem; top: 1rem; }
+  a:focus-visible { outline: 2px solid #0F4C81; outline-offset: 2px; }
+  </style>
+</head>
+<body class="body lh4">
+  <a class="skip" href="#contenu">Aller au contenu</a>
+
+  <header>
+    <div class="py05 sd-p05">
+      <h1 class="p1"><a class="block h1 lh1 fw800" href="/">Benoit Vinceneux</a></h1>
+    </div>
+    <aside class="py05 sd-p05" aria-label="Présentation">
+      <div class="copy p1">
+        <p>Senior Product Builder · AI × Data · Founder DNA<br>
+Passionné d'outdoor<br>
+📍France</p>
+      </div>
+    </aside>
+    <nav class="py05 sd-p05">
+      <ul class="px075 py1">
+        {nav.map(({ slug, label }) => slug === current
+          ? <li class="px0125"><a class="inlineblock px0125 ul:hover" href={`/${slug}`} aria-current="page"><span class="color-highlight bg-highlight bg-highlight-shadow">{label}</span></a></li>
+          : <li class="px0125"><a class="inlineblock px0125 ul:hover color-link:hover" href={`/${slug}`}><span>{label}</span></a></li>)}
+      </ul>
+    </nav>
+    <aside class="py05 sd-p05" aria-label="Réseaux sociaux">
+      <ul class="p05 row flex-wrap">
+        {social.map(({ label, href, icon }) => <li class="p05 h3 lh0"><a class="block" title={label} href={href}><span class="fab block" aria-hidden="true">{icon}</span><span class="hide">{label}</span></a></li>)}
+      </ul>
+    </aside>
+  </header>
+
+  <main id="contenu" class="main py05 sd-p05">
+<slot />
+  </main>
+
+  <footer class="py05 sd-p05">
+    <div class="p1 copy">
+      <p>(c) {new Date().getFullYear()}</p>
+    </div>
+  </footer>
+
+</body>
 </html>

@@ -1,4 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const cards = [
+  { slug: 'a-propos', title: 'À propos', cover: {
+    src: '/media/pages/a-propos/757095c601-1764930220/benoitvinceneux-288x288.png',
+    srcset: '/media/pages/a-propos/757095c601-1764930220/benoitvinceneux-288x288.png 288w,/media/pages/a-propos/757095c601-1764930220/benoitvinceneux-576x576.png 576w',
+  } },
+  ...projects.map((p) => ({ slug: p.id, title: p.data.title, cover: p.data.cover })),
+];
 ---
-<Base title="Benoit Vinceneux"><main><h1>Benoit Vinceneux</h1></main></Base>
+<Base title="Benoit Vinceneux – Senior Product Builder · AI × Data · Founder DNA. Passionné d'outdoor" description="Senior Product Builder · AI × Data · Founder DNA Passionné d'outdoor 📍France" path="/">
+    <div class="sd-grid2 ld-grid3">
+      {cards.map(({ slug, title, cover }) => (
+      <article class="p1"><a class="block anchor" href={`/${slug}`}>
+        <figure>
+          <img class="block w100 maxw" src={cover.src} srcset={cover.srcset} alt="">
+        </figure>
+        <h3 class="mt025 ul:hover">{title}</h3>
+      </a></article>))}
+    </div>
+</Base>
