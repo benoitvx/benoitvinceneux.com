@@ -40,5 +40,3 @@ Retour à l'ancien site Kirby (le snapshot n'existe plus que dans le tag `snapsh
    `- run: git fetch --depth 1 origin tag snapshot-kirby && rm -rf dist && mkdir dist && git archive snapshot-kirby:site | tar -x -C dist`
 2. PR vers `master`, merger quand `test` est vert : le job `deploy` publie le snapshot avec les mêmes garde-fous et le même rsync. Le smoke peut échouer (en-têtes et pages du snapshot différents de ceux attendus) : le site est quand même en ligne.
 3. Vérifier 200 sur `/`, une page projet et `/a-propos`. Pour revenir à Astro : `git revert` de ce commit.
-
-Le commit taggé déploie déjà `dist/` : restaurer le dossier du snapshot ne suffit pas. Remplir `dist/` depuis le tag dans le seul job `deploy` ne touche ni au dépôt ni aux tests (T-BV-ART-03 et T-BV-WF-04 restent verts) et garde la source, la cible et les garde-fous du rsync.

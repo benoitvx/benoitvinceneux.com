@@ -74,6 +74,8 @@ class TestRepo(unittest.TestCase):
             for k in ("test", "page", "motif", "pourquoi"):
                 self.assertTrue(str(e.get(k, "")).strip(), f"tests/exceptions.json : champ {k} vide dans {e}")
             self.assertIn(e["test"], {"html-validate", "axe"}, f"tests/exceptions.json : test inconnu dans {e}")
+            if e["page"] != "*":  # entrée morte = échec
+                self.assertTrue((ROOT / "dist" / f"{e['page']}.html").is_file(), f"tests/exceptions.json : page absente de dist/ dans {e}")
         rules = json.loads((ROOT / ".htmlvalidate.json").read_text()).get("rules", {})
         off = {r for r, v in rules.items() if v == "off"}
         html = {e["motif"] for e in entries if e["test"] == "html-validate"}

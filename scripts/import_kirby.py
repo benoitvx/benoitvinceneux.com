@@ -4,6 +4,8 @@ Usage : python3 -I scripts/import_kirby.py <dossier_contenu> [--site site] [--ou
 
 Lit seulement <contenu>/<n>_<slug>/project.txt (niveau racine, sans lien symbolique)
 et le snapshot <site>/ (description, vignette, images). Aucun autre fichier n'est ouvert.
+Le snapshot n'est plus dans le dépôt (#9) : l'extraire du tag avant usage,
+par exemple `mkdir /tmp/site && git archive snapshot-kirby:site | tar -x -C /tmp/site`, puis `--site /tmp/site`.
 """
 import argparse
 import glob
