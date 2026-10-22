@@ -168,8 +168,6 @@ Fondateur, projet solo : 2021 à 2024. Projet créé après s'être lassé de pa
 
 L'envie a démarré entre amis, puis amis d'amis : la demande organique a abouti au lancement de Curated Adventures.
 
-### Virage IA
-
 Fin 2023, dès le lancement des GPTs par OpenAI, l'expérience a été reconstruite autour d'un GPT personnalisé : l'utilisateur décrivait l'envie du moment, le GPT proposait le bon documentaire. En coulisses, des automatisations IA ont réduit de 80 % le temps passé sur les opérations quotidiennes.
 
 ### Contenu
