@@ -64,10 +64,10 @@ def pages():
 
 
 def norm(url, base="/"):
-    """URL interne -> chemin normalisé (/slug, / pour l'accueil) ; URL externe -> URL avec hôte en minuscules."""
+    """URL interne -> chemin normalisé (/slug, / pour l'accueil) ; URL externe -> URL sans query ni fragment, hôte en minuscules (#10)."""
     u = urlsplit(urljoin(DOMAIN + base, url.strip()))
     if u.netloc.lower() != "benoitvinceneux.com":
-        return u._replace(netloc=u.netloc.lower()).geturl()
+        return u._replace(netloc=u.netloc.lower(), query="", fragment="").geturl()
     path = re.sub(r"\.html$", "", unicodedata.normalize("NFC", unquote(u.path)))
     return "/" if path in ("", "/index") else path
 
