@@ -1,0 +1,22 @@
+# Site Astro (dist/) : fichiers statiques, en-têtes de sécurité, redirections héritées de Kirby
+Options -Indexes
+ErrorDocument 404 /404.html
+<FilesMatch "\.(php[0-9]?|phtml|phar)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^llms(-full)?\.txt$">
+  Header set Content-Type "text/markdown; charset=utf-8"
+</FilesMatch>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Strict-Transport-Security "max-age=300"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; style-src 'self' 'unsafe-inline' https://rsms.me https://use.fontawesome.com; font-src 'self' https://rsms.me https://use.fontawesome.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com"
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteRule ^home/?$ / [R=301,L]
+RewriteRule ^sitemap/?$ /sitemap.txt [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]

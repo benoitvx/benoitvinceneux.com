@@ -1,0 +1,429 @@
+# Benoit Vinceneux
+
+> Senior Product IC — AI × Data. Père de famille, builder & passionné d'outdoor. 📍France. Product leader spécialisé dans le développement 0→1 de produits IA, fondateur, ancien freelance (10 ans), premier PM en PME, puis intrapreneur d'État. Actuellement CPO MCP & Données à la DINUM (Services du Premier ministre).
+
+Site : https://benoitvinceneux.com
+Email : benoitvinceneux@gmail.com
+LinkedIn : https://www.linkedin.com/in/benoitvinceneux/
+GitHub : https://github.com/benoitvx
+
+---
+
+## À propos
+
+URL : https://benoitvinceneux.com/a-propos
+
+### Senior Product IC · AI × Data · Builder
+
+Mi-builder, mi-hacker, mi-dealmaker — je fais passer la tech de l'idée à la production.
+
+Benoit Vinceneux est un product leader spécialisé dans le développement 0→1 de produits IA, fondateur, ancien freelance (10 ans), premier PM en PME, puis intrapreneur d'État.
+
+Actuellement CPO MCP & Données à la Direction Interministérielle du Numérique (Services du Premier ministre), il pilote la composante données du socle IA interministériel et conçoit les fonctionnalités d'accès aux données publiques.
+
+Son approche produit combine vision fondateur (business case, adoption, go-to-market, partenariats) et posture IC senior « AI-powered » : constitution d'équipes, alignement, déblocage d'obstacles et shipping direct.
+
+### Parcours professionnel
+
+- DINUM — Services du Premier ministre 🇫🇷 · CPO MCP & Données · janvier 2026 → présent
+- Présidence de la République 🇫🇷 · CPO Datalma · septembre 2024 – décembre 2025
+- Freelance produit / tech · 2014 – 2024
+- 🍿 Curated Adventures · solopreneur · 2021 – 2023
+- YANA.place · founder, CEO · depuis 2018
+- Sigfox · Product Manager · 2016 et 2019-2020
+- NotreSanté · cofondateur, CPO · 2017 – 2020
+- Resopharma / LePharmacien.fr · Product Manager & GTM · 2016 – 2018
+- Laboratoires Pierre Fabre · 1ᵉʳ PM B2B · 2011 – 2017 (16 000 pharmaciens, 80 % connectés ≥ 1×/semaine)
+- Ça Compte Pour Moi · intrapreneur · 2014 – 2016 (1 M€ d'ARR un an après le lancement, 3 Trophées Les Echos)
+- Soregor / TGS France · Head of Product · 2017 – 2019
+- X-PRIME · Account Manager · 2009 – 2014 (portefeuille 1,5 M€/an)
+- Emakina · Project Manager · 2008 – 2009
+
+### Convictions
+
+- Les modèles se commoditisent — le produit IA se gagne sur l'éval et la vélocité d'itération.
+- Shipper > pitcher : un proto aligne mieux qu'un deck.
+- Un bon PM IC débloque le business, il ne gère pas seulement la roadmap.
+
+### Stack quotidienne
+
+Claude Code, MCP, embeddings, LLM-as-a-judge, Python, React, Metabase, Dagster, dbt, Docker.
+
+### Engagements & formations
+
+- 2025 — Perplexity AI Fellowship (programme sélectif d'affaires en IA : mentorat, conférences)
+- 2025 — Data for good, Product Lead — projet « Qui paie le prix du changement climatique »
+- 2024 — MIT xPro — Conception et construction de produits et services IA
+- 2023 — Thiga Academy — Lead Product Manager
+- 2020 — Académie du Numérique Responsable — MOOC Numérique Responsable
+- 2019-2021 — La Product Conf — Co-organisateur LPCx Toulouse, meetups communauté product
+- 2018 — Le Laptop — Méthodes de l'UX Design et du Design Thinking
+- 2008 — ISC Paris — Master Business & IT
+
+---
+
+## Services du Premier ministre — DINUM
+
+URL : https://benoitvinceneux.com/services-du-premier-ministre
+
+Direction Interministérielle du Numérique — Services du Premier ministre 🇫🇷
+CPO MCP & Données — depuis janvier 2026.
+
+Pilote de la composante « données & MCP » du socle interministériel d'IA générative, au sein du département IA dans l'État (IAE, ex-Etalab) de la DINUM.
+
+### Contexte
+
+Les données publiques françaises sont abondantes mais mal structurées pour les systèmes IA. Le trafic humain sur les portails baisse alors que les appels API explosent (340 M en 2025 sur la DILA, ×2 vs 2024). Le défi central : « Le problème n'est pas le modèle, c'est la donnée » — la donnée existe mais elle est mal exposée.
+
+### Mission
+
+Rendre les données publiques françaises exploitables par l'IA et accompagner les administrations à faire de même avec leurs propres jeux de données.
+
+- Piloter l'offre données & MCP du socle interministériel d'IA générative
+- Concevoir les fonctionnalités IA d'accès à la donnée publique
+- Lien produit avec l'Opérateur des Produits Interministériels, en particulier data.gouv.fr
+- Accompagner le déploiement de projets IA dans les ministères via l'incubateur ALLiaNCE
+
+### Approche : initialiser, prouver, transférer
+
+Construire des premières versions qui démontrent la faisabilité, recueillir des retours par mise en circulation, puis transférer aux administrations métier pour qu'elles enrichissent.
+
+### Offre data : 3 piliers + 1 chantier
+
+- Pilier 1 — Données Publiques pour l'IA. Accompagner les administrations à exposer leurs données dans des formats IA-natifs (MCP, CLI, Skill, llms.txt) avec un catalogue qui donne de la visibilité.
+- Pilier 2 — RAG as a Service. Infrastructure mutualisée de collections vectorielles pour les administrations.
+- Pilier 3 — Gouvernance des données. Faire avancer un GT interministériel sur la doctrine d'accès aux données comme pré-requis à la diffusion de l'IA.
+- Chantier — IA pour les devs. Équiper les développeurs de l'État (doctrine, skills, outils souverains), changer les pratiques.
+
+### Réalisations clés
+
+MCP data.gouv — accès programmatique à l'open data français pour les LLMs
+- 3 millions de requêtes par semaine en production
+- Couverture média numérique publique inédite, retours uniformément positifs
+- Démocratisation de l'usage en langage naturel
+
+ia.data.gouv.fr — premier catalogue européen multi-format natif IA pour les données publiques
+- Pour chaque source : formats disponibles (API, MCP, Parquet, collection vectorielle, Skill, llms.txt) avec liens directs
+
+Accompagnement des administrations sur les nouveaux formats (MCP, CLI, Skill)
+Partenariats avec data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA — retex, Q&A, aide à la conception, articles pédagogiques.
+
+Évaluation LLM verticalisée
+- Constitution d'un Golden Dataset
+- Méthodologie LLM-as-a-judge sur plusieurs approches d'optimisation
+- +16 % de qualité vs baseline, déployée en production
+
+Déploiement de la stack IA souveraine pour les développeurs
+- Évaluation de solutions du marché
+- Package d'expérimentation : Skills, Agent, environnement de travail (VM)
+- Repository etalab-ia/skills publié sur GitHub
+- Premières skills : Design System, ANSSI, RGAA / accessibilité
+
+### Convictions portées
+
+- Le succès de l'IA dans le secteur public se gagne sur la disponibilité des données dans le bon format, pas sur le choix du modèle.
+- Les Skills État renforcent la sécurité de manière proactive : les bonnes pratiques (ANSSI, RGAA) sont intégrées dès le développement plutôt qu'auditées a posteriori.
+- Une bonne offre data est multi-format by design : un même dataset doit être disponible en API, MCP, Parquet, collections vectorielles selon le cas d'usage.
+
+---
+
+## Présidence de la République — Datalma
+
+URL : https://benoitvinceneux.com/presidence-de-la-republique
+
+Directeur Produit / CPO pour Datalma (startup d'État) — septembre 2024 à décembre 2025.
+
+Programme Entrepreneur d'Intérêt Général au sein de la Direction Interministérielle du Numérique (DINUM). Partenaires : Services du Premier ministre & Présidence de la République.
+
+### Objectif de Datalma
+
+Plateforme d'intelligence décisionnelle destinée aux décideurs gouvernementaux (Président, ministres, conseillers, directeurs de cabinet).
+
+> « Contribuer à une action publique à la fois plus performante et plus ouverte. »
+
+### Mission
+
+Faciliter l'accès aux données publiques et inter-administratives pour des décisions politiques éclairées, incluant la mobilisation de l'IA.
+
+### Réalisations clés
+
+Observatoire santé
+- Tableaux de bord internes (épidémies, hospitalisations)
+- Observatoire public grippe lancé en 1 semaine
+
+Datalma Alerting
+- Pipeline IA détectant les sujets presse / données gouvernementales
+- Traite environ 30 articles par jour
+- Stack souveraine à 100 %
+
+### Technologies
+
+Python, Metabase, Dagster, dbt, React, Mistral.
+
+---
+
+## 🍿 Curated Adventures
+
+URL : https://benoitvinceneux.com/curated-adventures
+Site : https://curatedadventures.club
+
+Solopreneur. Projet créé après s'être lassé de passer des heures à chercher un bon documentaire d'aventure : un guide qui permet de trouver rapidement le bon contenu par sport, genre ou durée.
+
+L'envie a démarré entre amis, puis amis d'amis : la demande organique a abouti au lancement de Curated Adventures.
+
+### Contenu
+
+Sports outdoor — surf, escalade, snowboard, vélo. Documentaires connus comme plus confidentiels.
+
+### Curation & plateforme
+
+Tous les documentaires sont sélectionnés manuellement et disponibles sur YouTube et Vimeo.
+
+### Démarche éco-responsable
+
+Conscient de l'impact du streaming vidéo, le projet vise à rendre le site « le plus responsable possible » — détaillé dans la section about du site.
+
+---
+
+## Sigfox
+
+URL : https://benoitvinceneux.com/sigfox
+
+### Sigfox Device Management System — 2019-2020
+
+Product Manager. Premier espace client B2B pour les grands comptes utilisateurs du réseau Sigfox.
+
+Périmètre :
+- Plateforme à deux composantes : outil de facturation interne et services de gestion des parcs d'objets connectés (Business Intelligence)
+- Définition produit via ateliers utilisateurs
+- Conception UX / UI (~100 écrans)
+- Rédaction du backlog JIRA
+- Pilotage d'une équipe tech (2 à 10 développeurs)
+- Reporting à la Direction Générale
+
+Résultats :
+- −50 % sur les délais de paiement clients
+- Temps passé en support sur les factures : 10 min → 1 min
+
+Ressource : 100 écrans produits sur InVision.
+
+### Sigfox Global Network Operation Center — 2018
+
+Product Manager. Produit de data viz pour le Global Network Operation Center, sur un mur de 12 écrans permettant aux ingénieurs de monitorer le réseau télécom Sigfox dédié aux objets connectés.
+
+Périmètre :
+- Produit 0→1, data visualisation temps réel
+- Outil interne, big data IoT
+
+Résultats :
+- −65 % de temps nécessaire à l'identification de l'origine d'une erreur sur le réseau
+
+---
+
+## NotreSanté
+
+URL : https://benoitvinceneux.com/notresante
+
+NotreSanté — startup e-santé.
+Cofondateur, CPO — 2017-2020.
+
+Application mobile iOS / Android pour la gestion de la santé des familles avec enfants en bas âge. Cible B2C : familles avec enfants de moins de 10 ans.
+
+### Vision produit
+
+Aller au-delà de la simple prise de rendez-vous médical. Construire une expérience multi-profil au sein d'une même application, avec des parcours croisés entre membres de la famille et professionnels de santé.
+
+Exemple de parcours croisé : un parent chez le médecin reçoit une ordonnance, la prend en photo, l'envoie dans n'importe quelle pharmacie en France ; le second parent récupère la commande sans repasser par le foyer.
+
+### Périmètre
+
+- Produit end-to-end : discovery, conception, pilotage du dev, go-to-market
+- Stratégie produit, recherche utilisateurs, validation UX/UI
+- Management : 1 PO, 1 designer, 3 développeurs
+- Levée de fonds, structuration juridique, recrutement
+- Hébergement de Données de Santé (HDS) — conformité bout-en-bout
+- Partenariats laboratoires pharmaceutiques et pharmaciens
+
+### Distinctions
+
+- 2019 — Trophée de la Citoyenneté et de la Solidarité, Conseil Départemental de la Haute-Garonne
+- 2018 — Prix de l'innovation, CCI Occitanie
+
+### Ce qu'il en reste
+
+Apprentissages de fondateur sur P&L, arbitrages CAC/LTV, négociation partenaires et résilience face aux refus de levée. La vision « patient × pro » développée à NotreSanté correspond aujourd'hui à des stratégies déployées par des acteurs majeurs du secteur.
+
+---
+
+## Ça Compte Pour Moi
+
+URL : https://benoitvinceneux.com/ca-compte-pour-moi
+
+Compagnie Fiduciaire — 25ᵉ cabinet d'expertise-comptable indépendant français (CA 30 M€, 400 collaborateurs).
+Intrapreneur · Head of Product & GTM — 2014-2016.
+
+Création de la première offre d'expertise-comptable 100 % digitale en France. De la page blanche au lancement, puis à la rentabilité.
+
+### Mission
+
+Lancer une spin-off digitale pour un acteur traditionnel de l'expertise-comptable. Mission complète : stratégie, marque, business plan, modèle économique, produit, GTM, RH.
+
+### Périmètre
+
+- Stratégie, positionnement, création de la marque, business plan, modèle économique
+- UX, wireframes, conception fonctionnelle de la plateforme
+- Pilotage d'un pool de partenaires (dev, webdesign, RP, achats médias)
+- Plan de lancement multi-canal et plan RH
+- Recrutement et management des 10 premiers collaborateurs (COO, CMO, Head of Sales, CSM)
+
+### Résultats
+
+- Lancement février 2015 avec 2 collaborateurs et 0 client
+- 1 M€ d'ARR un an après le lancement
+- Rentable 3 ans après le lancement
+- 0 → 60 collaborateurs en 3 ans
+- 2019 : 3 000 clients, 45 collaborateurs
+- Top 3 du marché après 4 ans
+
+### Distinctions — Trophées Les Echos 2015
+
+- Or — Marketing digital
+- Or — Stratégie de communication & Innovation de l'offre
+- Prix spécial du jury
+
+---
+
+## Pierre Fabre
+
+URL : https://benoitvinceneux.com/pierre-fabre
+
+Laboratoires Pierre Fabre — Espace Pro B2B.
+1ᵉʳ Product Manager — 2011-2017.
+
+Mission : réinventer la relation entre le Laboratoire et ses 16 000 pharmacies clientes.
+
+### Contexte
+
+Plateforme B2B servant de « centre névralgique relationnel » entre le siège, les marques, les fonctions supports, les commerciaux et les pharmaciens. Premières fonctionnalités lancées en septembre 2015.
+
+### Objectifs de mission
+
+- Augmenter la visibilité de la plateforme auprès de tous les pharmaciens
+- Optimiser l'utilisation des services proposés
+- Intégrer continuellement de nouveaux services (commande en ligne, gestion des factures, e-learning, e-merchandising, retours produits)
+
+### Périmètre — 4 phases
+
+- Explorer : stratégie, ateliers, sessions collaboratives
+- Concevoir : wireframes, design, plans de communication
+- Réaliser : cahiers des charges, appels d'offres, coordination
+- Grandir : dashboards de KPI, acquisition, amélioration continue
+
+### Résultats
+
+- 80 % des pharmacies clientes connectées au moins 1× par semaine
+- 3 heures gagnées par semaine pour les utilisateurs actifs
+- Plateforme servant de base à la stratégie digitale Pierre Fabre déployée par la suite
+
+---
+
+## LePharmacien.fr
+
+URL : https://benoitvinceneux.com/lepharmacien-fr
+
+Résopharma — LePharmacien.fr.
+Product Manager & GTM — 2016-2018.
+
+Objectif : « Imaginer une plateforme de services pour simplifier la relation patient – pharmacien. »
+
+### Contexte
+
+Résopharma fournit des solutions techniques aux professionnels de santé. La société a développé une plateforme B2B2C pour améliorer la relation patient – pharmacien.
+
+### Le dispositif
+
+LePharmacien.fr est multi-canal (desktop, tablette, smartphone) et propose :
+- L'envoi d'ordonnance et le Click & Collect
+- L'enrôlement des patients en pharmacie
+- La recherche d'une pharmacie de garde 24h/24, 7j/7, partout en France
+
+Lancement : octobre 2018. Roadmap déployée fin 2018 et en 2019.
+
+### Périmètre — 4 phases
+
+Explorer
+- Analyse du marché et des dispositifs existants
+- Recherche utilisateur : ateliers avec pharmaciens et patients
+- 10 ateliers de co-création
+
+Concevoir
+- Analyse des flux de données — WebServices et API
+- UX Design et prototypes fonctionnels (desktop, tablette, smartphone)
+- Rédaction du backlog
+- 250 wireframes réalisés
+
+Réaliser
+- Coordination avec les équipes techniques de Résopharma
+
+Grandir
+- Élaboration de la roadmap 2018-2019 pour le lancement des nouvelles fonctionnalités
+
+### Partenaire
+
+Résopharma.
+
+---
+
+## Groupama
+
+URL : https://benoitvinceneux.com/groupama
+
+UX / UI Designer.
+
+Accompagnement de Groupama sur la création d'un extranet à destination des courtiers. La plateforme permet aux courtiers de dématérialiser le suivi administratif avec Groupama et de réaliser des tarifications en quelques clics pour certains risques.
+
+MVP validé et déployé en 2 mois.
+
+### Tâches réalisées
+
+- Réalisation UX & UI (environ 30 écrans produits)
+- Rédaction du backlog produit sur JIRA
+- Itération permanente avec l'équipe technique (interne Groupama)
+
+Ressource : écrans produit sur InVision (https://projects.invisionapp.com/share/MNWVV2MQT6A).
+
+---
+
+## Toulouse Football Club
+
+URL : https://benoitvinceneux.com/toulouse-football-club
+
+Interventions régulières auprès du Toulouse Football Club entre 2014 et 2019.
+
+### Missions réalisées
+
+- Pilotage opérationnel de la refonte du site institutionnel et de la boutique officielle
+- Développement d'un outil CRM custom intégré à l'écosystème du club (site officiel, boutique, billetterie, réseaux sociaux, etc.)
+- Refonte digitale globale : évaluation des outils d'emailing et de publicité, revue des prestataires (hébergement, abonnements divers)
+
+L'engagement illustre une expertise de transformation digitale et de pilotage projet opérationnel dans un contexte d'organisation sportive.
+
+---
+
+## YANA.place
+
+URL : https://benoitvinceneux.com/yana-place
+Site : https://yana.place
+
+Co-fondateur, Designer & gestionnaire (depuis 2018).
+
+> « En 2018, j'achète avec 2 associés un espace de 220 m² en plein cœur de l'hyper-centre de Toulouse. Nous faisons une rénovation complète en 3 mois pour proposer un nouveau produit sur le marché toulousain : des bureaux fermés, pour 4 - 6 personnes, tout équipés, à louer pour minimum 1 an. »
+
+---
+
+## Contact
+
+- Email : benoitvinceneux@gmail.com
+- LinkedIn : https://www.linkedin.com/in/benoitvinceneux/
+- GitHub : https://github.com/benoitvx
+- Localisation : France
