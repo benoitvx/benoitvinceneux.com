@@ -26,3 +26,7 @@
 
 ### Orchestration (#6, PR #34)
 - Le premier run sur `master` n'a pas de cache Playwright (les caches des branches de PR ne sont pas visibles depuis `master`) et `playwright install --with-deps` dépend d'`apt` : un miroir lent a bloqué le job plus de 10 min. Poser `timeout-minutes` sur les jobs pour ne pas attendre le plafond de 6 h.
+
+### Orchestration (#7, PR #35)
+- Le site en ligne envoyait déjà `Strict-Transport-Security: max-age=16000000` depuis la conf serveur, alors que le plan supposait l'absence de HSTS : relever les en-têtes de production (`curl -sI`) avant de fixer des valeurs cibles.
+- Prouver la condition `if:` du job `deploy` avec un `workflow_dispatch` sur une branche **verte** : sur une branche rouge, `needs: test` suffit à le sauter et le test ne prouve rien.
