@@ -15,7 +15,11 @@ for (const file of pages) {
   test(`axe: ${file}`, async ({ page }) => {
     await page.goto(`/${file}`);
     const builder = new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
-    for (const e of axe) if (e.page === '*' || `${e.page}.html` === file) builder.exclude(e.motif);
+    for (const e of axe) {
+      if (e.page !== '*' && `${e.page}.html` !== file) continue;
+      expect(await page.locator(e.motif).count(), `allowlist axe : sélecteur mort ${e.motif}`).toBeGreaterThan(0);
+      builder.exclude(e.motif);
+    }
     const { violations } = await builder.analyze();
     const blocking = violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
     for (const v of violations.filter((v) => !blocking.includes(v))) console.log(`${file} [${v.impact}] ${v.id}`);

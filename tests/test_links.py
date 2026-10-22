@@ -1,27 +1,24 @@
 """T-BV-LNK-01, LNK-02, HOST-01 : liens internes résolus, sans .html, hôtes externes connus."""
-import re
 import unittest
 from urllib.parse import urlsplit
 
 import test_dist as base
 
-DIST = base.DIST
-
 
 def sources():
     """(fichier relatif, chemin de base, [(attribut, valeur brute)], ids) pour chaque HTML et CSS de dist/."""
-    for f in sorted(DIST.rglob("*.html")):
+    for f in sorted(base.DIST.rglob("*.html")):
         doc = base.parse(f)
         ids = {a["id"] for _, a, _ in doc.tags if a.get("id")}
-        yield f.relative_to(DIST).as_posix(), "/" + f.relative_to(DIST).as_posix(), [(k, v) for _, k, v in doc.refs()], ids
-    for f in sorted(DIST.rglob("*.css")):
-        found = re.findall(r"""url\(\s*["']?([^"')]+)""", f.read_text())
-        yield f.relative_to(DIST).as_posix(), "/" + f.relative_to(DIST).as_posix(), [("url()", u) for u in found], set()
+        yield f.relative_to(base.DIST).as_posix(), "/" + f.relative_to(base.DIST).as_posix(), [(k, v) for _, k, v in doc.refs()], ids
+    for f in sorted(base.DIST.rglob("*.css")):
+        found = base.CSS_URL.findall(f.read_text())
+        yield f.relative_to(base.DIST).as_posix(), "/" + f.relative_to(base.DIST).as_posix(), [("url()", u) for u in found], set()
 
 
 def resolves(path):
     rel = "index.html" if path == "/" else path.lstrip("/")
-    return (DIST / rel).is_file() or (DIST / f"{rel}.html").is_file()
+    return (base.DIST / rel).is_file() or (base.DIST / f"{rel}.html").is_file()
 
 
 class TestLinks(unittest.TestCase):

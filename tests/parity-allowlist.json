@@ -1,5 +1,6 @@
 [
   {"test": "PAR-01", "page": "*", "motif": "Aller au contenu", "pourquoi": "D-3 : lien d'évitement ajouté"},
+  {"test": "PAR-01", "page": "*", "motif": "\\(c\\) \\d{4}", "pourquoi": "Ticket #6 : le pied de page affiche l'année du build, le snapshot fige « (c) 2026 »"},
   {"test": "PAR-02", "page": "curated-adventures", "motif": "^/numerique-responsable$", "pourquoi": "D-BV2 : lien vers une page non publiée retiré en #5"},
   {"test": "html-validate", "page": "index", "motif": "long-title", "pourquoi": "Parité : titre de l'accueil du snapshot (plus de 70 caractères) conservé tel quel"},
   {"test": "html-validate", "page": "sigfox", "motif": "no-inline-style", "pourquoi": "Parité : conteneur de la vidéo YouTube responsive en style en ligne, repris du contenu Kirby"},

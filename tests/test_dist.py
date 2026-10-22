@@ -41,6 +41,7 @@ REFERENCE = """\
 /media/	403
 """.splitlines()
 INLINE = {"a", "abbr", "b", "cite", "code", "em", "i", "mark", "q", "s", "small", "span", "strong", "sub", "sup", "u"}
+CSS_URL = re.compile(r"""url\(\s*["']?([^"')]+)""")
 ARTIFACT = re.compile(r"\.(php\d?|phtml|phar)$|^\.env|^\.DS_Store$|\.map$|^\.git$")
 
 
@@ -261,17 +262,16 @@ class TestDist(unittest.TestCase):
         used = []  # (fichier, directive, url)
         directive = {"img": "img-src", "iframe": "frame-src"}
         for f in DIST.rglob("*.html"):
-            for tag, a, _ in parse(f).tags:
-                if tag == "link" and "stylesheet" in (a.get("rel") or "").split():
-                    used.append((f, "style-src", a.get("href") or ""))
-                elif tag in directive:
-                    used.append((f, directive[tag], a.get("src") or ""))
+            doc = parse(f)
+            used += [(f, "style-src", a.get("href") or "") for tag, a, _ in doc.tags
+                     if tag == "link" and "stylesheet" in (a.get("rel") or "").split()]
+            used += [(f, directive[tag], v) for tag, k, v in doc.refs() if tag in directive and k in ("src", "srcset")]
         for f in DIST.rglob("*.css"):
             css = f.read_text()
             imports = re.findall(r"""@import\s+(?:url\()?["']?([^"')\s;]+)""", css)
             used += [(f, "style-src", u) for u in imports]
             used += [(f, "font-src" if re.search(r"\.(woff2?|ttf|otf|eot)([?#]|$)", u) else "img-src", u)
-                     for u in re.findall(r"""url\(\s*["']?([^"')]+)""", css) if u not in imports]
+                     for u in CSS_URL.findall(css) if u not in imports]
         for f, d, url in used:
             if url.startswith(("http://", "https://", "//")):
                 origin = "https://" + urlsplit(url).netloc
