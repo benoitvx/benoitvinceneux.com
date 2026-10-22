@@ -294,10 +294,10 @@ Lancer une spin-off digitale pour un acteur traditionnel de l'expertise-comptabl
 
 URL : https://benoitvinceneux.com/pierre-fabre
 
-Laboratoires Pierre Fabre — Espace Pro B2B.
-1ᵉʳ Product Manager — 2011-2017.
+Laboratoires Pierre Fabre : Espace Pro B2B.
+1ᵉʳ Product Manager B2B : 2014 à 2018.
 
-Mission : réinventer la relation entre le Laboratoire et ses 16 000 pharmacies clientes.
+Mission : réinventer la relation entre le Laboratoire et les pharmacies clientes : 80 % des pharmacies françaises ; 80 % d'entre elles se connectent au moins une fois par semaine.
 
 ### Contexte
 
@@ -309,7 +309,7 @@ Plateforme B2B servant de « centre névralgique relationnel » entre le siège,
 - Optimiser l'utilisation des services proposés
 - Intégrer continuellement de nouveaux services (commande en ligne, gestion des factures, e-learning, e-merchandising, retours produits)
 
-### Périmètre — 4 phases
+### Périmètre : 4 phases
 
 - Explorer : stratégie, ateliers, sessions collaboratives
 - Concevoir : wireframes, design, plans de communication
@@ -318,9 +318,8 @@ Plateforme B2B servant de « centre névralgique relationnel » entre le siège,
 
 ### Résultats
 
-- 80 % des pharmacies clientes connectées au moins 1× par semaine
-- 3 heures gagnées par semaine pour les utilisateurs actifs
-- Plateforme servant de base à la stratégie digitale Pierre Fabre déployée par la suite
+- 3 heures gagnées par semaine pour les pharmaciens utilisateurs
+- Une adoption B2B sur laquelle la stratégie digitale de Pierre Fabre s'est ensuite appuyée
 
 ---
 
