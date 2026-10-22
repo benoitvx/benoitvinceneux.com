@@ -376,7 +376,7 @@ URL : https://benoitvinceneux.com/groupama
 
 UX / UI Designer.
 
-Accompagnement de Groupama sur la création d'un extranet à destination des courtiers. La plateforme permet aux courtiers de dématérialiser le suivi administratif avec Groupama et de réaliser des tarifications en quelques clics pour certains risques.
+Accompagnement de Groupama en 2020 sur la création d'un extranet à destination des courtiers. La plateforme permet aux courtiers de dématérialiser le suivi administratif avec Groupama et de réaliser des tarifications en quelques clics pour certains risques.
 
 MVP validé et déployé en 2 mois.
 
@@ -385,8 +385,6 @@ MVP validé et déployé en 2 mois.
 - Réalisation UX & UI (environ 30 écrans produits)
 - Rédaction du backlog produit sur JIRA
 - Itération permanente avec l'équipe technique (interne Groupama)
-
-Ressource : écrans produit sur InVision (https://projects.invisionapp.com/share/MNWVV2MQT6A).
 
 ---
 
