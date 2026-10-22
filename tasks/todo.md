@@ -1,52 +1,51 @@
-# #11 [CONTENU] services-du-premier-ministre : cinq fronts, AI Product Lead, attribution MCP data.gouv
+# #12 [CONTENU] presidence-de-la-republique : résultats Datalma, équipe, pérennisation
 
-Branche : `feat/bv-11-services-premier-ministre` (déjà créée). PR `Closes #11` ouverte par l'orchestrateur.
-Milestone M3. Dépendance : #9 (mergé). Aucune décision de #2 en jeu (ticket de contenu, pas de dépendance ni de réglage).
-Texte appliqué : version finale de #11, réponses de Benoit du 22/10/2026 incluses (AI Product Lead ; titre « Services du Premier ministre » ; ia.data.gouv.fr retiré ; « auteur » de etalab-ia/skills ; 30+ entretiens ; benchmark de transcription conservé).
-`tasks/lessons.md` (leçons de #9) et ce plan : commités par le tech lead.
+Branche : `feat/bv-12-presidence` (déjà créée). PR `Closes #12` ouverte par l'orchestrateur.
+Milestone M3. Dépendance : #9 (mergé). Aucune décision de #2 en jeu (contenu seul, ni dépendance, ni réglage, ni secret).
+Texte appliqué : version finale de #12, réponses de Benoit du 22/10/2026 incluses :
+- dates : **octobre 2024 à décembre 2025** ;
+- « au-delà d'un changement de gouvernement » : **retiré**, on garde « Service pérennisé après 15 mois » ;
+- « 5 à 6 réactions ministérielles en 6 mois » : **retiré** (absent de la proposition : ne pas l'ajouter).
 
 ## Critères d'acceptation
 
-- [ ] Titre de page inchangé : `Services du Premier ministre` (donc `<title>` inchangé).
-- [ ] Chapeau : « Direction interministérielle du numérique, Services du Premier ministre 🇫🇷 », « *AI Product Lead : depuis janvier 2026* », puis le paragraphe IAE de l'issue.
-- [ ] « Le contexte » : texte de l'issue (« ×2 par rapport à 2024 », « de gros consommateurs », citation avec deux-points), sans « — ».
-- [ ] « La mission : cinq fronts » : les 5 puces de l'issue, mot pour mot.
-- [ ] « L'approche : initialiser, prouver, transférer » : paragraphe actuel inchangé.
-- [ ] Bloc « L'offre data : 3 piliers + 1 chantier » supprimé.
-- [ ] « Réalisations » (et non plus « Réalisations clés ») : 4 blocs de l'issue, mot pour mot (100 questions, 8 catégories, +16 %, ~10 % d'erreur, 30+ entretiens, 3 POC, etalab-ia/skills « dont je suis l'auteur »).
-- [ ] « Coordination de l'exposition des données » : MCP data.gouv.fr en coordination et suivi produit, 45 M de requêtes en 100 jours ; accompagnement avec la liste actuelle des administrations.
-- [ ] Plus aucune trace de : « 3 millions de requêtes par semaine », « Buzz com », « 100 % retours positifs », ia.data.gouv.fr, « CPO MCP & Données », « Golden Dataset », la liste de skills tronquée.
-- [ ] « Convictions portées » : 3 puces actuelles inchangées (*by design* en italique).
-- [ ] Meta description = texte exact de l'issue.
+- [ ] Titre de page inchangé : `Présidence de la République` (donc `<title>` inchangé).
+- [ ] Chapeau = texte de l'issue (trois paragraphes : rôle et programme ; *Octobre 2024 à décembre 2025* en italique ; Datalma développement conjoint + cible), les trois liens actuels conservés.
+- [ ] Citation actuelle conservée (voir points d'attention).
+- [ ] « Mission » : texte actuel, « — » remplacé par une virgule.
+- [ ] « Réalisations » : 3 blocs dans l'ordre de l'issue, mot pour mot : Datalma Alerting (avec « 5 minutes » et « 5 meilleures opportunités par e-mail à 9 h »), Plateforme décisionnelle : observatoire santé (« livré en 1 semaine, repris par la presse, toujours en ligne »), Une équipe et un service qui durent (équipe de 10 personnes, pérennisé après 15 mois).
+- [ ] Plus aucune trace de : « septembre 2024 », « shippé », « comme alternative aux rapports institutionnels », « Plateforme d'intelligence décisionnelle », « réactions ministérielles », « changement de gouvernement », « start-up d'état ».
+- [ ] « Stack » : `Python, Metabase, Dagster, dbt, React, embeddings Qwen3, Mistral, Docker.`
+- [ ] Meta description cohérente avec le nouveau chapeau (l'issue n'en donne pas : reprendre la première phrase du chapeau, voir étape 1).
 - [ ] Aucun « — », « · », « | » dans le texte visible, le `<title>` et la meta description de la page.
-- [ ] URL, slug, `order`, `cover`, `images` inchangés.
-- [ ] `public/llms.txt` et `public/llms-full.txt` : passages Services du Premier ministre alignés (voir étape 2).
+- [ ] URL, slug, `order`, `textposition`, `cover`, `images` inchangés ; liens existants inchangés (datalma.beta.gouv.fr, eig.numerique.gouv.fr, numerique.gouv.fr, explore.data.gouv.fr/grippe/). Aucun lien ajouté.
+- [ ] `public/llms.txt` et `public/llms-full.txt` : passages Présidence alignés (étape 2).
 
 ## Tests (catalogue #10)
 
-Aucun test à ajouter (l'issue n'en demande pas). Tests existants qui doivent rester verts sans modification, et ceux que ce ticket touche :
+Aucun test à ajouter (l'issue n'en demande pas). Tests existants qui doivent rester verts sans modification :
 
-| ID | Fichier | Lien avec #11 |
+| ID | Fichier | Lien avec #12 |
 |---|---|---|
 | T-BV-BUILD-01 | `npx astro build` + `tests/test_dist.py` | build de la page modifiée |
 | T-BV-CONT-01, T-BV-CONT-02, T-BV-CONT-03 | `tests/test_content.py` | front matter (`description` non vide, `cover`/`images` existants), pas de KirbyText |
-| T-BV-SPE-01 | `tests/test_dist.py` | toute URL `benoitvinceneux.com/...` des `llms*.txt` doit être une entrée 200 de `legacy-urls.txt` : ne garder que `/services-du-premier-ministre`, n'ajouter aucune URL du domaine |
+| T-BV-SPE-01 | `tests/test_dist.py` | URL `benoitvinceneux.com/...` des `llms*.txt` : `/presidence-de-la-republique` est bien 200 dans `legacy-urls.txt` ; n'ajouter aucune URL du domaine |
 | T-BV-SEO-01 | `tests/test_dist.py` | canonical, meta description non vide, `<title>` unique |
-| T-BV-LNK-01, T-BV-LNK-02, T-BV-HOST-01 | `tests/test_links.py` | lien externe `github.com/etalab-ia/skills` déjà présent ; aucun nouvel hôte |
+| T-BV-LNK-01, T-BV-LNK-02, T-BV-HOST-01 | `tests/test_links.py` | hôtes déjà dans `tests/allowed-hosts.txt` ; aucun nouvel hôte |
 | T-BV-HTML-01 | `npx html-validate "dist/**/*.html"` (+ `tests/test_repo.py`) | HTML de la page |
-| T-BV-HTTP-01 | `tests/http_check.sh` sur Apache local servant `dist/` | page et `llms*.txt` en 200, `text/markdown` |
+| T-BV-HTTP-01 | `tests/http_check.sh` sur Apache local servant `dist/` | page et `llms*.txt` en 200 |
 | T-BV-A11Y-01, T-BV-A11Y-02 | `tests/e2e/a11y.spec.ts`, `tests/test_a11y.py` | axe sur la page |
 | Autres (ART, INV, SPE-02..06, HTA, CSP, BUD, DEP, WF, GUARD, IMP) | `tests/*.py` | non concernés, doivent rester verts |
 
-Commande unique : `npx astro build && python3 -I -m unittest discover -s tests -v && npx html-validate "dist/**/*.html"`, puis Apache local + `BASE_URL=http://127.0.0.1:<port> bash tests/http_check.sh`, puis `npx playwright test`.
+Commande : `npx astro build && python3 -I -m unittest discover -s tests -v && npx html-validate "dist/**/*.html"`, puis Apache local + `BASE_URL=http://127.0.0.1:<port> bash tests/http_check.sh`, puis `npx playwright test`.
 
 ## Fichiers modifiés (3, rien à créer)
 
-1. `src/content/projects/services-du-premier-ministre.md` : front matter `description` + corps entier.
-2. `public/llms.txt` : ligne 8 seulement.
-3. `public/llms-full.txt` : section `## Services du Premier ministre — DINUM` seulement (lignes ~64 à 122).
+1. `src/content/projects/presidence-de-la-republique.md` : front matter `description` + corps entier.
+2. `public/llms.txt` : ligne 9 seulement.
+3. `public/llms-full.txt` : section `## Présidence de la République — Datalma` seulement (lignes ~124 à 160, jusqu'au `---` qui précède `## 🍿 Curated Adventures`).
 
-Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` et le résumé d'en-tête des deux `llms*.txt` (« CPO MCP & Données », lignes 3, 22, 28 de llms-full.txt, ligne 3 de llms.txt) relèvent de #13 et #22. Gabarit, `<title>` « – Benoit Vinceneux » (tiret demi-cadratin, autorisé) : #14.
+Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` ligne 28 (dates et « · » du parcours) et la ligne 29 de `public/llms-full.txt` (parcours de la section À propos) relèvent de #13 (qui porte déjà « octobre 2024 à décembre 2025 ») et #22. Gabarit, séparateur du `<title>` : #14.
 
 ## Étapes
 
@@ -55,90 +54,69 @@ Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` et le résumé d'
 Garder `title`, `order`, `textposition`, `cover`, `images` à l'octet. Remplacer `description` par :
 
 ```
-description: "Direction interministérielle du numérique : IA dans l'État. Données publiques pour l'IA, code agentique souverain, évaluation des modèles, coaching produit."
+description: "Directeur Produit / CPO de la startup d'État Datalma, programme Entrepreneur d'intérêt général de la Direction interministérielle du numérique (DINUM)."
 ```
 
-Corps cible (conserver les conventions Markdown actuelles : `###` pour les sections, deux espaces en fin de ligne pour les retours à la ligne) :
+Corps cible (conventions Markdown actuelles : `###` pour les sections, deux espaces en fin de ligne pour les retours à la ligne dans un bloc) :
 
 ```markdown
-**Direction interministérielle du numérique, Services du Premier ministre 🇫🇷**  
-*AI Product Lead : depuis janvier 2026*
+**Directeur Produit** / **CPO** de la startup d'État [Datalma](https://datalma.beta.gouv.fr/), programme [Entrepreneur d'intérêt général](https://www.eig.numerique.gouv.fr/) de la [Direction interministérielle du numérique](https://www.numerique.gouv.fr/) (DINUM).
 
-Au sein du département IA dans l'État (IAE, ex-Etalab) de la DINUM, je contribue à intégrer l'IA dans les services publics : dans les outils des agents comme dans les services accessibles aux citoyens.
+*Octobre 2024 à décembre 2025*
 
-### Le contexte
+Datalma est un développement conjoint des Services du Premier ministre (DINUM) et de la Présidence de la République : une plateforme d'aide à la décision pour le sommet de l'État. Cible : Président, ministres, conseillers, directeurs de cabinet, directeurs d'administration centrale.
 
-Les données publiques françaises sont abondantes mais mal exposées pour l'IA. Le trafic humain sur les portails baisse, les appels API explosent (340 M en 2025 sur la DILA, ×2 par rapport à 2024). Les agents et assistants IA deviennent de gros consommateurs de données publiques, mais ces données ne sont pas dans les formats dont ils ont besoin.
+> *« Contribuer à une action publique à la fois plus performante et plus ouverte, en transformant l'accès aux données gouvernementales pour les décideurs et à terme pour les citoyens. »*
 
-> *Le problème n'est pas le modèle, c'est la donnée. Et la donnée n'est pas absente : elle est mal exposée.*
+### Mission
 
-### La mission : cinq fronts
-
-- **Ouvrir les données publiques à l'IA** : coordination des serveurs MCP, CLI et skills qui connectent les modèles aux données publiques, et accompagnement des administrations qui exposent leurs propres données.
-- **Équiper les développeurs de l'État** : une stack de code agentique souveraine, avec les standards de l'État embarqués dès la conception (design system, accessibilité RGAA, sécurité).
-- **Structurer les pratiques d'évaluation IA** : jeux de données de référence, LLM-as-a-judge, méthodes adaptées à chaque type de produit.
-- **Veille sur l'IA agentique et les nouveaux usages**, pour en tirer des enseignements actionnables.
-- **Coaching produit** des équipes de l'incubateur IA de l'État (ALLiaNCE) et réflexion sur la stratégie des services IA aux citoyens.
-
-### L'approche : initialiser, prouver, transférer
-
-(paragraphe actuel, à l'octet)
+Faciliter l'accès aux données publiques et inter-administratives non ouvertes pour permettre des décisions politiques éclairées et rapides, y compris en mobilisant l'IA pour trouver des corrélations entre les données.
 
 ### Réalisations
 
-**Évaluation LLM verticalisée : une méthode réplicable**  
-- Jeu de données de référence de 100 questions sur 8 catégories juridiques, construit à partir de conversations réelles  
-- LLM-as-a-judge pour comparer plusieurs approches  
-- +16 % de qualité par rapport à la référence avec l'approche hybride retenue, déployée en production
+**Datalma Alerting : un agent de veille push, presse × données internes**  
+Chaque matin, le système repère dans la presse les sujets sur lesquels l'État dispose de données pour éclairer le débat public, et envoie les 5 meilleures opportunités par e-mail à 9 h.  
+- Pipeline en 4 étapes : ingestion RSS (environ 30 articles par jour), embeddings Qwen3-Embedding-0.6B, similarité cosinus avec le catalogue de jeux de données, e-mail du top 5  
+- Une veille manuelle de plusieurs heures ramenée à 5 minutes  
+- Stack 100 % souveraine
 
-**Évaluation de la transcription audio**  
-- Benchmark de modèles ouverts et commerciaux sur un corpus représentatif de l'administration : environ 10 % de taux d'erreur en moins  
-- Contribution au benchmark open source qui porte la méthode
+**Plateforme décisionnelle : observatoire santé**  
+- Tableaux de bord internes pour le Président, Matignon et le ministère de la Santé sur des indicateurs non ouverts (épidémies, hospitalisations…)  
+- [Observatoire grand public du suivi de la grippe](https://explore.data.gouv.fr/grippe/) : livré en 1 semaine, repris par la presse, toujours en ligne
 
-**Stack de code agentique souveraine**  
-- 30+ entretiens dans les ministères  
-- Benchmark comparatif d'agents de code sur inférence souveraine, 3 POC livrés  
-- Standards de l'État embarqués sous forme de skills : design system, accessibilité, sécurité
+**Une équipe et un service qui durent**  
+- Équipe de 10 personnes constituée et animée : data science, data engineering, développement, go-to-market  
+- Service pérennisé après 15 mois
 
-**Skills État : les standards de l'État dans les assistants de code**  
-- Dépôt [etalab-ia/skills](https://github.com/etalab-ia/skills), dont je suis l'auteur : DSFR, RGAA, sécurité ANSSI, data.gouv.fr, La Suite
-
-### Coordination de l'exposition des données
-
-- **Serveur MCP data.gouv.fr** : coordination et suivi produit du serveur qui connecte les modèles d'IA à l'open data français ; 45 M de requêtes en 100 jours.
-- **Accompagnement des administrations** qui exposent leurs données dans des formats prêts pour l'IA (MCP, CLI, skills) : data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA ; retours d'expérience, questions-réponses, aide à la conception, articles de vulgarisation.
-
-### Convictions portées
-
-(3 puces actuelles, à l'octet)
+### Stack  
+Python, Metabase, Dagster, dbt, React, embeddings Qwen3, Mistral, Docker.
 ```
 
 ### 2. Fichiers LLM (mêmes faits que la page, aucun ajout)
 
-- `public/llms.txt` ligne 8 : remplacer par l'entrée validée dans #22 (mêmes faits que la page) :
-  `- [Services du Premier ministre](https://benoitvinceneux.com/services-du-premier-ministre): AI Product Lead à la DINUM depuis janvier 2026. Cinq fronts : données publiques pour l'IA (coordination du serveur MCP data.gouv.fr, 45 M de requêtes en 100 jours), stack de code agentique souveraine, évaluation LLM verticalisée (100 questions, +16 % de qualité), veille agentique, coaching produit.`
-- `public/llms-full.txt` : réécrire la section entre `## Services du Premier ministre — DINUM` et le `---` qui précède `## Présidence de la République` comme transcription texte de la page (titre `## Services du Premier ministre : DINUM`, ligne URL inchangée, puis chapeau, Contexte, Mission : cinq fronts, Approche, Réalisations, Coordination de l'exposition des données, Convictions portées), sans « — » ni « · ». Supprimer « Offre data : 3 piliers + 1 chantier », l'ancien MCP data.gouv, ia.data.gouv.fr. Garder le style du fichier (pas de gras Markdown, puces `- `).
+- `public/llms.txt` ligne 9 : remplacer par l'entrée validée dans #22 (mêmes faits que la page) :
+  `- [Présidence de la République](https://benoitvinceneux.com/presidence-de-la-republique): CPO Datalma, startup d'État (octobre 2024 à décembre 2025). Plateforme d'aide à la décision pour le sommet de l'État. Datalma Alerting (veille de plusieurs heures ramenée à 5 minutes), observatoire grippe livré en 1 semaine, service pérennisé après 15 mois.`
+- `public/llms-full.txt` : réécrire la section entre `## Présidence de la République — Datalma` et le `---` qui précède `## 🍿 Curated Adventures` comme transcription texte de la page : titre `## Présidence de la République : Datalma`, ligne `URL :` inchangée, puis chapeau (rôle, dates, développement conjoint + cible), citation, `### Mission`, `### Réalisations` (3 blocs, intitulés de la page, même contenu), `### Stack`. Sans « — » ni « · ». Style du fichier : pas de gras Markdown, pas de liens Markdown, puces `- `.
 
 ### 3. Vérification locale
 
-1. `npx astro build`, puis les 4 commandes du tableau Tests.
-2. Contrôle des séparateurs (« — », « · », « | ») :
-   - `grep -nE '—|·|\|' dist/services-du-premier-ministre.html` : seuls résultats acceptables hors `<title>`, meta description et `<main>` (gabarit, #14) ;
-   - `sed -n '8p' public/llms.txt | grep -E '—|·|\|'` : 0 résultat ;
-   - `awk '/^## Services du Premier ministre/,/^## Présidence/' public/llms-full.txt | grep -nE '—|·|\|'` : 0 résultat.
-3. `grep -n "3 millions\|Buzz\|ia.data.gouv\|CPO MCP\|Golden" dist/services-du-premier-ministre.html` : 0 résultat.
-4. `git diff --stat` : seulement les 3 fichiers + `tasks/` ; front matter `cover`/`images` identiques.
+1. `npx astro build`, puis les commandes du tableau Tests.
+2. Séparateurs :
+   - `grep -nE '—|·|\|' dist/presidence-de-la-republique.html` : résultats acceptables seulement hors `<title>`, meta description et `<main>` (gabarit, #14) ;
+   - `sed -n '9p' public/llms.txt | grep -E '—|·|\|'` : 0 résultat ;
+   - `awk '/^## Présidence/,/^## 🍿/' public/llms-full.txt | grep -nE '—|·|\|'` : 0 résultat.
+3. `grep -nE "septembre 2024|shippé|alternative aux rapports|intelligence décisionnelle|réactions|changement de gouvernement" dist/presidence-de-la-republique.html public/llms.txt` (ligne 9) et la section Présidence de `llms-full.txt` : 0 résultat.
+4. `git diff --stat` : seulement les 3 fichiers + `tasks/todo.md` ; `cover`/`images` identiques.
 
 ### 4. Commit
 
-`content: Services du Premier ministre, cinq fronts et intitulé AI Product Lead (#11)`. (`tasks/lessons.md` et ce plan sont déjà commités par le tech lead.)
+`content: Présidence de la République, résultats Datalma, équipe et pérennisation (#12)` (inclut `tasks/todo.md`).
 
 ## Points d'attention
 
-- Attribution : le MCP data.gouv.fr est en **coordination et suivi produit**, jamais « construit » ni en tête des réalisations. Ne rien ajouter : pas de lien vers le benchmark de transcription (l'issue n'en donne pas), pas de lien MCP, pas de chiffre hors issue.
-- Ne jamais citer ni nommer les « Sources » de l'issue (documents privés), ni la lettre de mission ou une doctrine non publiée.
-- Le gabarit (`src/layouts/Base.astro`, `[slug].astro`) ou le pied de page peuvent contenir « · » ou « | » hors du contenu de la page : hors périmètre (#14). Le contrôle porte sur le `<title>`, la meta description et le contenu de `<main>`.
-- `DILA / Légifrance` : la barre oblique n'est pas un séparateur interdit ; la liste reprend la page actuelle à l'identique.
-- Placement de la liste des administrations (dans la puce « Accompagnement », avant les types d'aide, séparée par « ; ») : choix éditorial, l'issue dit seulement « inchangée » ; la phrase est figée ci-dessus.
-- Première ligne du chapeau en gras, comme la page actuelle (seul le texte change).
+- Citation : l'issue n'en parle pas (ni « conservé » ni « supprimé ») et ne la reprend pas dans le chapeau ; le chapeau est « conservé, sans changement de fond » et le Constat ne demande pas son retrait : on la garde à l'identique. Si un relecteur lit l'omission comme un retrait, le signaler plutôt que trancher seul.
+- Liens du chapeau : l'issue donne le texte sans liens ; règle de parité (aucun lien ne change) : on garde les trois liens actuels sur les mêmes mots. Gras actuel sur « Directeur Produit » / « CPO » conservé.
+- Attribution : ne rien ajouter. Pas de « 5 à 6 réactions », pas de « changement de gouvernement », pas de lien nouveau, pas de chiffre hors issue. « Équipe de 10 personnes constituée et animée » mot pour mot, sans reformulation.
+- Ne jamais citer ni nommer les « Sources » de l'issue (documents privés), ni de doctrine non publiée.
+- « × » (presse × données internes) et « / » (Directeur Produit / CPO) ne sont pas des séparateurs interdits. Les flèches « → » du pipeline actuel disparaissent (texte de l'issue avec virgules).
 - `.nvmrc` reste à 24.

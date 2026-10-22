@@ -121,38 +121,41 @@ Skills État : les standards de l'État dans les assistants de code
 
 ---
 
-## Présidence de la République — Datalma
+## Présidence de la République : Datalma
 
 URL : https://benoitvinceneux.com/presidence-de-la-republique
 
-Directeur Produit / CPO pour Datalma (startup d'État) — septembre 2024 à décembre 2025.
+Directeur Produit / CPO de la startup d'État Datalma, programme Entrepreneur d'intérêt général de la Direction interministérielle du numérique (DINUM).
 
-Programme Entrepreneur d'Intérêt Général au sein de la Direction Interministérielle du Numérique (DINUM). Partenaires : Services du Premier ministre & Présidence de la République.
+Octobre 2024 à décembre 2025
 
-### Objectif de Datalma
+Datalma est un développement conjoint des Services du Premier ministre (DINUM) et de la Présidence de la République : une plateforme d'aide à la décision pour le sommet de l'État. Cible : Président, ministres, conseillers, directeurs de cabinet, directeurs d'administration centrale.
 
-Plateforme d'intelligence décisionnelle destinée aux décideurs gouvernementaux (Président, ministres, conseillers, directeurs de cabinet).
-
-> « Contribuer à une action publique à la fois plus performante et plus ouverte. »
+> « Contribuer à une action publique à la fois plus performante et plus ouverte, en transformant l'accès aux données gouvernementales pour les décideurs et à terme pour les citoyens. »
 
 ### Mission
 
-Faciliter l'accès aux données publiques et inter-administratives pour des décisions politiques éclairées, incluant la mobilisation de l'IA.
+Faciliter l'accès aux données publiques et inter-administratives non ouvertes pour permettre des décisions politiques éclairées et rapides, y compris en mobilisant l'IA pour trouver des corrélations entre les données.
 
-### Réalisations clés
+### Réalisations
 
-Observatoire santé
-- Tableaux de bord internes (épidémies, hospitalisations)
-- Observatoire public grippe lancé en 1 semaine
+Datalma Alerting : un agent de veille push, presse × données internes
+Chaque matin, le système repère dans la presse les sujets sur lesquels l'État dispose de données pour éclairer le débat public, et envoie les 5 meilleures opportunités par e-mail à 9 h.
+- Pipeline en 4 étapes : ingestion RSS (environ 30 articles par jour), embeddings Qwen3-Embedding-0.6B, similarité cosinus avec le catalogue de jeux de données, e-mail du top 5
+- Une veille manuelle de plusieurs heures ramenée à 5 minutes
+- Stack 100 % souveraine
 
-Datalma Alerting
-- Pipeline IA détectant les sujets presse / données gouvernementales
-- Traite environ 30 articles par jour
-- Stack souveraine à 100 %
+Plateforme décisionnelle : observatoire santé
+- Tableaux de bord internes pour le Président, Matignon et le ministère de la Santé sur des indicateurs non ouverts (épidémies, hospitalisations…)
+- Observatoire grand public du suivi de la grippe (https://explore.data.gouv.fr/grippe/) : livré en 1 semaine, repris par la presse, toujours en ligne
 
-### Technologies
+Une équipe et un service qui durent
+- Équipe de 10 personnes constituée et animée : data science, data engineering, développement, go-to-market
+- Service pérennisé après 15 mois
 
-Python, Metabase, Dagster, dbt, React, Mistral.
+### Stack
+
+Python, Metabase, Dagster, dbt, React, embeddings Qwen3, Mistral, Docker.
 
 ---
 
