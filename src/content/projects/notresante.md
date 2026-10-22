@@ -1,14 +1,14 @@
 ---
 title: "NotreSanté"
 order: 6
-description: "NotreSanté — startup e-santé Cofondateur, CPO — 2017-2020"
+description: "NotreSanté, startup e-santé : cofondateur et CPO, 2016 à 2019."
 textposition: "above"
 cover: { src: "/media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-288x288.png", srcset: "/media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-288x288.png 288w,/media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-576x576.png 576w" }
 images:
   - { src: "/media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-640x.png", srcset: "/media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-320x.png 320w, /media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-640x.png 640w, /media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-960x.png 960w, /media/pages/notresante/f74b6cc8ef-1603366145/notresante-min-1280x.png 1280w", width: 640, height: 640 }
 ---
-**NotreSanté — startup e-santé**  
-*Cofondateur, CPO — 2017-2020*
+**NotreSanté : startup e-santé**  
+*Cofondateur, CPO : 2016 à 2019*
 
 Application mobile iOS / Android pour la gestion de la santé des familles avec enfants en bas âge. Cible B2C : familles avec enfants de moins de 10 ans.
 
@@ -23,14 +23,14 @@ Exemple de parcours croisé : un parent chez le médecin reçoit une ordonnance,
 - Produit end-to-end : discovery, conception, pilotage du dev, go-to-market  
 - Stratégie produit, recherche utilisateurs, validation UX/UI  
 - Management : 1 PO, 1 designer, 3 développeurs  
-- Levée de fonds, structuration juridique, recrutement  
-- Hébergement de Données de Santé (HDS) — conformité bout-en-bout  
+- Levée de fonds, structuration juridique, constitution de l'équipe  
+- Hébergement de Données de Santé (HDS) : conformité de bout en bout  
 - Partenariats laboratoires pharmaceutiques et pharmaciens
 
 ### Distinctions
 
-- 2019 — Trophée de la Citoyenneté et de la Solidarité, Conseil Départemental de la Haute-Garonne  
-- 2018 — Prix de l'innovation, CCI Occitanie
+- 2019 : Trophée de la Citoyenneté et de la Solidarité, Conseil départemental de la Haute-Garonne  
+- 2018 : Prix de l'innovation, CCI Occitanie
 
 ### Ce qu'il en reste
 

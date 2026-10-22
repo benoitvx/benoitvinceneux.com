@@ -221,8 +221,8 @@ Résultats :
 
 URL : https://benoitvinceneux.com/notresante
 
-NotreSanté — startup e-santé.
-Cofondateur, CPO — 2017-2020.
+NotreSanté : startup e-santé.
+Cofondateur, CPO : 2016 à 2019.
 
 Application mobile iOS / Android pour la gestion de la santé des familles avec enfants en bas âge. Cible B2C : familles avec enfants de moins de 10 ans.
 
@@ -237,14 +237,14 @@ Exemple de parcours croisé : un parent chez le médecin reçoit une ordonnance,
 - Produit end-to-end : discovery, conception, pilotage du dev, go-to-market
 - Stratégie produit, recherche utilisateurs, validation UX/UI
 - Management : 1 PO, 1 designer, 3 développeurs
-- Levée de fonds, structuration juridique, recrutement
-- Hébergement de Données de Santé (HDS) — conformité bout-en-bout
+- Levée de fonds, structuration juridique, constitution de l'équipe
+- Hébergement de Données de Santé (HDS) : conformité de bout en bout
 - Partenariats laboratoires pharmaceutiques et pharmaciens
 
 ### Distinctions
 
-- 2019 — Trophée de la Citoyenneté et de la Solidarité, Conseil Départemental de la Haute-Garonne
-- 2018 — Prix de l'innovation, CCI Occitanie
+- 2019 : Trophée de la Citoyenneté et de la Solidarité, Conseil départemental de la Haute-Garonne
+- 2018 : Prix de l'innovation, CCI Occitanie
 
 ### Ce qu'il en reste
 
