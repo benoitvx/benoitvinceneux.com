@@ -1,0 +1,6 @@
+[
+  {"test": "html-validate", "page": "*", "motif": "long-title", "pourquoi": "Parité : titre de l'accueil du snapshot (plus de 70 caractères) conservé tel quel ; html-validate ne permet pas de désactiver une règle pour un seul fichier : la règle est coupée pour tout le site"},
+  {"test": "html-validate", "page": "*", "motif": "no-inline-style", "pourquoi": "Parité : conteneur de la vidéo YouTube responsive en style en ligne, repris du contenu Kirby ; html-validate ne permet pas de désactiver une règle pour un seul fichier : la règle est coupée pour tout le site"},
+  {"test": "axe", "page": "sigfox", "motif": "iframe[src^=\"https://www.youtube-nocookie.com/\"]", "pourquoi": "Contenu tiers : les violations (boutons sans nom, ARIA) sont dans le lecteur YouTube, hors de notre HTML ; l'iframe elle-même a un title (A11Y-01)"},
+  {"test": "axe", "page": "google48428a5b5297f7c9", "motif": "html", "pourquoi": "Fichier de vérification Google : texte brut sans balisage, pas une page du site ; servi tel quel à l'octet (T-BV-SPE-02)"}
+]

@@ -67,7 +67,19 @@ class TestRepo(unittest.TestCase):
         self.assertLess(guard, rsync, "deploy.yml, job deploy : predeploy_guard.sh doit précéder rsync")
         self.assertIn("--delete-after --delay-updates", lines[rsync], "deploy.yml, rsync : --delete-after --delay-updates absent")
         self.assertIn(" dist/ ", lines[rsync], "deploy.yml, rsync : source dist/ absente")
-        self.assertNotIn("site/", job, "deploy.yml, job deploy : publie encore site/")
+
+    def test_html_01_exceptions(self):
+        entries = json.loads((ROOT / "tests/exceptions.json").read_text())
+        for e in entries:
+            for k in ("test", "page", "motif", "pourquoi"):
+                self.assertTrue(str(e.get(k, "")).strip(), f"tests/exceptions.json : champ {k} vide dans {e}")
+            self.assertIn(e["test"], {"html-validate", "axe"}, f"tests/exceptions.json : test inconnu dans {e}")
+            if e["page"] != "*":  # entrée morte = échec
+                self.assertTrue((ROOT / "dist" / f"{e['page']}.html").is_file(), f"tests/exceptions.json : page absente de dist/ dans {e}")
+        rules = json.loads((ROOT / ".htmlvalidate.json").read_text()).get("rules", {})
+        off = {r for r, v in rules.items() if v == "off"}
+        html = {e["motif"] for e in entries if e["test"] == "html-validate"}
+        self.assertEqual(off, html, f".htmlvalidate.json : règles à off {sorted(off)} ≠ entrées html-validate de tests/exceptions.json {sorted(html)}")
 
     def test_art_03_no_php_in_git(self):
         files = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True).stdout.decode().split("\0")
@@ -75,7 +87,7 @@ class TestRepo(unittest.TestCase):
         for f in filter(None, files):
             self.assertNotRegex(f, r"\.php\d?$", f"fichier PHP versionné : {f}")
             if f.endswith(".htaccess"):
-                self.assertIn(f, {"public/.htaccess", "site/.htaccess"}, f".htaccess versionné hors public/ et site/ : {f}")
+                self.assertEqual(f, "public/.htaccess", f".htaccess versionné hors public/ : {f}")
             path = ROOT / f
             if path.is_file() and not path.is_symlink():
                 self.assertNotIn(needle, path.read_bytes(), f"balise PHP dans le fichier versionné {f}")

@@ -1,120 +1,99 @@
-# #7 [BV-05] Bascule : déploiement de `dist/` conditionné aux tests
+# #9 [BV-07] Nettoyage : suppression du snapshot `site/`
 
-> Remplacé en partie le 22/10/2026 (décisions de Benoit) : HSTS laissé au serveur (absent de `public/.htaccess`, smoke avec `HSTS_MIN_AGE=16000000`), pas d'environnement `production` (secrets au niveau du dépôt). Les mentions de `environment: production` et `HSTS_MAX_AGE=300` ci-dessous sont caduques.
+Branche : `feat/bv-07-nettoyage-snapshot` (déjà créée). PR `Closes #9` ouverte par l'orchestrateur.
+Décision de Benoit du 22/10/2026 (commentaire de #9) : fait maintenant, sans attendre #8 ; le prérequis « #8 fermé » de la recette est ignoré.
+Dépendances : #7 (bascule) mergé, `master` déploie `dist/`. Décision liée (#2) : D-2 (observation avant suppression, levée par la décision du 22/10). Décisions du 22/10 appliquées : HSTS posé par le serveur (absent de `public/.htaccess`, plus de passage à 31536000), pas d'environnement GitHub.
+Tag annoté `snapshot-kirby` : **déjà créé et poussé** par l'orchestrateur sur `ff18679` (dernier commit de `master` contenant `site/`). Ne pas le recréer ni le déplacer.
+Inchangés : `package.json`, lockfile, `.nvmrc` (24), `public/`, `src/`, secrets `DEPLOY_*`, cible et source rsync (`dist/`), job `test`, `scripts/import_kirby.py`.
 
-Branche : `feat/bv-05-bascule` (déjà créée). PR `Closes #7` ouverte par l'orchestrateur, **non mergée** : M2 = mise en production, Benoit décide (CLAUDE.md, garde-fous).
-Dépendances : #4 (BV-02) et #6 (BV-04) mergés. Décisions liées (#2) : D-1 (pas de préproduction : smoke + revert en moins de 5 min), D-5 (Environment `production` + protection de `master`, réglés par Benoit).
-`tasks/lessons.md` (modifié, non commité) part avec le premier commit.
-Inchangés : `package.json`, lockfile, `.nvmrc` (24), job `test` (sauf `timeout-minutes`), secrets `DEPLOY_*`, cible rsync.
+## Critères d'acceptation (issue #9)
 
-## Critères d'acceptation (issue #7)
+- [ ] Le tag `snapshot-kirby` existe sur le dépôt distant (fait : `git ls-remote --tags origin snapshot-kirby`)
+- [ ] CI verte sans `site/`
+- [ ] Supprimés : `site/`, `tests/test_parity.py`, `tests/parity-allowlist.json`
+- [ ] README : retour arrière via le tag
+- [ ] Demande de Benoit : CLAUDE.md à jour dans la même PR
 
-- [ ] Un test volontairement rouge sur une PR de contrôle empêche tout déploiement
-- [ ] Un `workflow_dispatch` lancé depuis une autre branche ne déploie pas
-- [ ] Le job échoue avant le rsync si `.htaccess` manque ou si `dist/` contient trop peu de pages
-- [ ] Smoke vert après le premier déploiement
-- [ ] Le README décrit le rollback en 3 étapes au plus
+## Tests (catalogue #10)
 
-## Tests à livrer (catalogue #10)
-
-| ID | Fichier | Contenu |
+| ID | Action | Fichier |
 |---|---|---|
-| T-BV-WF-04 | `tests/test_repo.py` (nouvelle méthode `test_wf_04_deploy_job`) | Lire `deploy.yml`, isoler le bloc du job (de `^  deploy:` à la fin ou au job suivant `^  \w`). Regex `re.M` : `^\s+needs:\s*test\s*$` ; ligne `if:` **exacte** `if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'` ; `concurrency:` suivi de `group: deploy` et `cancel-in-progress: false`. Index de la première ligne contenant `predeploy_guard.sh` < index de la première ligne qui matche `run:.*rsync ` ; cette même ligne contient `--delete-after --delay-updates` et ` dist/ ` comme source ; `assertNotIn("site/", bloc_deploy)`. Message d'échec nommant le critère manquant. |
-| T-BV-GUARD-01 | `tests/test_guard.py` (nouveau) | 5 cas, `subprocess.run(["bash", ROOT/"tests/predeploy_guard.sh", tmp])` sur des copies de `dist/` dans `tempfile.TemporaryDirectory()` (`shutil.copytree(..., symlinks=True)`) : (1) copie intacte → code 0 ; (2) `.htaccess` supprimé ; (3) tous les `*.html` sauf 2 supprimés ; (4) `x.php` ajouté ; (5) lien symbolique ajouté (`os.symlink`). Cas 2 à 5 : code ≠ 0 **et** un mot-clé du message dans la sortie (le script écrit sur `>&2` : lancer avec `stderr=subprocess.STDOUT` ou lire `stderr`) (`.htaccess`, `pages`, `.php`, `lien symbolique`). `dist/` absent → échec (convention #10), pas de skip. |
-| T-BV-SMK-01 | `tests/http_check.sh` (existant, + 1 bloc) | Joué dans le job `deploy` après rsync : `BASE_URL=https://benoitvinceneux.com HSTS_MAX_AGE=300 bash tests/http_check.sh`. Ajout : si `BASE_URL` commence par `https://`, `curl -s -o /dev/null -w '%{http_code} %{redirect_url}' "http://${BASE#https://}/"` (sans l'en-tête `X-Forwarded-Proto`) doit valoir `301 https://<hôte>/`. Sans effet sur le run Apache local (`http://127.0.0.1:8080`). Non bloquant pour la mise en ligne (voir points d'attention). |
+| T-BV-CSS-01 | **retiré** (`test_css_01_static_identical`) | `tests/test_dist.py` |
+| T-BV-PAR-00 à 04 | **retirés** (fichier supprimé) | `tests/test_parity.py` |
+| T-BV-PAR-05 | **retiré** (`test_par_05_media_identical`) | `tests/test_dist.py` |
+| T-BV-ART-03 | modifié : `.htaccess` versionné seulement dans `public/` (plus d'exception `site/.htaccess`) | `tests/test_repo.py` |
+| T-BV-HTML-01 | contrôle « chaque règle à `off` de `.htmlvalidate.json` a une entrée `html-validate` justifiée » repris de `test_par_00` (qui le portait) dans `test_html_01_exceptions` ; même ID, pas de nouvel identifiant | `tests/test_repo.py` |
+| T-BV-A11Y-02 | inchangé, lit `tests/exceptions.json` au lieu de `tests/parity-allowlist.json` | `tests/e2e/a11y.spec.ts` |
+| T-BV-WF-04 | retirer la seule assertion `assertNotIn("site/", job)` (la source `dist/` reste exigée) | `tests/test_repo.py` |
 
-Tout le reste du catalogue est déjà vert : rien à retirer.
+Rien d'autre n'est retiré : les 48 autres tests de #10 restent verts.
 
 ## Fichiers
 
-| Fichier | Action |
-|---|---|
-| `tests/predeploy_guard.sh` | **Créer** (~15 lignes bash, `set -u`). Usage `bash tests/predeploy_guard.sh <dir>`. Contrôles, chacun `echo "ÉCHEC predeploy_guard : …" >&2; exit 1` : `test -f "$d/.htaccess"` ; `find "$d" -type l` vide (« lien symbolique : <chemins> ») ; `find "$d" -type f \( -name '*.php' -o -name '*.php[0-9]' -o -name '*.phtml' -o -name '*.phar' \)` vide (même motif que T-BV-ART-01 et le `.htaccess`) ; `find "$d" -name '*.html' -type f \| wc -l` ≥ nombre d'entrées `200` de `legacy-urls.txt` qui sont des pages (sans `.`) ou finissent par `.html` (awk, 14 aujourd'hui : 13 pages + fichier Google ; `dist/` en a 15 avec `404.html`). Message : « N pages HTML dans <dir>, au moins M attendues ». `legacy-urls.txt` lu relativement au script (`$(dirname "$0")`). Fin : `echo "predeploy_guard : OK (<dir>)"`. |
-| `tests/test_guard.py` | **Créer** (T-BV-GUARD-01). |
-| `tests/test_repo.py` | **Modifier** : + `test_wf_04_deploy_job`. |
-| `tests/http_check.sh` | **Modifier** : + bloc http→https (SMK-01), commentaire d'en-tête mis à jour. |
-| `.github/workflows/deploy.yml` | **Modifier** le job `deploy` (voir ci-dessous) ; job `test` : seulement `timeout-minutes: 15`. |
-| `README.md` | **Réécrire** (court) : ce que publie `master` (désormais `dist/`, plus `site/`), build local, tests, rollback. Retirer la description des secrets qui donne le format de la cible (`user@hôte:chemin/`) : garder seulement les noms `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_TARGET`. Aucun détail d'hébergement (dépôt public). |
-| `tests/smoke.sh` | **Ne pas créer** : la note CTO de #7 dit `smoke.sh` = `http_check.sh`. Une ligne dans le README : « le smoke post-déploiement (`tests/smoke.sh` dans #7) est `tests/http_check.sh` lancé sur le domaine public ». |
+1. `git rm -r site/ tests/test_parity.py`.
+2. `git mv tests/parity-allowlist.json tests/exceptions.json`, puis garder seulement les 4 entrées encore utiles :
+   les 2 `html-validate` (`long-title`, `no-inline-style`) et les 2 `axe` (iframe YouTube de sigfox, fichier Google).
+   Retirer les entrées `PAR-01`, `PAR-02` et `D-3` : elles déclaraient des écarts au snapshot, qui n'existe plus. Les corrections D-3 restent exigées par T-BV-A11Y-01 et T-BV-SPE-06, et la décision reste tracée dans #2.
+   **Pourquoi ce choix :** `.htmlvalidate.json` n'accepte pas de commentaires (JSON) et les exceptions servent à deux outils (html-validate, axe) ; un seul petit fichier sous un nom neutre, au même format `{test, page, motif, pourquoi}`, est le plus court et garde chaque exception justifiée. Le renommage satisfait le scénario 2 (`git ls-files tests/parity-allowlist.json` vide).
+3. `tests/e2e/a11y.spec.ts` : chemin `tests/parity-allowlist.json` → `tests/exceptions.json` (ligne 6) et le mot « allowlist » du commentaire/message si besoin (optionnel).
+4. `tests/test_dist.py` : supprimer `assert_same_tree`, `test_css_01_static_identical`, `test_par_05_media_identical` et `import filecmp` (plus utilisé). Ne pas toucher `parse`, `norm`, `pages`, `refs` (utilisés par `test_links`, `test_a11y`, `test_budget`, CSP).
+5. `tests/test_repo.py` :
+   - ART-03 : `self.assertEqual(f, "public/.htaccess", f".htaccess versionné hors public/ : {f}")` ;
+   - WF-04 : supprimer la ligne `assertNotIn("site/", job, ...)` ;
+   - ajouter `test_html_01_exceptions` (≈ 6 lignes, reprises de `test_par_00`) : `tests/exceptions.json` est du JSON valide ; chaque entrée a `test`, `page`, `motif`, `pourquoi` non vides et `test` ∈ {`html-validate`, `axe`} ; ensemble des règles à `"off"` de `.htmlvalidate.json` = ensemble des `motif` des entrées `html-validate`. (Le sélecteur mort `axe` est déjà vérifié dans `a11y.spec.ts`.)
+6. `README.md` : retirer la ligne `site/` ; réécrire « Rollback » (voir ci-dessous).
+7. `CLAUDE.md` (seulement ces phrases) :
+   - l. 7 « Aujourd'hui : `site/` est un snapshot… » → « `dist/`, construit par Astro, est servi par Apache. Chaque push sur `master` le déploie (`.github/workflows/deploy.yml`, rsync `--delete-after`) si le job `test` passe. L'ancien site Kirby n'existe plus que dans le tag `snapshot-kirby` : le retour arrière passe par ce tag (README). » ;
+   - l. 13 « déployée à la place de `site/` après la bascule » → « déployée par rsync » ;
+   - l. 45 « Tant que #7 n'est pas mergé, le job de déploiement doit continuer à publier `site/`. » → supprimée, sans remplacement (aucune règle ajoutée).
+   - Rien d'autre (la ligne « En cours : migration… » et « Stack cible » restent).
+8. `tasks/todo.md` (ce fichier).
 
-### Job `deploy` cible
+## README : section « Rollback » (texte cible, à reprendre tel quel)
 
-```yaml
-  deploy:
-    needs: test
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-    concurrency:
-      group: deploy
-      cancel-in-progress: false
-    runs-on: ubuntu-24.04
-    environment: production
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@<même SHA> # v6
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@<même SHA> # v6
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: npx astro build
-      - name: Garde-fous avant mise en ligne
-        run: bash tests/predeploy_guard.sh dist
-      - name: Configure SSH        # inchangé (secrets via env:)
-        ...
-      - name: Deploy dist/
-        env:
-          DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}
-        run: rsync -rtlz --delete-after --delay-updates dist/ "$DEPLOY_TARGET"
-      - name: Smoke après mise en ligne (T-BV-SMK-01, non bloquant pour la mise en ligne)
-        run: bash tests/http_check.sh
-        env:
-          BASE_URL: https://benoitvinceneux.com
-          HSTS_MAX_AGE: 300
-```
+**Régression Astro (cas normal)** : inchangé, 3 étapes (`git revert <sha>` sur une branche, PR, merge quand `test` est vert, vérifier 200 sur `/`, une page projet, `/a-propos`).
+
+**Retour à l'ancien site Kirby** (le snapshot n'est plus que dans le tag `snapshot-kirby`) :
+1. Sur une branche partie de `master`, dans `.github/workflows/deploy.yml`, job `deploy`, remplacer la ligne `- run: npx astro build` par :
+   `- run: git fetch --depth 1 origin tag snapshot-kirby && rm -rf dist && mkdir dist && git archive snapshot-kirby:site | tar -x -C dist`
+2. PR vers `master`, merger quand `test` est vert : le job `deploy` publie le snapshot (mêmes garde-fous, même rsync). Le smoke peut être rouge (en-têtes et pages du snapshot différents de ceux attendus) : c'est attendu, le site est en ligne.
+3. Vérifier 200 sur `/`, une page projet et `/a-propos`. Pour revenir à Astro : `git revert` de ce commit.
+
+Pourquoi cette procédure et pas `git checkout snapshot-kirby -- site/` + source rsync `site/` :
+- le commit taggé (`ff18679`) déploie déjà `dist/` : restaurer `site/` ne suffit pas, il faut changer ce que le job publie ;
+- versionner à nouveau `site/` remet `site/.htaccess` dans le dépôt : T-BV-ART-03 devient rouge, le check `test` exigé par la protection de `master` bloque le merge ;
+- changer la source rsync en `site/` casse T-BV-WF-04 (source `dist/` exigée) : même blocage.
+  Remplir `dist/` depuis le tag dans le seul job `deploy` ne touche ni au dépôt ni aux tests, et garde rsync, garde-fous et cible inchangés.
+- Vérifié en local le 22/10 (clone `--depth 1` jetable) : `git fetch --depth 1 origin tag snapshot-kirby` fonctionne sans identifiants (dépôt public, `persist-credentials: false`), `git archive` restitue les 14 `.html` + `.htaccess`, `predeploy_guard.sh dist` → OK (aucun lien symbolique ni `.php` dans le snapshot).
 
 ## Ordre des étapes
 
-1. Commit `chore: Leçons de #6` avec `tasks/lessons.md` (et ce `tasks/todo.md`).
-2. `tests/predeploy_guard.sh` + `tests/test_guard.py` ; vérifier les 5 cas.
-3. `test_wf_04` dans `tests/test_repo.py` : le lancer, il doit être **rouge** sur le workflow actuel.
-4. `deploy.yml` (job `deploy` + `timeout-minutes` sur `test`) : WF-01 à 04 verts.
-5. Bloc http→https dans `http_check.sh` ; rejouer `http_check.sh` sur l'Apache local (le bloc ne doit pas s'exécuter en `http://`).
-6. README.
-7. Vérification locale complète : `npx astro build`, `python3 -I -m unittest discover -s tests -v`, `npx html-validate "dist/**/*.html"`, `http_check.sh` sur Apache local, `npx playwright test`.
-8. Commits `type: Description en français`, pas de push (orchestrateur).
+1. Suppressions et renommage (étapes 1-2), mise à jour des tests (3-5).
+2. `npx astro build && python3 -I -m unittest discover -s tests -v && npx html-validate "dist/**/*.html" && npx playwright test` : tout vert.
+3. README, CLAUDE.md.
+4. Contrôle scénario 2 : `git ls-files site tests/test_parity.py tests/parity-allowlist.json` vide ; `grep -rn 'site/' .github tests README.md` → aucune ligne hors mentions du tag (`snapshot-kirby:site` ne contient pas `site/`).
+5. Un commit : `chore: Supprime le snapshot Kirby site/ et les tests de parité` (ou deux : `chore` + `docs`).
+
+## Recette (QA), à dérouler (scénarios 1 à 6, prérequis #8 ignoré)
+
+1. `git ls-remote --tags origin snapshot-kirby` présent ; `git ls-tree snapshot-kirby site/ | head` non vide.
+2. Voir étape 4 ci-dessus.
+3. CI du ticket : `test` vert sur la PR ; après merge, `deploy` + smoke verts (orchestrateur).
+4. `curl -sI https://benoitvinceneux.com/` : `Strict-Transport-Security` avec `max-age` ≥ 16000000.
+5. Smoke complet (`BASE_URL=https://benoitvinceneux.com HSTS_MIN_AGE=16000000 bash tests/http_check.sh`) + 200 sur `/`, une page projet, `/a-propos`.
+6. Rollback à blanc dans un **clone jetable** du scratchpad (`git clone` du dépôt, `git switch -c rollback-test` depuis la branche du ticket ; jamais dans le dépôt de travail : `git fetch --depth 1` y écrirait `.git/shallow`). Appliquer l'étape 1 du README telle qu'écrite, exécuter la commande `run:` remplacée, puis `bash tests/predeploy_guard.sh dist` et `python3 -I -m unittest discover -s tests -p test_repo.py` (WF-04 et ART-03 restent verts). Rien n'est poussé ; `rm -rf` du clone ensuite.
 
 ## Points d'attention
 
-- **Ne jamais toucher** les noms `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_TARGET` ni `"$DEPLOY_TARGET"` (CLAUDE.md). Les secrets restent sous `env:` (T-BV-WF-02).
-- **Avant le merge** de cette PR, `master` publie toujours `site/` : ne rien changer sur `master` hors de cette branche.
-- `if:` à recopier **à l'octet près** (WF-04 compare la ligne exacte).
-- `environment: production` (D-5) : si l'environnement n'existe pas encore, GitHub le crée sans règle au premier run et les secrets du dépôt restent lus ; il devient indispensable dès que Benoit y déplace les `DEPLOY_*`. Prérequis de merge (case D-5 de #2 non cochée) : Benoit crée l'environnement restreint à `master`, y déplace les secrets et protège `master` (check `test` exigé). Ce n'est pas un bloqueur d'implémentation.
-- Smoke non bloquant (« équivalent » de `continue-on-error` retenu) : c'est la **dernière** étape du job, après le rsync. S'il échoue, le site est déjà en ligne et le job passe au rouge (signal visible), sans rollback automatique (hors périmètre). Pas de `continue-on-error` : il masquerait l'échec (job vert). Le rollback reste le revert manuel du README.
-- `http_check.sh` lit `dist/404.html` et `dist/.htaccess` : c'est pourquoi le smoke tourne dans le job `deploy`, après le build.
-- `--delete-after` supprime côté serveur tout ce qui n'est pas dans `dist/` : `llms-full.txt` et `google48428a5b5297f7c9.html` doivent être dans `public/` (c'est le cas, couvert par T-BV-SPE-01/02 et scénario QA 9).
-- Le seuil du garde-fou suit le texte de #7 (« URL HTML de `legacy-urls.txt` ») : pages sans `.` + entrées `.html`. Lire strictement « URL 200 en `.html` » de #10 donnerait 1 seul fichier, ce qui ne protège rien contre un `dist/` partiel.
-- `timeout-minutes` (leçon #6) : `test` 15 (cible 4 min, marge pour un premier run sans cache Playwright), `deploy` 10.
-- `python3 -I` : `test_guard.py` importe seulement la stdlib (et au besoin `test_dist` comme module, convention #6).
-- README, commits, PR : aucun nom d'hôte, utilisateur SSH, chemin serveur ni détail d'hébergement. Le domaine public `benoitvinceneux.com` est déjà dans le dépôt : autorisé.
+- Ne pas recréer/déplacer le tag ; ne pas toucher `DEPLOY_*`, la cible ni la source rsync.
+- `tests/fixtures/kirby/site/` est une fixture de `test_import.py` (T-BV-IMP-04), pas le snapshot : **ne pas la supprimer**. `git rm -r site/` à la racine seulement.
+- `scripts/import_kirby.py` garde `--site` par défaut `site` : script ponctuel (#5) hors périmètre du scénario 2 ; pour le relancer, extraire `site/` depuis le tag et passer `--site`. Non modifié pour garder le diff minimal.
+- #10 cite encore `tests/parity-allowlist.json` comme fichier d'exceptions : le signaler dans la description de la PR (nouveau nom `tests/exceptions.json`, clés réservées `html-validate` et `axe` inchangées). Ne pas éditer #10 sans accord.
+- Le job `deploy` après merge reste vert : `dist/` a 13 pages HTML ≥ 13 attendues par le garde-fou ; rien ne change dans ce job.
+- Pas de nouvelle dépendance, pas de nouvel ID de test, pas de nouveau fichier hors renommage.
 
-### Rollback (README, 3 étapes)
+## Développement (22/10)
 
-1. `git revert <sha du commit de bascule>` sur une branche, PR vers `master`.
-2. Merger quand `test` est vert : le job `deploy` republie `site/` (tant que `site/` existe, c'est-à-dire jusqu'à #9).
-3. Vérifier le run et le site (200 sur `/`, une page projet, `/a-propos`).
-
-## Recette (QA) : répartition
-
-| Scénario | Qui |
-|---|---|
-| 1 Lecture du workflow | local (QA) |
-| 2 PR de contrôle rouge | à faire (orchestrateur ou Benoit) |
-| 3 `workflow_dispatch` depuis une autre branche | à faire (orchestrateur ou Benoit) |
-| 4 Garde-fous en négatif | local : `predeploy_guard.sh` sur copies de `dist/` sans `.htaccess`, avec 2 pages, avec `x.php`, avec un lien symbolique → code ≠ 0, aucun rsync (aussi T-BV-GUARD-01) |
-| 5 Bascule (merge) | à faire (Benoit) |
-| 6 Smoke manuel `curl -sI` en production | à faire (après bascule) |
-| 7 Régression navigateur | à faire (après bascule) |
-| 8 Rollback à blanc | local : branche jetable, commit de la bascule, `git revert HEAD`, vérifier que le diff restaure `rsync … site/`, puis supprimer la branche |
-| 9 Fichiers hors build servis | à faire (après bascule) |
+- Fait selon le plan, sans écart. `tests/exceptions.json` : 4 entrées (2 `html-validate`, 2 `axe`).
+- Local : `npm ci`, `npx astro build`, unittest 47 tests OK (53 avant : -5 PAR-00 à 04, -2 CSS-01/PAR-05, +1 `test_html_01_exceptions`), `html-validate` OK, `http_check.sh` OK sur Apache local (port 8099 : le 8080 est pris sur ce poste), Playwright 14/14.
+- Commande de retour arrière du README essayée dans un clone `--depth 1` jetable : 14 `.html`, `predeploy_guard.sh dist` OK.
