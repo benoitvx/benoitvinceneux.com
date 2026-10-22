@@ -42,7 +42,7 @@ Créer :
 
 Modifier :
 - `tests/test_dist.py` : T-BV-PAR-05 + helper partagé avec CSS-01.
-- `src/pages/sitemap.txt.ts` : rien à changer dans la logique (elle liste déjà `getCollection('projects')`) ; retirer seulement le commentaire « [] tant que #5… ». Le sitemap liste maintenant 13 URL.
+- `src/pages/sitemap.txt.ts` : rien à changer dans la logique (elle liste déjà `getCollection('projects')`) ; retirer le commentaire « [] tant que #5… » et trier par `data.order` (`getCollection` rend l'ordre du système de fichiers : sitemap identique macOS/Linux). Le sitemap liste maintenant 13 URL.
 
 Ne pas toucher : `public/media/` (déjà copié et identique à `site/media`, vérifié par `diff -rq` : T-BV-PAR-05 le garantit), `tests/legacy-exclude.txt` (les pages projet y restent : gabarit en #6), `package.json`, lockfile, `.nvmrc`, `deploy.yml`.
 
@@ -127,9 +127,9 @@ Assertions T-BV-IMP-04 : la sortie contient exactement `projet-a.md` et `projet-
 ## Points d'attention
 
 - Sécurité : l'archive contient des `.htaccess` et un `index.php` suspect. Ne jamais les ouvrir, lire, afficher, copier ou exécuter. Aucune copie de l'archive dans le dépôt ni dans `public/`. Aucun nom d'hôte, chemin serveur ou chemin local de l'archive dans un fichier versionné, un commit ou la PR.
-- T-BV-CONT-02 : vérifier que `astro sync` échoue bien sur une erreur de schéma avec Astro 7.3.7 et que le message nomme fichier et champ. Si `sync` ne valide pas, le signaler (le catalogue impose `sync`) au lieu de basculer en silence sur `build`. Ne pas copier `site/`, `public/` ni `dist/` dans la copie temporaire (lent, inutile).
+- T-BV-CONT-02 : vérifier que `astro sync` échoue bien sur une erreur de schéma avec Astro 7.3.7 et que le message nomme fichier et champ. Si `sync` ne valide pas, le signaler (le catalogue impose `sync`) au lieu de basculer en silence sur `build`. Ne pas copier `site/`, `public/` ni `dist/` dans la copie temporaire (lent, inutile). Avec `node_modules` en lien symbolique, le cache du content layer (`node_modules/.astro/`) serait celui du vrai dépôt : passer un `cacheDir` interne au dossier temporaire (config de la copie) et vérifier qu'un `npx astro build` après la suite donne toujours 13 lignes de sitemap. Le message d'Astro nomme la collection et l'id (`sigfox`) plutôt que le chemin : asserter sur le slug et `description`, pas sur `sigfox.md`.
 - T-BV-SPE-05 : le sitemap passe à 13 URL dont 11 pages pas encore construites (gabarit en #6) : attendu, les pages restent dans `legacy-exclude.txt`. Vérifier que `http_check.sh` et T-BV-INV-01 ne lisent pas le sitemap.
-- `description` : prise de la meta du snapshot (tronquée avec `…` par Kirby) : c'est voulu, parité T-BV-PAR-04 en #6.
+- `description` : présente et non vide dans les 11 pages du snapshot (vérifié), prise de la meta (tronquée avec `…` par Kirby) : c'est voulu, parité T-BV-PAR-04 en #6.
 - Ordre : `order` = préfixe 2 à 12, cohérent avec l'ordre de la nav (T-BV-NAV-01).
 - Lien `/numerique-responsable` (brouillon) dans curated-adventures : retiré en #5 (D-BV2) ; l'écart de parité sera déclaré dans `tests/parity-allowlist.json` en #6. À noter dans la PR.
 - `__pycache__` déjà ignoré ; ne pas versionner de sortie de test.
