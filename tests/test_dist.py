@@ -217,8 +217,6 @@ class TestDist(unittest.TestCase):
             self.assertRegex(url, re.escape(DOMAIN) + r"/\S*$", f"dist/sitemap.txt : URL invalide {url!r}")
             self.assertNotIn(".html", url, f"dist/sitemap.txt : {url} contient .html")
         self.assertEqual(len(lines), len(set(lines)), "dist/sitemap.txt : doublons")
-        for want in (f"{DOMAIN}/", f"{DOMAIN}/a-propos"):
-            self.assertIn(want, lines, f"dist/sitemap.txt : {want} absent")
         want = {f"{DOMAIN}/" + ("" if s == "index" else s) for s in pages()}
         self.assertEqual(set(lines), want, f"dist/sitemap.txt : en trop {sorted(set(lines) - want)}, manquant {sorted(want - set(lines))}")
 
