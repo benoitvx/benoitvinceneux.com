@@ -44,7 +44,7 @@ Définition commune, dans `tests/test_dist.py` : **page** = chemin `200` de `leg
 | T-BV-PAR-04 | `tests/test_parity.py` | `<title>` et meta description identiques (décodés) |
 | T-BV-BUD-01 | `tests/test_budget.py` (nouveau) | chaque `.html` ≤ 50 Ko ; chaque image ≤ 700 Ko ; aucun fichier > 1 Mo ; total `dist/` ≤ 16 Mo ; total `dist/**/*.css` ≤ 100 Ko |
 | T-BV-HTML-01 | `npx html-validate "dist/**/*.html"` | vert sur toutes les pages ; chaque règle à `off` dans `.htmlvalidate.json` a son entrée `html-validate` dans l'allowlist (contrôlé par PAR-00) |
-| T-BV-A11Y-02 | `tests/e2e/a11y.spec.ts` | pages = 13 pages de `legacy-urls.txt` + `404.html` (même définition que Python, voir dette (a)) ; exclusions de règles uniquement via les entrées `axe` de l'allowlist (`disableRules`), aucune prévue |
+| T-BV-A11Y-02 | `tests/e2e/a11y.spec.ts` | pages = 13 pages de `legacy-urls.txt` + `404.html` (même définition que Python, voir dette (a)) ; exclusions uniquement via les entrées `axe` de l'allowlist (`builder.exclude(motif)`) ; une seule : l'iframe YouTube de sigfox (violations dans le lecteur tiers) |
 | T-BV-HTTP-01 à 06 | `tests/http_check.sh` | `excluded()` tolérant au fichier absent (`[ -f … ] && grep -qxF …`) → les 13 pages passent dans HTTP-01 et HTTP-02 ; rien d'autre à changer |
 
 Message d'échec : chaque assertion nomme le fichier ou l'URL et la valeur attendue (convention #10). Scénarios négatifs de la recette (un mot changé dans un `.md`, un lien `/n-existe-pas`) : le message de PAR-01 / LNK-01 doit nommer la page et l'écart (pour PAR-01, afficher le premier fragment divergent, pas les deux textes entiers).
@@ -58,7 +58,7 @@ Message d'échec : chaque assertion nomme le fichier ou l'URL et la valeur atten
 Liste d'objets `{test, page, motif, pourquoi}`. `page` = slug (`index` pour l'accueil) ou `*`.
 - `PAR-01` / `PAR-02` : `motif` = regex retirée du texte (PAR-01) ou des URL normalisées (PAR-02) des **deux** côtés avant comparaison. « Sert » = le motif a trouvé au moins une occurrence sur au moins une page concernée.
 - `html-validate` : `motif` = id de règle ; « sert » = la règle est à `"off"` dans `.htmlvalidate.json`, et réciproquement chaque règle `off` a son entrée (bijection testée par PAR-00).
-- `axe` : `motif` = id de règle axe, lu par `a11y.spec.ts` ; aucune entrée prévue (si on en ajoute une, PAR-00 vérifie seulement ses champs).
+- `axe` : `motif` = sélecteur CSS exclu de l'analyse (`builder.exclude`), lu par `a11y.spec.ts` ; une entrée : l'iframe YouTube de sigfox (PAR-00 vérifie seulement ses champs).
 
 Entrées attendues (à confirmer par les tests, ne rien pré-déclarer d'autre) :
 1. `PAR-01`, `*`, `Aller au contenu`, « D-3 : lien d'évitement ajouté ».
