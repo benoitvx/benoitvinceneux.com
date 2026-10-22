@@ -1,0 +1,13 @@
+[
+  {"test": "PAR-01", "page": "*", "motif": "Aller au contenu", "pourquoi": "D-3 : lien d'évitement ajouté"},
+  {"test": "PAR-01", "page": "*", "motif": "\\(c\\) \\d{4}", "pourquoi": "Ticket #6 : le pied de page affiche l'année du build, le snapshot fige « (c) 2026 »"},
+  {"test": "PAR-02", "page": "curated-adventures", "motif": "^/numerique-responsable$", "pourquoi": "D-BV2 : lien vers une page non publiée retiré en #5"},
+  {"test": "PAR-02", "page": "*", "motif": "^https://use\\.fontawesome\\.com/releases/v5\\.12\\.1/css/brands\\.css(\\?v=sri)?$", "pourquoi": "Font Awesome chargé avec integrity+crossorigin : URL distincte (?v=sri) pour ne pas réutiliser la copie en cache de l'ancien site, servie sans Access-Control-Allow-Origin, qui échouerait au contrôle CORS (tasks/lessons.md, #6)"},
+  {"test": "html-validate", "page": "*", "motif": "long-title", "pourquoi": "Parité : titre de l'accueil du snapshot (plus de 70 caractères) conservé tel quel ; html-validate ne permet pas de désactiver une règle pour un seul fichier : la règle est coupée pour tout le site"},
+  {"test": "html-validate", "page": "*", "motif": "no-inline-style", "pourquoi": "Parité : conteneur de la vidéo YouTube responsive en style en ligne, repris du contenu Kirby ; html-validate ne permet pas de désactiver une règle pour un seul fichier : la règle est coupée pour tout le site"},
+  {"test": "axe", "page": "sigfox", "motif": "iframe[src^=\"https://www.youtube-nocookie.com/\"]", "pourquoi": "Contenu tiers : les violations (boutons sans nom, ARIA) sont dans le lecteur YouTube, hors de notre HTML ; l'iframe elle-même a un title (A11Y-01)"},
+  {"test": "D-3", "page": "*", "motif": "aria-current=\"page\"", "pourquoi": "D-3 : aria-current sur l'entrée de nav active (absent du snapshot), exigé par T-BV-A11Y-01"},
+  {"test": "D-3", "page": "index", "motif": "alt=\"\"", "pourquoi": "D-3 : vignettes de l'accueil en alt=\"\" (le snapshot avait « <Titre> Cover »), exigé par T-BV-A11Y-01"},
+  {"test": "D-3", "page": "404", "motif": "Page introuvable", "pourquoi": "D-3 : page 404 en français (Kirby n'en servait pas de statique), exigé par T-BV-SPE-06"},
+  {"test": "axe", "page": "google48428a5b5297f7c9", "motif": "html", "pourquoi": "Fichier de vérification Google : texte brut sans balisage, pas une page du site ; servi tel quel à l'octet (T-BV-SPE-02)"}
+]

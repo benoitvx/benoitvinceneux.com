@@ -6,7 +6,7 @@ DIR="$(dirname "$0")/.."
 HSTS="max-age=${HSTS_MAX_AGE:-300}"
 c() { curl -s -H 'X-Forwarded-Proto: https' "$@"; }
 fail() { echo "ÉCHEC $1 : obtenu « $2 », attendu « $3 »"; exit 1; }
-excluded() { grep -qxF "$1" "$DIR/tests/legacy-exclude.txt"; }
+excluded() { [ -f "$DIR/tests/legacy-exclude.txt" ] && grep -qxF "$1" "$DIR/tests/legacy-exclude.txt"; }
 
 # HTTP-01 : statut attendu de chaque URL héritée
 while IFS="$(printf '\t')" read -r path want; do

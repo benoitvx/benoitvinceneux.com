@@ -3,10 +3,11 @@ import hashlib
 import os
 import re
 import tempfile
+import unicodedata
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
@@ -39,6 +40,8 @@ REFERENCE = """\
 /.htaccess	403
 /media/	403
 """.splitlines()
+INLINE = {"a", "abbr", "b", "cite", "code", "em", "i", "mark", "q", "s", "small", "span", "strong", "sub", "sup", "u"}
+CSS_URL = re.compile(r"""url\(\s*["']?([^"')]+)""")
 ARTIFACT = re.compile(r"\.(php\d?|phtml|phar)$|^\.env|^\.DS_Store$|\.map$|^\.git$")
 
 
@@ -47,11 +50,67 @@ def legacy():
 
 
 def excluded():
-    return (ROOT / "tests/legacy-exclude.txt").read_text().split()
+    f = ROOT / "tests/legacy-exclude.txt"
+    return f.read_text().split() if f.exists() else []
 
 
 def ok_paths():
     return {p for p, want in legacy() if want == "200"}
+
+
+def pages():
+    """Slugs des 13 pages (entrées 200 sans point de legacy-urls.txt) ; l'accueil vaut 'index'."""
+    return sorted(p.strip("/") or "index" for p in ok_paths() if "." not in p)
+
+
+def norm(url, base="/"):
+    """URL interne -> chemin normalisé (/slug, / pour l'accueil) ; URL externe -> URL sans query ni fragment, hôte en minuscules (#10)."""
+    u = urlsplit(urljoin(DOMAIN + base, url.strip()))
+    if u.netloc.lower() != "benoitvinceneux.com":
+        return u._replace(netloc=u.netloc.lower(), query="", fragment="").geturl()
+    path = re.sub(r"\.html$", "", unicodedata.normalize("NFC", unquote(u.path)))
+    return "/" if path in ("", "/index") else path
+
+
+class Doc(HTMLParser):
+    """tags = [(balise, attributs, conteneurs ouverts parmi nav/main)], text = texte visible, title = textes des <title>."""
+    def __init__(self):
+        super().__init__()
+        self.tags, self.text, self.title, self.open = [], [], [], []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("nav", "main", "script", "style", "title"):
+            self.open.append(tag)
+        if tag == "title":
+            self.title.append("")
+        self.tags.append((tag, dict(attrs), set(self.open)))
+        self.text.append("" if tag in INLINE else " ")  # bord de bloc = espace visible
+
+    def handle_endtag(self, tag):
+        self.text.append("" if tag in INLINE else " ")
+        if tag in self.open:
+            self.open.remove(tag)
+
+    def handle_data(self, data):
+        if "title" in self.open:
+            self.title[-1] += data
+        elif not {"script", "style"} & set(self.open):
+            self.text.append(data)
+
+    def refs(self):
+        """(balise, attribut, valeur brute) de chaque href/src/srcset, srcset découpé."""
+        for tag, a, _ in self.tags:
+            for k in ("href", "src", "srcset"):
+                for v in (a.get(k) or "").split(",") if k == "srcset" else [a.get(k) or ""]:
+                    if v.strip():
+                        yield tag, k, v.split()[0] if k == "srcset" else v.strip()
+
+
+def parse(f):
+    doc = Doc()
+    doc.feed(Path(f).read_text())
+    doc.close()
+    return doc
 
 
 def artifact_problems(root):
@@ -70,19 +129,6 @@ def artifact_problems(root):
 def csp():
     m = re.search(r'Content-Security-Policy "([^"]+)"', (DIST / ".htaccess").read_text())
     return m[1] if m else ""
-
-
-class Hosts(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.found = []  # (directive, url)
-
-    def handle_starttag(self, tag, attrs):
-        a = dict(attrs)
-        if tag == "link" and "stylesheet" in (a.get("rel") or "").split():
-            self.found.append(("style-src", a.get("href") or ""))
-        elif tag in ("img", "iframe"):
-            self.found.append(("img-src" if tag == "img" else "frame-src", a.get("src") or ""))
 
 
 class TestDist(unittest.TestCase):
@@ -130,8 +176,9 @@ class TestDist(unittest.TestCase):
         paths = [line.split("\t")[0] for line in lines]
         self.assertEqual(len(paths), len(set(paths)), f"legacy-urls.txt : chemins en double {sorted({p for p in paths if paths.count(p) > 1})}")
         self.assertLessEqual(set(REFERENCE), set(lines), f"legacy-urls.txt : entrées de référence absentes {sorted(set(REFERENCE) - set(lines))}")
-        pages = [line.split("\t")[0] for line in REFERENCE[:13]]
-        self.assertEqual(excluded(), pages, "legacy-exclude.txt doit contenir exactement l'accueil, /a-propos et les 11 projets")
+
+    def test_inv_03_no_exclusion(self):
+        self.assertEqual(excluded(), [], "tests/legacy-exclude.txt doit être absent ou vide")
 
     def test_inv_04_redirect_targets(self):
         for path, want in legacy():
@@ -170,8 +217,8 @@ class TestDist(unittest.TestCase):
             self.assertRegex(url, re.escape(DOMAIN) + r"/\S*$", f"dist/sitemap.txt : URL invalide {url!r}")
             self.assertNotIn(".html", url, f"dist/sitemap.txt : {url} contient .html")
         self.assertEqual(len(lines), len(set(lines)), "dist/sitemap.txt : doublons")
-        for want in (f"{DOMAIN}/", f"{DOMAIN}/a-propos"):
-            self.assertIn(want, lines, f"dist/sitemap.txt : {want} absent")
+        want = {f"{DOMAIN}/" + ("" if s == "index" else s) for s in pages()}
+        self.assertEqual(set(lines), want, f"dist/sitemap.txt : en trop {sorted(set(lines) - want)}, manquant {sorted(want - set(lines))}")
 
     def test_spe_06_404(self):
         html = (DIST / "404.html").read_text()
@@ -211,15 +258,18 @@ class TestDist(unittest.TestCase):
                             "base-uri": "'self'", "frame-ancestors": "'none'", "form-action": "'self'"}.items():
             self.assertEqual(dirs.get(name), [value], f"dist/.htaccess CSP : {name} {value} attendu")
         used = []  # (fichier, directive, url)
+        directive = {"img": "img-src", "iframe": "frame-src"}
         for f in DIST.rglob("*.html"):
-            parser = Hosts()
-            parser.feed(f.read_text(errors="replace"))
-            used += [(f, d, u) for d, u in parser.found]
+            doc = parse(f)
+            used += [(f, "style-src", a.get("href") or "") for tag, a, _ in doc.tags
+                     if tag == "link" and "stylesheet" in (a.get("rel") or "").split()]
+            used += [(f, directive[tag], v) for tag, k, v in doc.refs() if tag in directive and k in ("src", "srcset")]
         for f in DIST.rglob("*.css"):
             css = f.read_text()
             imports = re.findall(r"""@import\s+(?:url\()?["']?([^"')\s;]+)""", css)
             used += [(f, "style-src", u) for u in imports]
-            used += [(f, "font-src", u) for u in re.findall(r"""url\(\s*["']?([^"')]+)""", css) if u not in imports]
+            used += [(f, "font-src" if re.search(r"\.(woff2?|ttf|otf|eot)([?#]|$)", u) else "img-src", u)
+                     for u in CSS_URL.findall(css) if u not in imports]
         for f, d, url in used:
             if url.startswith(("http://", "https://", "//")):
                 origin = "https://" + urlsplit(url).netloc
@@ -227,6 +277,28 @@ class TestDist(unittest.TestCase):
         self.assertIn("https://www.youtube-nocookie.com", dirs.get("frame-src", []), "dist/.htaccess CSP : frame-src youtube-nocookie absent")
         for host in ("https://use.fontawesome.com", "https://rsms.me"):
             self.assertIn(host, dirs.get("font-src", []), f"dist/.htaccess CSP : font-src {host} absent")
+
+    def test_art_04_no_script(self):
+        for f in DIST.rglob("*.html"):
+            rel = f.relative_to(ROOT)
+            self.assertNotRegex(f.read_text(), r"(?i)<script", f"{rel} : balise <script> (CSP script-src 'none')")
+            for tag, a, _ in parse(f).tags:
+                for k, v in a.items():
+                    self.assertFalse(k.startswith("on"), f"{rel} : attribut {k} sur <{tag}>")
+                    self.assertFalse((v or "").strip().lower().startswith("javascript:"), f"{rel} : URL javascript: dans {k} de <{tag}>")
+
+    def test_seo_01_head(self):
+        titles = {}
+        for slug in pages():
+            doc, rel = parse(DIST / f"{slug}.html"), f"dist/{slug}.html"
+            want = f"{DOMAIN}/" + ("" if slug == "index" else slug)
+            canon = [a.get("href") for t, a, _ in doc.tags if t == "link" and a.get("rel") == "canonical"]
+            self.assertEqual(canon, [want], f"{rel} : canonical {canon}, attendu {want}")
+            desc = [a.get("content") for t, a, _ in doc.tags if t == "meta" and a.get("name") == "description"]
+            self.assertTrue(desc and desc[0].strip(), f"{rel} : meta description absente ou vide")
+            title = "".join(doc.title)
+            self.assertNotIn(title, titles, f"{rel} : <title> {title!r} déjà utilisé par {titles.get(title)}")
+            titles[title] = rel
 
 
 if __name__ == "__main__":
