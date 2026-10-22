@@ -2,8 +2,8 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// Exclusions : uniquement les entrées "axe" de l'allowlist (motif = sélecteur CSS retiré de l'analyse ; "html" = page entière).
-const axe: { page: string; motif: string }[] = JSON.parse(readFileSync('tests/parity-allowlist.json', 'utf8')).filter((e: { test: string }) => e.test === 'axe');
+// Exclusions : uniquement les entrées "axe" de tests/exceptions.json (motif = sélecteur CSS retiré de l'analyse ; "html" = page entière).
+const axe: { page: string; motif: string }[] = JSON.parse(readFileSync('tests/exceptions.json', 'utf8')).filter((e: { test: string }) => e.test === 'axe');
 const skipped = new Set(axe.filter((e) => e.motif === 'html').map((e) => `${e.page}.html`));
 // Pages = tous les .html de dist/ (dont 404.html), hors pages exclues.
 const pages = readdirSync('dist').filter((f) => f.endsWith('.html') && !skipped.has(f));
@@ -14,7 +14,7 @@ for (const file of pages) {
     const builder = new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']);
     for (const e of axe) {
       if (e.page !== '*' && `${e.page}.html` !== file) continue;
-      expect(await page.locator(e.motif).count(), `allowlist axe : sélecteur mort ${e.motif}`).toBeGreaterThan(0);
+      expect(await page.locator(e.motif).count(), `exceptions axe : sélecteur mort ${e.motif}`).toBeGreaterThan(0);
       builder.exclude(e.motif);
     }
     const { violations } = await builder.analyze();

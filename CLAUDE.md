@@ -4,13 +4,13 @@
 
 Site portfolio de Benoit Vinceneux : accueil, page « à propos », 11 pages projet, `llms.txt` et `llms-full.txt`.
 
-- **Aujourd'hui :** `site/` est un snapshot statique de l'ancien site Kirby, servi par Apache. Chaque push sur `master` le déploie (`.github/workflows/deploy.yml`, rsync `--delete`).
+- **Aujourd'hui :** `dist/`, construit par Astro, est servi par Apache. Chaque push sur `master` le déploie (`.github/workflows/deploy.yml`, rsync `--delete-after`) si le job `test` passe. L'ancien site Kirby n'existe plus que dans le tag `snapshot-kirby` : le retour arrière passe par ce tag (README, section « Rollback »).
 - **En cours :** migration vers Astro. Plan, décisions et tickets : issues GitHub. Pilotage #1, décisions #2, catalogue des tests CI #10. Puis milestone `M3 Contenus` (issues `[CONTENU]`) après la bascule.
 
 ## Stack cible
 
 - Astro, seule dépendance de `dependencies`. En `devDependencies`, seulement `@playwright/test`, `@axe-core/playwright` et `html-validate`, à des versions exactes (décision D-BV4). Toute autre dépendance : demander à Benoit.
-- `build.format: 'file'`, sortie dans `dist/`, déployée à la place de `site/` après la bascule.
+- `build.format: 'file'`, sortie dans `dist/`, déployée par rsync.
 - Tests : Python 3 stdlib (`unittest`, lancé en `python3 -I`) sur `dist/`, et Playwright pour l'accessibilité. Catalogue des tests : issue #10. Le déploiement n'a lieu que si le job `test` passe.
 - Pas de Tailwind, pas d'intégration Astro, pas d'`astro:assets`. Les CSS et les URL du snapshot sont reprises telles quelles : ce n'est pas une refonte.
 
@@ -42,7 +42,6 @@ S'arrêter et demander à Benoit avant :
 
 Interdits :
 - Ne jamais modifier les secrets `DEPLOY_*` ni la cible du rsync.
-- Tant que #7 n'est pas mergé, le job de déploiement doit continuer à publier `site/`.
 - Pas de `push --force`, pas de réécriture d'historique, pas de push sur le remote `framagit`.
 - Dépôt public : ne jamais écrire dans le code, les commits, les PR ou les issues de nom d'hôte, d'utilisateur SSH, de chemin serveur ni de détail sur l'hébergement.
 - Ne jamais versionner de fichier `.php` (le PHP est bloqué par le `.htaccess`).
