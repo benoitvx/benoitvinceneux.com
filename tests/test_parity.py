@@ -48,6 +48,8 @@ class TestParity(unittest.TestCase):
                 used = any(re.search(e["motif"], "".join(d.text)) for s in slugs for d in both(s))
             elif e["test"] == "PAR-02":
                 used = any(re.search(e["motif"], base.norm(v, f"/{s}")) for s in slugs for d in both(s) for _, _, v in d.refs())
+            elif e["test"] == "D-3":  # écart volontaire, présent dans dist/
+                used = any(re.search(e["motif"], (base.DIST / f"{s}.html").read_text()) for s in slugs)
             else:  # html-validate : contrôlé avec .htmlvalidate.json ci-dessus ; axe : sélecteur vérifié dans a11y.spec.ts
                 used = e["test"] in ("html-validate", "axe") and all((base.DIST / f"{s}.html").is_file() for s in slugs)
             self.assertTrue(used, f"parity-allowlist.json : entrée morte {e}")

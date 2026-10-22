@@ -1,15 +1,12 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// Pages = entrées 200 sans point de legacy-urls.txt (comme tests/test_dist.py) + la 404.
-const pages = readFileSync('tests/legacy-urls.txt', 'utf8').split('\n')
-  .map((l) => l.split('\t'))
-  .filter(([path, want]) => want === '200' && !path.includes('.'))
-  .map(([path]) => (path === '/' ? 'index.html' : `${path.slice(1)}.html`))
-  .concat('404.html');
-// Exclusions : uniquement les entrées "axe" de l'allowlist (motif = sélecteur CSS retiré de l'analyse).
+// Exclusions : uniquement les entrées "axe" de l'allowlist (motif = sélecteur CSS retiré de l'analyse ; "html" = page entière).
 const axe: { page: string; motif: string }[] = JSON.parse(readFileSync('tests/parity-allowlist.json', 'utf8')).filter((e: { test: string }) => e.test === 'axe');
+const skipped = new Set(axe.filter((e) => e.motif === 'html').map((e) => `${e.page}.html`));
+// Pages = tous les .html de dist/ (dont 404.html), hors pages exclues.
+const pages = readdirSync('dist').filter((f) => f.endsWith('.html') && !skipped.has(f));
 
 for (const file of pages) {
   test(`axe: ${file}`, async ({ page }) => {
