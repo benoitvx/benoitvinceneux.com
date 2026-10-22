@@ -9,3 +9,7 @@
 ## #4 .htaccess et fichiers statiques
 - Apache local (macOS `/usr/sbin/httpd`) : charger `mod_autoindex`, sinon un dossier sans index répond 404 au lieu de 403 malgré `Options -Indexes` (Ubuntu l'active par défaut).
 - Le port 8080 peut être occupé en local : prendre un autre port, `BASE_URL` suffit.
+
+### Orchestration (#4, PR #32)
+- Les 301 `RewriteRule ... / [R=301]` à cible relative prennent le schéma vu par Apache : derrière un proxy TLS, cela ajoute un saut `http://`. Cibles absolues `https://%{HTTP_HOST}/…`.
+- La protection `.ht*` vient souvent de la conf globale du serveur : la poser aussi dans `public/.htaccess` pour ne pas en dépendre.

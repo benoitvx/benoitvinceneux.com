@@ -89,14 +89,20 @@ class TestDist(unittest.TestCase):
     def test_build_01_index(self):
         self.assertTrue((DIST / "index.html").is_file(), "dist/index.html absent : lancer npx astro build")
 
-    def test_css_01_static_identical(self):
-        src, out = ROOT / "site/static", DIST / "static"
+    def assert_same_tree(self, name):
+        src, out = ROOT / "site" / name, DIST / name
         files = lambda d: {p.relative_to(d).as_posix() for p in d.rglob("*") if p.is_file()}
-        self.assertEqual(files(out), files(src), "dist/static/ et site/static/ n'ont pas les mêmes fichiers")
+        self.assertEqual(files(out), files(src), f"dist/{name}/ et site/{name}/ n'ont pas les mêmes fichiers")
         for rel in sorted(files(src)):
-            self.assertTrue(filecmp.cmp(src / rel, out / rel, shallow=False), f"dist/static/{rel} diffère de site/static/{rel}")
+            self.assertTrue(filecmp.cmp(src / rel, out / rel, shallow=False), f"dist/{name}/{rel} diffère de site/{name}/{rel}")
+
+    def test_css_01_static_identical(self):
+        self.assert_same_tree("static")
         html = (DIST / "index.html").read_text()
         self.assertRegex(html, r'<link[^>]*href="/static/master\.css"', 'dist/index.html: <link href="/static/master.css"> absent')
+
+    def test_par_05_media_identical(self):
+        self.assert_same_tree("media")
 
     def test_art_01_dist_clean(self):
         self.assertEqual(artifact_problems(DIST), [], "dist/ contient des fichiers interdits")
