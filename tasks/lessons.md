@@ -13,3 +13,8 @@
 ### Orchestration (#4, PR #32)
 - Les 301 `RewriteRule ... / [R=301]` à cible relative prennent le schéma vu par Apache : derrière un proxy TLS, cela ajoute un saut `http://`. Cibles absolues `https://%{HTTP_HOST}/…`.
 - La protection `.ht*` vient souvent de la conf globale du serveur : la poser aussi dans `public/.htaccess` pour ne pas en dépendre.
+
+## #5 Import Kirby (PR #33)
+- Les fichiers interdits au dépôt (`.php`, lien symbolique) de la fixture sont créés à la volée par le test : la fixture versionnée reste propre et T-BV-ART-03 passe.
+- `python3 -I -m unittest tests.test_x` échoue (pas de paquet `tests`, `-I` retire le dossier courant) : utiliser `discover -s tests -p 'test_x.py'`.
+- Regex de domaine : borner la fin d'hôte (`(?=/|$)`), sinon `benoitvinceneux.com.example.org` est réécrit.
