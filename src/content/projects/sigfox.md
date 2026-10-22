@@ -1,13 +1,15 @@
 ---
 title: "Sigfox"
 order: 5
-description: "Product Manager"
+description: "Sigfox : Product Manager du premier espace client B2B (2019-2020) et d'un outil de data visualisation temps réel pour le centre d'opérations réseau (2016)."
 textposition: "above"
 cover: { src: "/media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-288x288.png", srcset: "/media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-288x288.png 288w,/media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-576x576.png 576w" }
 images:
   - { src: "/media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-640x.png", srcset: "/media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-320x.png 320w, /media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-640x.png 640w, /media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-960x.png 960w, /media/pages/sigfox/0cf298a6fe-1603366159/sigfox-min-1280x.png 1280w", width: 640, height: 640 }
 ---
-### Sigfox Device Management System — 2019-2020
+Sigfox : opérateur télécom 0G pour objets connectés.
+
+### Sigfox Device Management System : 2019-2020
 
 *Product Manager*
 
@@ -25,11 +27,9 @@ Premier espace client B2B pour les grands comptes utilisateurs du réseau Sigfox
 - −50 % sur les délais de paiement clients  
 - Temps passé en support sur les factures : 10 min → 1 min
 
-**Ressource** : 100 écrans produits sur InVision *(lien existant)*
-
 ---
 
-### Sigfox Global Network Operation Center — 2018
+### Sigfox Global Network Operation Center : 2016
 
 *Product Manager*
 

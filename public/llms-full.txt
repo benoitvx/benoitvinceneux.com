@@ -186,7 +186,9 @@ Conscient de l'impact du streaming vidéo, le projet vise à rendre le site « l
 
 URL : https://benoitvinceneux.com/sigfox
 
-### Sigfox Device Management System — 2019-2020
+Sigfox : opérateur télécom 0G pour objets connectés.
+
+### Sigfox Device Management System : 2019-2020
 
 Product Manager. Premier espace client B2B pour les grands comptes utilisateurs du réseau Sigfox.
 
@@ -202,9 +204,7 @@ Résultats :
 - −50 % sur les délais de paiement clients
 - Temps passé en support sur les factures : 10 min → 1 min
 
-Ressource : 100 écrans produits sur InVision.
-
-### Sigfox Global Network Operation Center — 2018
+### Sigfox Global Network Operation Center : 2016
 
 Product Manager. Produit de data viz pour le Global Network Operation Center, sur un mur de 12 écrans permettant aux ingénieurs de monitorer le réseau télécom Sigfox dédié aux objets connectés.
 
