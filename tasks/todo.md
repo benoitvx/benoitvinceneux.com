@@ -1,40 +1,41 @@
-# #16 [CONTENU] notresante : dates et taille d'équipe
+# #17 [CONTENU] pierre-fabre : taux de connexion 80 %, dates 2014-2018
 
-Branche : `feat/bv-16-notresante` (déjà créée). PR `Closes #16` ouverte par l'orchestrateur.
+Branche : `feat/bv-17-pierre-fabre` (déjà créée). PR `Closes #17` ouverte par l'orchestrateur.
 Milestone M3. Dépendance : #9 (mergé). Aucune décision de #2 en jeu (contenu seul, ni dépendance, ni réglage, ni secret).
-Texte appliqué : version finale de #16, réponses de Benoit du 22/10/2026 incluses (et #23) :
-- période : **2016-2019** (écrite « 2016 à 2019 » dans le chapeau et la meta, comme la proposition) ;
-- équipe : **1 PO, 1 designer, 3 développeurs** (ligne actuelle conservée ; pas de « 1 UX, 1 UI, 5 développeurs »).
+Texte appliqué : version finale de #17, réponses de Benoit du 22/10/2026 incluses (et #23) :
+- taux de connexion : **80 %** (pas 75 %) ;
+- période : **2014-2018**, écrite « 2014 à 2018 » comme la proposition ;
+- chapeau : traduction fidèle annoncée par l'issue de « 80 % of all French pharmacies; 80 % of them log in at least once a week » ;
+- règle : ne plus associer « 16 000 » à un pourcentage (le « 16 000 » disparaît de la page).
 
 ## Critères d'acceptation
 
-- [ ] Titre de page inchangé : `NotreSanté` (donc `<title>` inchangé).
-- [ ] Chapeau, ligne 1 (gras conservé) : « NotreSanté : startup e-santé ».
-- [ ] Chapeau, ligne 2 (italique conservé) : « Cofondateur, CPO : 2016 à 2019 ».
-- [ ] Paragraphe d'intro, « Vision produit », « Ce qu'il en reste » : inchangés.
-- [ ] « Périmètre », trois lignes données par l'issue :
-  - « Management : 1 PO, 1 designer, 3 développeurs » (identique à l'actuelle) ;
-  - « Levée de fonds, structuration juridique, constitution de l'équipe » (« recrutement » devient « constitution de l'équipe ») ;
-  - « Hébergement de Données de Santé (HDS) : conformité de bout en bout » (« — » devient « : », « bout-en-bout » devient « de bout en bout »).
-  Les trois autres puces (Produit end-to-end, Stratégie produit, Partenariats) sont inchangées.
-- [ ] « Distinctions » :
-  - « 2019 : Trophée de la Citoyenneté et de la Solidarité, Conseil départemental de la Haute-Garonne » (« départemental » en minuscule, comme l'issue) ;
-  - « 2018 : Prix de l'innovation, CCI Occitanie ».
-- [ ] Meta description (donnée par l'issue, appliquée telle quelle) : `NotreSanté, startup e-santé : cofondateur et CPO, 2016 à 2019.`
-- [ ] Plus aucune trace sur la page de : « 2017-2020 », « recrutement », « bout-en-bout », « Conseil Départemental ».
+- [ ] Titre de page inchangé : `Pierre Fabre` (donc `<title>` inchangé).
+- [ ] Chapeau, ligne 1 (gras conservé) : « Laboratoires Pierre Fabre : Espace Pro B2B ».
+- [ ] Chapeau, ligne 2 (italique conservé) : « 1ᵉʳ Product Manager B2B : 2014 à 2018 ».
+- [ ] Chapeau, paragraphe : « Réinventer la relation entre le Laboratoire et les pharmacies clientes : **80 % des pharmacies françaises** ; **80 % d'entre elles se connectent au moins une fois par semaine**. » (gras comme l'issue).
+- [ ] « Contexte », « Mission » et le contenu des 4 phases (Explorer, Concevoir, Réaliser, Grandir) : inchangés.
+- [ ] Titre de section : « Périmètre : 4 phases » (« — » devient « : »).
+- [ ] « Résultats », exactement deux puces :
+  - « **3 heures gagnées** par semaine pour les pharmaciens utilisateurs » (identique) ;
+  - « Une adoption B2B sur laquelle la stratégie digitale de Pierre Fabre s'est ensuite appuyée » (ajout de « Une » et « de »).
+  La puce « 80 % des pharmaciens clients connectés… » est supprimée (le taux passe dans le chapeau).
+- [ ] Meta description (l'issue n'en donne pas ; réalignée sur le chapeau sans rien ajouter, même forme que #16) :
+  `Laboratoires Pierre Fabre, Espace Pro B2B : 1ᵉʳ Product Manager B2B, 2014 à 2018.`
+- [ ] Plus aucune trace sur la page de : « 2011 », « 2017 », « 16 000 », « 1× », « 75 % ».
 - [ ] Aucun « — », « · », « | » dans le texte visible du `<main>` et la meta description de la page.
 - [ ] URL, slug, `title`, `order`, `textposition`, `cover`, `images` inchangés à l'octet. Aucun lien ajouté.
-- [ ] `public/llms.txt` et `public/llms-full.txt` : passages NotreSanté alignés (étape 2).
+- [ ] `public/llms.txt` et `public/llms-full.txt` : passages Pierre Fabre alignés (étape 2).
 
 ## Tests (catalogue #10)
 
-Aucun test à ajouter (l'issue n'en demande pas). Les tests ne référencent cette page que par des listes d'URL (`tests/test_dist.py` l. 22, `tests/legacy-urls.txt` l. 8, `tests/test_a11y.py` l. 6). Tests qui doivent rester verts sans modification :
+Aucun test à ajouter (l'issue n'en demande pas). Les tests ne référencent cette page que par des listes d'URL (`tests/test_dist.py` l. 21, `tests/legacy-urls.txt` l. 7, `tests/test_a11y.py` l. 7). Tests qui doivent rester verts sans modification :
 
-| ID | Fichier | Lien avec #16 |
+| ID | Fichier | Lien avec #17 |
 |---|---|---|
 | T-BV-BUILD-01 | `npx astro build` + `tests/test_dist.py` | build de la page modifiée |
 | T-BV-CONT-01, T-BV-CONT-02, T-BV-CONT-03 | `tests/test_content.py` | front matter (`description` non vide, `cover`/`images` existants), pas de KirbyText |
-| T-BV-SPE-01 | `tests/test_dist.py` | URL `benoitvinceneux.com/...` des `llms*.txt` : `/notresante` est 200 dans `legacy-urls.txt` ; n'ajouter aucune URL du domaine |
+| T-BV-SPE-01 | `tests/test_dist.py` | URL `benoitvinceneux.com/...` des `llms*.txt` : `/pierre-fabre` est 200 dans `legacy-urls.txt` ; n'ajouter aucune URL du domaine |
 | T-BV-SEO-01 | `tests/test_dist.py` | canonical, meta description non vide, `<title>` unique |
 | T-BV-LNK-01, T-BV-LNK-02, T-BV-HOST-01 | `tests/test_links.py` | aucun lien ni hôte nouveau |
 | T-BV-HTML-01 | `npx html-validate "dist/**/*.html"` (+ `tests/test_repo.py`) | HTML de la page |
@@ -46,11 +47,11 @@ Commande : `npx astro build && python3 -I -m unittest discover -s tests -v && np
 
 ## Fichiers modifiés (3, rien à créer)
 
-1. `src/content/projects/notresante.md` : front matter `description`, chapeau, 2 puces de Périmètre, 2 puces de Distinctions.
-2. `public/llms.txt` : ligne 12 seulement.
-3. `public/llms-full.txt` : section `## NotreSanté` seulement (l. 220 à 252, jusqu'au `---` qui précède `## Ça Compte Pour Moi`).
+1. `src/content/projects/pierre-fabre.md` : front matter `description`, chapeau (3 lignes), titre « Périmètre », section « Résultats ».
+2. `public/llms.txt` : ligne 14 seulement.
+3. `public/llms-full.txt` : section `## Pierre Fabre` seulement (l. 293 à 325, jusqu'au `---` qui précède `## LePharmacien.fr`).
 
-Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` l. 33 et `public/llms-full.txt` l. 34 (parcours À propos : « NotreSanté · cofondateur, CPO · 2017 – 2020 ») relèvent de #13 et #22 ; l'écart de dates qui y subsiste est connu, ce n'est pas un oubli (même choix que #15). Gabarit, séparateur du `<title>` : #14.
+Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` l. 35 et `public/llms-full.txt` l. 36 (parcours À propos : « Laboratoires Pierre Fabre · 1ᵉʳ PM B2B · 2011 – 2017 (16 000 pharmaciens, 80 % connectés ≥ 1×/semaine) ») relèvent de #13 et #22 ; l'écart qui y subsiste (dates, 16 000 associé à un pourcentage) est connu, ce n'est pas un oubli (même choix que #15 et #16). Gabarit, séparateur du `<title>` : #14.
 
 ## Étapes
 
@@ -59,68 +60,60 @@ Hors périmètre (ne pas toucher) : `src/pages/a-propos.astro` l. 33 et `public/
 Garder `title`, `order`, `textposition`, `cover`, `images` à l'octet. Remplacer `description` par :
 
 ```
-description: "NotreSanté, startup e-santé : cofondateur et CPO, 2016 à 2019."
+description: "Laboratoires Pierre Fabre, Espace Pro B2B : 1ᵉʳ Product Manager B2B, 2014 à 2018."
 ```
 
-Corps cible (conventions actuelles conservées : deux espaces en fin de ligne dans le chapeau et les listes, sauf dernière puce) :
+Modifications du corps (conventions actuelles conservées : deux espaces en fin de ligne dans le chapeau et les listes, sauf dernière puce) :
 
 ```markdown
-**NotreSanté : startup e-santé**  
-*Cofondateur, CPO : 2016 à 2019*
+**Laboratoires Pierre Fabre : Espace Pro B2B**  
+*1ᵉʳ Product Manager B2B : 2014 à 2018*
 
-Application mobile iOS / Android pour la gestion de la santé des familles avec enfants en bas âge. Cible B2C : familles avec enfants de moins de 10 ans.
-
-### Vision produit
-
-(inchangé)
-
-### Périmètre
-
-- Produit end-to-end : discovery, conception, pilotage du dev, go-to-market  
-- Stratégie produit, recherche utilisateurs, validation UX/UI  
-- Management : 1 PO, 1 designer, 3 développeurs  
-- Levée de fonds, structuration juridique, constitution de l'équipe  
-- Hébergement de Données de Santé (HDS) : conformité de bout en bout  
-- Partenariats laboratoires pharmaceutiques et pharmaciens
-
-### Distinctions
-
-- 2019 : Trophée de la Citoyenneté et de la Solidarité, Conseil départemental de la Haute-Garonne  
-- 2018 : Prix de l'innovation, CCI Occitanie
-
-### Ce qu'il en reste
-
-(inchangé)
+Réinventer la relation entre le Laboratoire et les pharmacies clientes : **80 % des pharmacies françaises** ; **80 % d'entre elles se connectent au moins une fois par semaine**.
 ```
 
-### 2. Fichiers LLM (mêmes faits que la page, aucun ajout)
+```markdown
+### Périmètre : 4 phases
+```
 
-- `public/llms.txt` ligne 12 : seule la période change, `(2017-2020)` devient `(2016-2019)` ; le reste de la ligne est inchangé (elle ne contient ni « — », ni « · », ni « | »).
-- `public/llms-full.txt`, section `## NotreSanté` (style du fichier : pas de gras, puces `- `, chapeau terminé par des points) :
-  - l. 224 : `NotreSanté : startup e-santé.`
-  - l. 225 : `Cofondateur, CPO : 2016 à 2019.`
-  - puce Levée de fonds : `- Levée de fonds, structuration juridique, constitution de l'équipe`
-  - puce HDS : `- Hébergement de Données de Santé (HDS) : conformité de bout en bout`
-  - distinctions : `- 2019 : Trophée de la Citoyenneté et de la Solidarité, Conseil départemental de la Haute-Garonne`, `- 2018 : Prix de l'innovation, CCI Occitanie`
-  - Le reste de la section est inchangé.
+```markdown
+### Résultats
 
-### 3. Vérification locale
+- **3 heures gagnées** par semaine pour les pharmaciens utilisateurs  
+- Une adoption B2B sur laquelle la stratégie digitale de Pierre Fabre s'est ensuite appuyée
+```
 
-1. `npx astro build`, puis les commandes du tableau Tests.
-2. Séparateurs :
-   - `grep -nE '—|·|\|' dist/notresante.html` : résultats acceptables seulement hors `<main>` et meta description (gabarit, #14) ;
-   - `sed -n '12p' public/llms.txt | grep -E '—|·|\|'` : 0 résultat ;
-   - `awk '/^## NotreSanté/,/^## Ça Compte Pour Moi/' public/llms-full.txt | grep -nE '—|·|\|'` : 0 résultat.
-3. `grep -niE "2017-2020|recrutement|bout-en-bout|Conseil Départemental" dist/notresante.html`, `sed -n '12p' public/llms.txt` et la section de `llms-full.txt` : 0 résultat.
-4. `git diff --stat` : seulement les 3 fichiers + `tasks/todo.md` ; `cover`/`images` identiques.
+Tout le reste du corps (Contexte, Mission, Explorer, Concevoir, Réaliser, Grandir) reste à l'octet.
 
-### 4. Commit
+### 2. Fichiers pour les LLM (mêmes faits, aucun ajout)
 
-`content: NotreSanté, période 2016-2019 et constitution de l'équipe (#16)` (inclut `tasks/todo.md`).
+`public/llms.txt` l. 14, remplacer par :
+
+```
+- [Pierre Fabre](https://benoitvinceneux.com/pierre-fabre): 1ᵉʳ Product Manager B2B (2014-2018). Espace Pro B2B des Laboratoires Pierre Fabre : centre névralgique relationnel avec les pharmacies clientes (commande en ligne, gestion des factures, e-learning, e-merchandising, retours produits). Lancement septembre 2015. 80 % des pharmacies françaises ; 80 % d'entre elles se connectent au moins une fois par semaine. 3 heures gagnées par semaine pour les pharmaciens utilisateurs.
+```
+
+`public/llms-full.txt`, section `## Pierre Fabre` :
+
+- l. 297-298 : `Laboratoires Pierre Fabre : Espace Pro B2B.` puis `1ᵉʳ Product Manager B2B : 2014 à 2018.`
+- l. 300 : `Mission : réinventer la relation entre le Laboratoire et les pharmacies clientes : 80 % des pharmacies françaises ; 80 % d'entre elles se connectent au moins une fois par semaine.`
+- `### Périmètre — 4 phases` devient `### Périmètre : 4 phases`.
+- `### Résultats` : deux puces seulement :
+  - `- 3 heures gagnées par semaine pour les pharmaciens utilisateurs`
+  - `- Une adoption B2B sur laquelle la stratégie digitale de Pierre Fabre s'est ensuite appuyée`
+- Contexte, Objectifs de mission, puces des 4 phases : inchangés.
+
+### 3. Vérifications
+
+- Build + tests (commande ci-dessus), Apache local + `http_check.sh`, Playwright.
+- `grep -nE '—|·|\|' src/content/projects/pierre-fabre.md` : aucune ligne hors front matter `cover`/`images` (les `,` des srcset ne sont pas concernés ; vérifier qu'il n'y a rien).
+- `grep -nE '2011|2017|16 000|1×|75 %' src/content/projects/pierre-fabre.md` et dans la section Pierre Fabre de `llms.txt` / `llms-full.txt` (hors l. 36 du parcours, #13/#22) : aucun résultat.
+- `git diff` : seulement les 3 fichiers listés (+ `tasks/todo.md`).
 
 ## Points d'attention
 
-- Attribution : ne rien ajouter (pas l'équipe LinkedIn « 1 UX, 1 UI, 5 développeurs », pas de chiffre, pas de lien, pas de mention CV).
-- « iOS / Android » (barre oblique), « × » et « end-to-end » ne sont pas des séparateurs interdits : conservés.
-- Ne jamais citer ni nommer les « Sources » de l'issue (documents privés), ni de doctrine non publiée.
-- Ne pas toucher au gabarit (`src/layouts/Base.astro`), ni à `.nvmrc` (24).
+- Ne pas réintroduire « 16 000 » nulle part sur la page ni dans les passages Pierre Fabre des `llms*.txt` (règle de l'issue).
+- « Laboratoire » garde sa majuscule (texte actuel et issue).
+- L'espace avant « ; » et « % » suit l'issue (« françaises** ; ** », « 80 % ») : reproduire tel quel ; ne pas inventer d'espace insécable spécial si le fichier n'en utilise pas.
+- Ne rien ajouter : pas de lien, pas de chiffre (pas de « 75 % », pas de « 16 000 »), pas de reformulation du Contexte ni des phases.
+- Les sources de l'issue (CV, liste d'expériences) ne sont jamais citées sur le site.
