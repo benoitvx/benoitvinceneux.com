@@ -236,12 +236,11 @@ class TestDist(unittest.TestCase):
             "ErrorDocument": r"^ErrorDocument 404 /404\.html$",
             "nosniff": r'X-Content-Type-Options "nosniff"',
             "Referrer-Policy": r'Referrer-Policy "strict-origin-when-cross-origin"',
-            "HSTS": r'Strict-Transport-Security "max-age=300"',
             "301 home": r"^RewriteRule \^home/\?\$ (https://%\{HTTP_HOST\})?/ \[R=301,L\]$",
             "301 sitemap": r"^RewriteRule \^sitemap/\?\$ (https://%\{HTTP_HOST\})?/sitemap\.txt \[R=301,L\]$",
         }.items():
             self.assertRegex(hta, re.compile(pattern, re.M), f"dist/.htaccess : {label} absent")
-        self.assertNotRegex(hta, r"includeSubDomains|preload", "dist/.htaccess : HSTS ne doit avoir ni includeSubDomains ni preload")
+        self.assertNotIn("Strict-Transport-Security", hta, "dist/.htaccess : HSTS posé par le serveur, ne pas le redéfinir (décision du 22/10/2026)")
 
     def test_hta_02_no_html_redirect(self):
         for line in (DIST / ".htaccess").read_text().splitlines():

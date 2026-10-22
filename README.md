@@ -5,7 +5,8 @@ Site portfolio statique construit avec Astro et servi par Apache.
 - `src/`, `public/` : sources Astro. Le build produit `dist/`.
 - `site/` : snapshot statique de l'ancien site Kirby, conservé jusqu'au nettoyage (#9).
 - Déploiement (`.github/workflows/deploy.yml`) : chaque push sur `master` lance le job `test`, puis, s'il est vert, le job `deploy` reconstruit `dist/`, passe les garde-fous (`tests/predeploy_guard.sh`), le synchronise par rsync et lance le smoke.
-- Secrets GitHub : `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_TARGET`.
+- Secrets GitHub (au niveau du dépôt, sans environnement) : `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`, `DEPLOY_TARGET`. Le job `deploy` ne tourne que sur `master` hors PR, et `master` est protégée (PR obligatoire, check `test` exigé).
+- HSTS : posé par la configuration du serveur, pas par `public/.htaccess`.
 
 ## Build local
 
@@ -27,6 +28,6 @@ Le smoke après déploiement (`tests/smoke.sh` dans #7) est `tests/http_check.sh
 
 ## Rollback
 
-1. `git revert <sha du commit à annuler>` sur une branche, puis PR vers `master`. Pour annuler la bascule (#7) alors que les secrets `DEPLOY_*` sont rattachés à l'environnement `production` (D-5), garder la ligne `environment: production` dans le job de déploiement restauré.
+1. `git revert <sha du commit à annuler>` sur une branche, puis PR vers `master`.
 2. Merger quand le job `test` est vert : le job `deploy` republie la version précédente.
 3. Vérifier le run, puis le site : 200 sur `/`, une page projet et `/a-propos`.

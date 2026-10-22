@@ -52,7 +52,6 @@ jobs:
       group: deploy
       cancel-in-progress: false
     runs-on: ubuntu-24.04
-    environment: production
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -87,4 +86,4 @@ jobs:
         run: bash tests/http_check.sh
         env:
           BASE_URL: https://benoitvinceneux.com
-          HSTS_MAX_AGE: 300
+          HSTS_MIN_AGE: 16000000
