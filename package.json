@@ -1,0 +1,13 @@
+{
+  "name": "benoitvinceneux.com",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "astro": "7.3.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0",
+    "html-validate": "11.16.2"
+  }
+}
