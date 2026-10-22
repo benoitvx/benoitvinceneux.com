@@ -7,7 +7,7 @@ cover: { src: "/media/pages/groupama/987755c999-1603366187/groupama-min-288x288.
 images:
   - { src: "/media/pages/groupama/987755c999-1603366187/groupama-min-640x.png", srcset: "/media/pages/groupama/987755c999-1603366187/groupama-min-320x.png 320w, /media/pages/groupama/987755c999-1603366187/groupama-min-640x.png 640w, /media/pages/groupama/987755c999-1603366187/groupama-min-960x.png 960w, /media/pages/groupama/987755c999-1603366187/groupama-min-1280x.png 1280w", width: 640, height: 640 }
 ---
-J'ai accompagné **Groupama** sur la création d'un extranet à destination des courtiers.  
+J'ai accompagné **Groupama** sur la création d'un intranet à destination des courtiers.  
 La plateforme permet aux courtiers de **dématérialiser le suivi administratif** avec Groupama et de **réaliser des tarifications en quelques clics** pour certains risques.
 
 **Nous sommes parvenus à valider et déployer le MVP en 2 mois.**
