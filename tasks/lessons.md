@@ -23,3 +23,6 @@
 - Ajouter `crossorigin` + `integrity` à une ressource CDN que l'ancien site chargeait sans `crossorigin` casse le cache des visiteurs déjà venus : le CDN répond sans `Access-Control-Allow-Origin` ni `Vary: Origin` aux requêtes sans `Origin` (max-age 1 an), et le navigateur réutilise cette copie, qui échoue au contrôle CORS. Vérifier les en-têtes avec et sans `Origin` avant d'ajouter SRI ; une URL distincte (query string) évite la copie en cache.
 - La comparaison visuelle snapshot/build se fait dans un contexte navigateur neuf par page, sinon le cache partagé fausse le résultat.
 - html-validate (`unique-landmark`) exige un nom accessible sur chaque `<aside>` quand il y en a plusieurs : les `aria-label` sont nécessaires pour HTML-01.
+
+### Orchestration (#6, PR #34)
+- Le premier run sur `master` n'a pas de cache Playwright (les caches des branches de PR ne sont pas visibles depuis `master`) et `playwright install --with-deps` dépend d'`apt` : un miroir lent a bloqué le job plus de 10 min. Poser `timeout-minutes` sur les jobs pour ne pas attendre le plafond de 6 h.
