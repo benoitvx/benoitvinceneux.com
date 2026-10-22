@@ -1,9 +1,7 @@
 ---
 title: "YANA.place"
 order: 12
-description: "En 2018, j'achète avec 2 associés un espace de 220m2 en plein coeur de l'hypercentre de Toulouse. Nous faisons une rénovation complète en 3 mois pour proposer u…"
-role: "Co-fondateur, Designer & gestionnaire"
-website: "https://yana.place"
+description: "YANA.place : espace de bureaux de 220 m² à Toulouse, cofondé en 2018, rentable dès la deuxième année."
 cover: { src: "/media/pages/yana-place/9446d9539a-1651663211/yana-place-288x288.png", srcset: "/media/pages/yana-place/9446d9539a-1651663211/yana-place-288x288.png 288w,/media/pages/yana-place/9446d9539a-1651663211/yana-place-576x576.png 576w" }
 images:
   - { src: "/media/pages/yana-place/9446d9539a-1651663211/yana-place-640x.png", srcset: "/media/pages/yana-place/9446d9539a-1651663211/yana-place-320x.png 320w, /media/pages/yana-place/9446d9539a-1651663211/yana-place-640x.png 640w, /media/pages/yana-place/9446d9539a-1651663211/yana-place-960x.png 960w, /media/pages/yana-place/9446d9539a-1651663211/yana-place-1280x.png 1280w", width: 576, height: 576 }
@@ -14,5 +12,15 @@ images:
   - { src: "/media/pages/yana-place/3691066123-1603443882/img-4104-e1553855684259-min-1280x-min-640x.jpg", srcset: "/media/pages/yana-place/3691066123-1603443882/img-4104-e1553855684259-min-1280x-min-320x.jpg 320w, /media/pages/yana-place/3691066123-1603443882/img-4104-e1553855684259-min-1280x-min-640x.jpg 640w, /media/pages/yana-place/3691066123-1603443882/img-4104-e1553855684259-min-1280x-min-960x.jpg 960w, /media/pages/yana-place/3691066123-1603443882/img-4104-e1553855684259-min-1280x-min-1280x.jpg 1280w", width: 576, height: 768 }
   - { src: "/media/pages/yana-place/dafbe8e9d3-1603443882/img-4127-e1553855566774-min-1280x-min-640x.jpg", srcset: "/media/pages/yana-place/dafbe8e9d3-1603443882/img-4127-e1553855566774-min-1280x-min-320x.jpg 320w, /media/pages/yana-place/dafbe8e9d3-1603443882/img-4127-e1553855566774-min-1280x-min-640x.jpg 640w, /media/pages/yana-place/dafbe8e9d3-1603443882/img-4127-e1553855566774-min-1280x-min-960x.jpg 960w, /media/pages/yana-place/dafbe8e9d3-1603443882/img-4127-e1553855566774-min-1280x-min-1280x.jpg 1280w", width: 576, height: 768 }
 ---
-En 2018, j'achète avec 2 associés un espace de 220m2 en plein coeur de l'hypercentre de Toulouse.  
-Nous faisons une rénovation complète en 3 mois pour proposer **un nouveau produit sur le marché toulousain** : des bureaux fermés, pour 4 - 6 personnes, tout équipés, à louer pour minimum 1 an
+En 2018, j'achète avec 2 associés un espace de 220 m² en plein cœur de l'hypercentre de Toulouse. Nous le rénovons entièrement en 6 mois pour proposer un nouveau produit sur le marché toulousain : des bureaux fermés pour 4 à 6 personnes, tout équipés, à louer pour un an minimum.
+
+**Rôle** : cofondateur, designer et gestionnaire
+
+**Résultats**
+
+- 40 postes de travail
+- 750 K€ de dette bancaire pour l'achat et la rénovation
+- Rentable dès la deuxième année
+- Exploité par une équipe locale depuis 2021
+
+**Site** : [yana.place](https://yana.place)
