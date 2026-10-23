@@ -92,6 +92,9 @@ class TestRepo(unittest.TestCase):
             if path.is_file() and not path.is_symlink():
                 self.assertNotIn(needle, path.read_bytes(), f"balise PHP dans le fichier versionné {f}")
 
+    def test_spe_01_llms_full_generated(self):
+        self.assertFalse((ROOT / "public/llms-full.txt").exists(), "public/llms-full.txt existe : llms-full.txt est généré au build (src/pages/llms-full.txt.ts, #22)")
+
 
 if __name__ == "__main__":
     unittest.main()
