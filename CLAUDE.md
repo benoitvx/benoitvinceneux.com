@@ -2,7 +2,7 @@
 
 ## Projet
 
-Site portfolio de Benoit Vinceneux : accueil, page « à propos », 11 pages projet, `llms.txt` et `llms-full.txt`.
+Site portfolio de Benoit Vinceneux : accueil, page « à propos », 11 pages projet, `llms.txt` (tenu à la main) et `llms-full.txt` (généré au build depuis les pages).
 
 - **Aujourd'hui :** `dist/`, construit par Astro, est servi par Apache. Chaque push sur `master` le déploie (`.github/workflows/deploy.yml`, rsync `--delete-after`) si le job `test` passe. L'ancien site Kirby n'existe plus que dans le tag `snapshot-kirby` : le retour arrière passe par ce tag (README, section « Rollback »).
 - **Migration Astro terminée** (bascule #7, nettoyage #9). Pilotage #1, décisions #2, catalogue des tests CI #10. **En cours :** milestone `M3 Contenus` (issues `[CONTENU]`, synthèse #23).
