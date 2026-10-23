@@ -9,7 +9,7 @@ images:
 ---
 Je suis intervenu régulièrement auprès du club de Football de Toulouse entre 2014 & 2019
 
-Exemples de missions que j'ai effectué pour eux :  
+Exemples de missions que j'ai effectuées pour eux :  
 - **Pilotage opérationnel de la refonte du site institutionnel & de la boutique officielle**  
 - Développement d’un **outil CRM sur mesure** alimenté par l’ensemble de l’écosystème (site officiel, boutique, billetterie, réseaux sociaux, etc.)  
 - **Remise à plat des outils digitaux utilisés** (e-mailing, gestion des publicités) et des prestataires en contrat (hébergement, abonnements divers)

@@ -10,7 +10,7 @@ const { title, description, role, website, textposition, images } = entry.data;
 const { Content } = await render(entry);
 const above = textposition === 'above';
 ---
-<Base title={`${title} – Benoit Vinceneux`} description={description} path={`/${entry.id}`} current={entry.id}>
+<Base title={`${title} : Benoit Vinceneux`} description={description} path={`/${entry.id}`} current={entry.id}>
     <div class={above ? '' : 'ld-row'}>
       <div class="span1 order9">
         <div class="p025">
