@@ -177,7 +177,7 @@ class TestDist(unittest.TestCase):
             for m in re.finditer(re.escape(DOMAIN) + r"(/[\w./-]*)?", text):
                 path = (m[1] or "/").rstrip(".") or "/"
                 self.assertIn(path, ok_paths(), f"dist/{name} : {m[0]} n'est pas une entrée 200 de legacy-urls.txt")
-            for sep in ("—", "·", "<iframe"):
+            for sep in ("—", "·", "</"):
                 self.assertNotIn(sep, text, f"dist/{name} contient {sep!r}")
         full = (DIST / "llms-full.txt").read_text()
         for slug in ["a-propos"] + [f.stem for f in (ROOT / "src/content/projects").glob("*.md")]:
