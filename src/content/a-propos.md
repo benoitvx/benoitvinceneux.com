@@ -44,7 +44,7 @@ Claude Code, OpenCode, MCP, Albert API, embeddings, LLM-as-a-judge, Python, Reac
 
 ### Engagements & formations
 
-- 2026 : intervenant au meetup Claude Code Paris 02, *MCP Gateway for Open Government*
+- 2026 : intervenant au meetup Claude Code Paris 02, *MCP Leading the People*
 - 2025 : Data for Good, saison 14, Product Lead du projet *[Qui paie le prix du changement climatique](https://dataforgood.fr/projets/qui-paie-le-prix-du-changement-climatique)*
 - 2025 : [Perplexity AI Fellowship](https://www.linkedin.com/posts/aravind-srinivas-16051987_we-are-launching-a-perplexity-ai-business-activity-7294814157227315201-J51l/), sur sélection
 - Lauréat de la 7ᵉ promotion Entrepreneurs d'intérêt général
