@@ -52,7 +52,7 @@ Choisir un modèle sur des chiffres plutôt que sur une démo, savoir ce que vau
 Les agents publics utilisent déjà des assistants de code commerciaux, et les standards de l'État (design system, accessibilité, sécurité) restent à configurer à la main, projet par projet.
 
 **Une stack open source pour les agents publics**  
-- [Albert Code](https://github.com/etalab-ia/albert-code), porté par la DINUM : un agent de code open source branché sur l'inférence souveraine de l'État, exécuté dans une machine virtuelle isolée, avec les skills État préinstallées  
+- [Albert Code](https://github.com/etalab-ia/albert-code), porté par la DINUM : un agent de code open source branché sur l'inférence souveraine de l'État, exécuté dans une machine virtuelle isolée, avec les skills État proposées à l'installation  
 - Albert Code est lui-même développé avec un agent de code
 
 **Investigation et prototypes**  
