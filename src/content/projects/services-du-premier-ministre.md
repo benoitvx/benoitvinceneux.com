@@ -1,7 +1,7 @@
 ---
 title: "Services du Premier ministre"
 order: 2
-description: "Direction interministérielle du numérique : IA dans l'État. Données publiques pour l'IA, code agentique souverain, évaluation des modèles, coaching produit."
+description: "Direction interministérielle du numérique : IA dans l'État. Données publiques pour l'IA, évaluation des modèles, code agentique souverain, interventions MCP."
 textposition: "above"
 cover: { src: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-288x288.png", srcset: "/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-288x288.png 288w,/media/pages/services-du-premier-ministre/cfed094263-1777404734/dinum-576x576.png 576w" }
 images:
@@ -30,21 +30,34 @@ Les données publiques françaises sont abondantes mais mal exposées pour l'IA.
 
 Sur chaque sujet : on fait une première version pour montrer que c'est possible, on met en circulation et on collecte des retours, puis on transfère à l'administration métier qui prend la main et améliore.
 
-### Réalisations
+### Évaluation des modèles d'IA
 
-**Évaluation LLM verticalisée : une méthode réplicable**  
+Choisir un modèle sur des chiffres plutôt que sur une démo, savoir ce que vaut un produit en production, mesurer l'effet de chaque changement.
+
+**Un assistant juridique : une méthode réplicable**  
 - Jeu de données de référence de 100 questions sur 8 catégories juridiques, construit à partir de conversations réelles  
 - LLM-as-a-judge pour comparer plusieurs approches  
 - +16 % de qualité par rapport à la référence avec l'approche hybride retenue, déployée en production
 
-**Évaluation de la transcription audio**  
-- Benchmark de modèles ouverts et commerciaux sur un corpus représentatif de l'administration : environ 10 % de taux d'erreur en moins  
-- Contribution au benchmark open source qui porte la méthode
+**Transcription audio et documents scannés**  
+- Benchmark de modèles ouverts et commerciaux sur un corpus représentatif de l'administration : environ 10 % d'erreurs en moins par rapport au système actuel  
+- Contribution au banc d'évaluation open source [eval-transcript](https://github.com/etalab-ia/eval-transcript), qui mesure le taux d'erreur mot et qualifie la gravité des erreurs avec un panel de LLM juges  
+- Auteur d'[eval-ocr-htr](https://github.com/etalab-ia/eval-ocr-htr), banc d'évaluation open source qui compare des modèles de reconnaissance de texte (OCR et HTR) sur des documents manuscrits scannés, via l'inférence souveraine de l'État
 
-**Stack de code agentique souveraine**  
+**Un guide public pour l'État**  
+- J'ai rédigé le [guide des évaluations de systèmes d'IA](https://guides.ia.numerique.gouv.fr/guides/evaluations-des-systemes-dia), qui recense les pratiques d'évaluation de l'administration pour que chaque équipe réutilise ce qui existe au lieu de repartir de zéro
+
+### Code agentique souverain
+
+Les agents publics utilisent déjà des assistants de code commerciaux, et les standards de l'État (design system, accessibilité, sécurité) restent à configurer à la main, projet par projet.
+
+**Une stack open source pour les agents publics**  
+- [Albert Code](https://github.com/etalab-ia/albert-code), porté par la DINUM : un agent de code open source branché sur l'inférence souveraine de l'État, exécuté dans une machine virtuelle isolée, avec les skills État proposées à l'installation  
+- Albert Code est lui-même développé avec un agent de code
+
+**Investigation et prototypes**  
 - 30+ entretiens dans les ministères  
-- Benchmark comparatif d'agents de code sur inférence souveraine, 3 POC livrés  
-- Standards de l'État embarqués sous forme de skills : design system, accessibilité, sécurité
+- Benchmark comparatif d'agents de code sur inférence souveraine, 3 POC livrés
 
 **Skills État : les standards de l'État dans les assistants de code**  
 - Dépôt [etalab-ia/skills](https://github.com/etalab-ia/skills), dont je suis l'auteur : DSFR, RGAA, sécurité ANSSI, data.gouv.fr, La Suite
@@ -53,6 +66,13 @@ Sur chaque sujet : on fait une première version pour montrer que c'est possible
 
 - **Serveur MCP data.gouv.fr** : coordination et suivi produit du serveur qui connecte les modèles d'IA à l'open data français ; 45 M de requêtes en 100 jours.
 - **Accompagnement des administrations** qui exposent leurs données dans des formats prêts pour l'IA (MCP, CLI, skills) : data.gouv, ANSSI, IGN, France Travail, DILA / Légifrance, Éducation nationale, CEA ; retours d'expérience, questions-réponses, aide à la conception, articles de vulgarisation.
+
+### Interventions
+
+- **Claude Code Paris 02**, février 2026 : *MCP Leading the People*, connecter les assistants IA aux données publiques françaises. [Slides de Claude Code Paris 02](https://benoitvx.github.io/claude-code-paris-02/)
+- **Atelier MCP, rencontre de l'incubateur IA de l'État (ALLiaNCE)**, 20 janvier 2026 : le Model Context Protocol expliqué à des agents publics non techniques, avec des démonstrations branchées sur le serveur MCP de data.gouv.fr. [Slides de l'atelier MCP](https://benoitvx.github.io/atelier-mcp-slides/)
+- **Sovereign Agents Blitz Hackathon 2026**, 29 avril 2026 : présentation des serveurs MCP de l'État aux participants.
+- Plusieurs talks donnés dans l'administration sur les nouveaux formats de données pour l'IA.
 
 ### Convictions portées
 

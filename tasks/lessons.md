@@ -35,3 +35,8 @@
 - Le tag `snapshot-kirby` pointe sur un commit qui déploie déjà `dist/` : revenir au snapshot demande de remplir `dist/` depuis le tag dans le job `deploy` (README), pas seulement de restaurer `site/`.
 - Les exceptions html-validate et axe sont dans `tests/exceptions.json` (l'ancienne allowlist de parité n'existe plus).
 - `playwright install --with-deps` dépend d'`apt` : des miroirs lents ont porté le job `test` à 13 min sans échec.
+
+## #50 Services du Premier ministre (PR #51)
+- Décrire un dépôt tiers d'après son README, pas d'après la proposition : « imprimé et manuscrit » (eval-ocr-htr) et « skills préinstallées » (albert-code) étaient faux.
+- Un produit non revendiqué suivi de puces sans sujet se lit comme une réalisation personnelle : séparer ce qui décrit le produit de ce que Benoit a fait.
+- Tout nouvel hôte de lien passe par `tests/allowed-hosts.txt` (T-BV-HOST-01).
